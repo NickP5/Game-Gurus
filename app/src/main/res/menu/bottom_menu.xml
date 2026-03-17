@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/HomeFragment"
+        android:title="Home"
+        android:icon="@drawable/baseline_add_home_24"/>
+
+    <item
+        android:id="@+id/SearchFragment"
+        android:title="Search"
+        android:icon="@drawable/outline_allergy_24"/>
+
+    <item
+        android:id="@+id/CreateFragment"
+        android:title="Create"
+        android:icon="@drawable/m3_split_button_chevron_avd"/>
+
+    <item
+        android:id="@+id/LeaderboardFragment"
+        android:title="Leaderboard"
+        android:icon="@drawable/outline_aq_indoor_24"/>
+
+    <item
+        android:id="@+id/ProfileFragment"
+        android:title="Profile"
+        android:icon="@drawable/outline_area_chart_24"/>
+
+</menu>
