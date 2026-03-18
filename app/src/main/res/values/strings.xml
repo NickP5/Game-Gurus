@@ -12,6 +12,11 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
+    <!-- placeholder strings for post preview-->
+    <string name="default_op_clue">OP clue here</string>
+    <string name="default_op_rating">OP rating here</string>
+    <string name="default_op_name">OP name here</string>
+
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
         volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus
