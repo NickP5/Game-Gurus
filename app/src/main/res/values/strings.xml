@@ -4,6 +4,11 @@
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
+    <string name="home_fragment_label">Home Fragment</string>
+    <string name="search_fragment_label">Search Fragment</string>
+    <string name="create_fragment_label">Create Fragment</string>
+    <string name="leaderboard_fragment_label">Leaderboard Fragment</string>
+    <string name="profile_fragment_label">Profile Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 

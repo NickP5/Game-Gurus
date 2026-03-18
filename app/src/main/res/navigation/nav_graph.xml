@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/HomeFragment">
 
     <fragment
         android:id="@+id/FirstFragment"
@@ -15,6 +15,7 @@
             android:id="@+id/action_FirstFragment_to_SecondFragment"
             app:destination="@id/SecondFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/SecondFragment"
         android:name="com.example.theapp.SecondFragment"
@@ -25,4 +26,40 @@
             android:id="@+id/action_SecondFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/HomeFragment"
+        android:name="com.example.theapp.HomeFragment"
+        android:label="@string/home_fragment_label"
+        tools:layout="@layout/fragment_home">
+    </fragment>
+
+    <fragment
+        android:id="@+id/SearchFragment"
+        android:name="com.example.theapp.SearchFragment"
+        android:label="@string/search_fragment_label"
+        tools:layout="@layout/fragment_search">
+    </fragment>
+
+    <fragment
+        android:id="@+id/CreateFragment"
+        android:name="com.example.theapp.CreateFragment"
+        android:label="@string/create_fragment_label"
+        tools:layout="@layout/fragment_create">
+    </fragment>
+
+    <fragment
+        android:id="@+id/LeaderboardFragment"
+        android:name="com.example.theapp.LeaderboardFragment"
+        android:label="@string/leaderboard_fragment_label"
+        tools:layout="@layout/fragment_leaderboard">
+    </fragment>
+
+    <fragment
+        android:id="@+id/ProfileFragment"
+        android:name="com.example.theapp.ProfileFragment"
+        android:label="@string/profile_fragment_label"
+        tools:layout="@layout/fragment_profile">
+    </fragment>
+
 </navigation>
