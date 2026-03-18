@@ -5,7 +5,7 @@
     android:layout_height="100dp">
 
     <TextView
-        android:id="@+id/opClue"
+        android:id="@+id/postClue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20sp"
@@ -16,8 +16,8 @@
         android:maxLines="1"/>
 
     <TextView
-        android:id="@+id/opRating"
-        android:layout_below="@id/opClue"
+        android:id="@+id/postRating"
+        android:layout_below="@id/postClue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="16sp"
@@ -27,8 +27,8 @@
         android:layout_marginTop="5dp"/>
 
     <TextView
-        android:id="@+id/opName"
-        android:layout_below="@id/opRating"
+        android:id="@+id/postOP"
+        android:layout_below="@id/postRating"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="16sp"
