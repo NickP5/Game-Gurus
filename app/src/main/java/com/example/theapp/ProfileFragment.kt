@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import com.example.theapp.databinding.FragmentProfileBinding
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class ProfileFragment : Fragment() {
+class ProfileFragment : BottomSheetDialogFragment() {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
 

@@ -62,6 +62,21 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         binding.bottomNavigationView.setupWithNavController(navController)
 
+        binding.bottomNavigationView.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.ProfileFragment -> {
+                    val sheet = ProfileFragment()
+                    sheet.show(supportFragmentManager, "HalfPageSheet")
+                    false
+                }
+                else -> {
+                    findNavController(R.id.nav_host_fragment_content_main)
+                        .navigate(item.itemId)
+                    true
+                }
+            }
+        }
+
         binding.fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null)

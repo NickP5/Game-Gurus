@@ -5,6 +5,7 @@
     <string name="account">Account</string>
     <string name="account_preferences">Account Preferences</string>
     <string name="dark_mode">Dark Mode</string>
+    <string name="font_size">Font Size</string>
     <!-- Strings used for fragments for navigation -->
     <string name="home_fragment_label">Home</string>
     <string name="search_fragment_label">Search</string>
@@ -50,4 +51,11 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
+
+    <string-array name="font_size_array">
+        <item>Small</item>
+        <item>Medium</item>
+        <item>Large</item>
+    </string-array>
+
 </resources>
