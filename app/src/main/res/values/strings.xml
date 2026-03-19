@@ -4,8 +4,18 @@
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
+    <string name="home_fragment_label">Home Fragment</string>
+    <string name="search_fragment_label">Search Fragment</string>
+    <string name="create_fragment_label">Create Fragment</string>
+    <string name="leaderboard_fragment_label">Leaderboard Fragment</string>
+    <string name="profile_fragment_label">Profile Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+
+    <!-- placeholder strings for post preview-->
+    <string name="default_op_clue">OP clue here</string>
+    <string name="default_op_rating">OP rating here</string>
+    <string name="default_op_name">OP name here</string>
 
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
