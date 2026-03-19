@@ -1,5 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="white">#FFFFFF</color>
+    <color name="profile_border">#FF000000</color>
+    <color name="mint_cream">#F5FFFA</color>
+    <color name="light_salmon">#FFA07A</color>
+    <color name="hot_pink">#FF69B4</color>
+    <color name="fuchsia">#FF00FF</color>
+    <color name="light_goldenrod_yellow">#FAFAD2</color>
+    <color name="salmon">#FA8072</color>
+    <color name="pale_goldenrod">#EEE8AA</color>
+    <color name="violet">#EE82EE</color>
+    <color name="dark_salmon">#E9967A</color>
+    <color name="crimson">#DC143C</color>
+    <color name="goldenrod">#DAA520</color>
+    <color name="light_blue">#ADD8E6</color>
+    <color name="pale_green">#98FB98</color>
+    <color name="light_sky_blue">#87CEFA</color>
+    <color name="sky_blue">#87CEEB</color>
+    <color name="purple">#800080</color>
+    <color name="royal_blue">#4169E1</color>
+    <color name="sea_green">#2E8B57</color>
+    <color name="forest_green">#228B22</color>
+    <color name="light_sea_green">#20B2AA</color>
+    <color name="dodger_blue">#1E90FF</color>
+    <color name="midnight_blue">#191970</color>
+    <color name="aqua">#00FFFF</color>
+    <color name="cyan">#00FFFF</color>
+    <color name="spring_green">#00FF7F</color>
+    <color name="medium_spring_green">#00FA9A</color>>
+    <color name="deep_sky_blue">#00BFFF</color>
+    <color name="black">#000000</color>
 </resources>

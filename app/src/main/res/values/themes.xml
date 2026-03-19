@@ -6,4 +6,16 @@
     </style>
 
     <style name="Theme.TheApp" parent="Base.Theme.TheApp" />
+
+    <style name="TextSmall">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TextMedium">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="TextLarge">
+        <item name="android:textSize">22sp</item>
+    </style>
 </resources>

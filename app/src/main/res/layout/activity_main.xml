@@ -35,7 +35,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/bottomAppBar"
         android:layout_gravity="bottom"
-        android:background="@color/white"
         android:fitsSystemWindows="true"
         app:fabCradleMargin="10dp"
         app:fabCradleRoundedCornerRadius="50dp">
@@ -46,6 +45,9 @@
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             app:labelVisibilityMode="labeled"
+            app:itemTextColor="@color/list_item_selector"
+            app:itemIconTint="@color/list_item_selector"
+            app:itemActiveIndicatorStyle="@animator/nav_default_enter_anim"
             app:menu="@menu/bottom_menu" />
 
     </com.google.android.material.bottomappbar.BottomAppBar>

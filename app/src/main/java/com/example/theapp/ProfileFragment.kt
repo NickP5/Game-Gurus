@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import com.example.theapp.databinding.FragmentProfileBinding
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class ProfileFragment : Fragment() {
+class ProfileFragment : BottomSheetDialogFragment() {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
 
@@ -22,6 +22,16 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Temporary Strings
+        val displayName = "Chip Peterson"
+        val username = "@chippete"
+
+        binding.displayNameText.text = displayName
+        binding.usernameText.text = username
+
+        // Temporary Profile Image
+        binding.profilePic.setImageResource(R.drawable.mountain)
     }
 
     override fun onDestroyView() {
