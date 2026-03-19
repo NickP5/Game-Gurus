@@ -22,6 +22,16 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Temporary Strings
+        val displayName = "Chip Peterson"
+        val username = "@chippete"
+
+        binding.displayNameText.text = displayName
+        binding.usernameText.text = username
+
+        // Temporary Profile Image
+        binding.profilePic.setImageResource(R.drawable.mountain)
     }
 
     override fun onDestroyView() {

@@ -9,7 +9,9 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
-import androidx.fragment.app.Fragment
+import android.view.View
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.navigation.navOptions
 import androidx.navigation.ui.setupWithNavController
 import com.example.theapp.databinding.ActivityMainBinding
 
@@ -19,6 +21,15 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val sharedPref = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
+        val isDarkMode = sharedPref.getBoolean(KEY_DARK_MODE, false)
+
+        if (isDarkMode) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
+
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -27,10 +38,16 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
 
         val navController = findNavController(R.id.nav_host_fragment_content_main)
-        appBarConfiguration = AppBarConfiguration(navController.graph)
-        setupActionBarWithNavController(navController, appBarConfiguration)
 
-        binding.bottomNavigationView.setupWithNavController(navController)
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id == R.id.SettingsFragment) {
+                binding.bottomNavigationView.visibility = View.GONE
+                binding.fab.hide()
+            } else {
+                binding.bottomNavigationView.visibility = View.VISIBLE
+                binding.fab.show()
+            }
+        }
 
         appBarConfiguration = AppBarConfiguration(
             setOf(
@@ -43,6 +60,7 @@ class MainActivity : AppCompatActivity() {
         )
 
         setupActionBarWithNavController(navController, appBarConfiguration)
+        binding.bottomNavigationView.setupWithNavController(navController)
 
         binding.fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
@@ -62,7 +80,14 @@ class MainActivity : AppCompatActivity() {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
-            R.id.action_settings -> true
+            R.id.action_settings -> {
+                val navController = findNavController(R.id.nav_host_fragment_content_main)
+                val navOptions = navOptions {
+                    launchSingleTop = true
+                }
+                navController.navigate(R.id.SettingsFragment, null, navOptions)
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
