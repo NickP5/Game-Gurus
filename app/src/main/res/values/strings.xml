@@ -6,6 +6,10 @@
     <string name="account_preferences">Account Preferences</string>
     <string name="dark_mode">Dark Mode</string>
     <string name="font_size">Font Size</string>
+    <string name="notification_button">Notifications</string>
+    <string name="close_profile">Close Profile</string>
+    <string name="display_name">Display Name</string>
+    <string name="username">username</string>
     <!-- Strings used for fragments for navigation -->
     <string name="home_fragment_label">Home</string>
     <string name="search_fragment_label">Search</string>

@@ -70,8 +70,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:spinnerMode="dropdown"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
+        android:gravity="center"
+        android:padding="13dp"
         app:layout_constraintTop_toTopOf="@id/fontSize"
         app:layout_constraintEnd_toEndOf="parent" />
 

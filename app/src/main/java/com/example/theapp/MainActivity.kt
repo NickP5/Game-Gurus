@@ -11,7 +11,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.navigation.navOptions
 import androidx.navigation.ui.setupWithNavController
 import com.example.theapp.databinding.ActivityMainBinding
 
@@ -19,6 +18,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+    private var hideOptions = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val sharedPref = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
@@ -41,11 +41,13 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.SettingsFragment) {
-                binding.bottomNavigationView.visibility = View.GONE
                 binding.fab.hide()
+                hideOptions = true
+                invalidateOptionsMenu()
             } else {
-                binding.bottomNavigationView.visibility = View.VISIBLE
                 binding.fab.show()
+                hideOptions = false
+                invalidateOptionsMenu()
             }
         }
 
@@ -96,11 +98,8 @@ class MainActivity : AppCompatActivity() {
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
             R.id.action_settings -> {
-                val navController = findNavController(R.id.nav_host_fragment_content_main)
-                val navOptions = navOptions {
-                    launchSingleTop = true
-                }
-                navController.navigate(R.id.SettingsFragment, null, navOptions)
+                findNavController(R.id.nav_host_fragment_content_main)
+                    .navigate(R.id.SettingsFragment)
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -111,5 +110,11 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
+        val menuItem = menu.findItem(R.id.action_settings) // Replace action_settings with your item ID
+        menuItem.isVisible = !hideOptions
+        return super.onPrepareOptionsMenu(menu)
     }
 }

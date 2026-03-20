@@ -32,6 +32,10 @@ class ProfileFragment : BottomSheetDialogFragment() {
 
         // Temporary Profile Image
         binding.profilePic.setImageResource(R.drawable.mountain)
+
+        binding.closeProfileButton.setOnClickListener { view ->
+            dismiss()
+        }
     }
 
     override fun onDestroyView() {
