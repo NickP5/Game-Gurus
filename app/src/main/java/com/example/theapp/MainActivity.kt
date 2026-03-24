@@ -44,6 +44,8 @@ class MainActivity : AppCompatActivity() {
                 binding.fab.hide()
                 hideOptions = true
                 invalidateOptionsMenu()
+            } else if (destination.id == R.id.RecentProgressFragment) {
+                binding.fab.hide()
             } else {
                 binding.fab.show()
                 hideOptions = false

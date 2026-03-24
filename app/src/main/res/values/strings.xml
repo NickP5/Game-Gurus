@@ -9,6 +9,7 @@
     <string name="close_profile">Close Profile</string>
     <string name="display_name">Display Name</string>
     <string name="username">username</string>
+    <string name="recent_progress">Recent Progress</string>
     <!-- Strings used for fragments for navigation -->
     <string name="home_fragment_label">Home</string>
     <string name="search_fragment_label">Search</string>

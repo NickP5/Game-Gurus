@@ -38,6 +38,10 @@
         android:name="com.example.theapp.ProfileFragment"
         android:label="@string/profile_fragment_label"
         tools:layout="@layout/fragment_profile">
+
+        <action
+            android:id="@+id/profile_to_recent_progress"
+            app:destination="@+id/RecentProgressFragment" />
     </fragment>
 
     <fragment
@@ -45,6 +49,13 @@
         android:name="com.example.theapp.SettingsFragment"
         android:label="@string/action_settings"
         tools:layout="@layout/fragment_settings">
+    </fragment>
+
+    <fragment
+        android:id="@+id/RecentProgressFragment"
+        android:name="com.example.theapp.RecentProgressFragment"
+        android:label="@string/recent_progress"
+        tools:layout="@layout/fragment_recent_progress">
     </fragment>
 
     <action
