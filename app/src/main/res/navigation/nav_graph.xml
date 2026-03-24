@@ -40,8 +40,8 @@
         tools:layout="@layout/fragment_profile">
 
         <action
-            android:id="@+id/profile_to_recent_progress"
-            app:destination="@+id/RecentProgressFragment" />
+            android:id="@+id/profile_to_statistics"
+            app:destination="@+id/StatisticsFragment" />
     </fragment>
 
     <fragment
@@ -52,10 +52,10 @@
     </fragment>
 
     <fragment
-        android:id="@+id/RecentProgressFragment"
-        android:name="com.example.theapp.RecentProgressFragment"
+        android:id="@+id/StatisticsFragment"
+        android:name="com.example.theapp.StatisticsFragment"
         android:label="@string/recent_progress"
-        tools:layout="@layout/fragment_recent_progress">
+        tools:layout="@layout/fragment_statistics">
     </fragment>
 
     <action

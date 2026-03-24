@@ -29,6 +29,10 @@ class ProfileFragment : BottomSheetDialogFragment() {
         val displayName = "Chip Peterson"
         val username = "@chippete"
 
+        // Requirement for switching outside of profile fragment
+        val navController = requireActivity()
+            .findNavController(R.id.nav_host_fragment_content_main)
+
         binding.displayNameText.text = displayName
         binding.usernameText.text = username
 
@@ -39,11 +43,8 @@ class ProfileFragment : BottomSheetDialogFragment() {
             dismiss()
         }
 
-        binding.recentProgress.setOnClickListener { view ->
-            val navController = requireActivity()
-                .findNavController(R.id.nav_host_fragment_content_main)
-
-            navController.navigate(R.id.RecentProgressFragment)
+        binding.statistics.setOnClickListener { view ->
+            navController.navigate(R.id.StatisticsFragment)
             dismiss()
         }
 
