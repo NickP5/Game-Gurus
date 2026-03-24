@@ -3,8 +3,11 @@ package com.example.theapp
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import android.util.Log
+import com.google.firebase.firestore.AggregateSource
+import com.google.firebase.firestore.SetOptions
 
 private const val TAG = "Post"
+public var pID = 0
 
 
 
@@ -29,17 +32,29 @@ class Post {
         val user = hashMapOf(
             "name" to postOP,
             "rating" to postRating,
-            "clue" to postClue
+            "clue" to postClue,
+            "pID" to pID
+
         )
+        val postsRef = db.collection("posts")
+        val query = postsRef.whereEqualTo("clue", postClue)
+        //Log.d(TAG, "Documents count: $count")
 
         db.collection("posts")
-            .add(user)
-            .addOnSuccessListener { documentReference ->
-                Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
-            }
+            .orderBy("pID").limit(1).get()
+            .addOnSuccessListener { document ->
+                Log.d(TAG, "pID is: $document.data")}
+
+
+        db.collection("posts")
+            .document().set(user, SetOptions.merge())
+                .addOnSuccessListener { documentReference ->
+                    Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference}")
+                }
             .addOnFailureListener { e ->
-                Log.w(TAG, "Error adding document", e)
-            }
+                    Log.w(TAG, "Error adding document", e)
+                }
+        }
+
     }
-}
 
