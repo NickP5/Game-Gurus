@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.theapp.databinding.FragmentStatisticsBinding
-import java.lang.Character.toString
 
 class StatisticsFragment : Fragment() {
     private var _binding: FragmentStatisticsBinding? = null
@@ -24,6 +23,7 @@ class StatisticsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Temporary values for the statistics page
         val displayName = "Jonathan"
         val recentPoints = 9
         val recentAttempts = 90
