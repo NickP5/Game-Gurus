@@ -28,6 +28,7 @@ class Post {
 
     fun saveUserToFirestore() {
         val db = Firebase.firestore
+        val documentID = pID
 
         val user = hashMapOf(
             "name" to postOP,
@@ -38,22 +39,24 @@ class Post {
         )
         val postsRef = db.collection("posts")
         val query = postsRef.whereEqualTo("clue", postClue)
-        //Log.d(TAG, "Documents count: $count")
+        //Log.d(TAG, "Documents count: $count"
+        //if this v is document exists, fuck off and tell them no
+        //else add document to post collection
+        db.collection("posts")
+            .whereEqualTo("pID", pID).whereEqualTo("name", postOP).get()
+            .addOnSuccessListener { documentSnapshot->
+                if (!documentSnapshot.exists()) {}
+
 
         db.collection("posts")
-            .orderBy("pID").limit(1).get()
-            .addOnSuccessListener { document ->
-                Log.d(TAG, "pID is: $document.data")}
-
-
-        db.collection("posts")
-            .document().set(user, SetOptions.merge())
+            .document("$documentID").set(user)
                 .addOnSuccessListener { documentReference ->
-                    Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference}")
+                    Log.d(TAG, "DocumentSnapshot added with ID: $documentReference")
                 }
             .addOnFailureListener { e ->
                     Log.w(TAG, "Error adding document", e)
                 }
+        pID += 1
         }
 
     }
