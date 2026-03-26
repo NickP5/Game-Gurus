@@ -30,6 +30,10 @@
     <color name="medium_spring_green">#00FA9A</color>>
     <color name="deep_sky_blue">#00BFFF</color>
     <color name="black">#000000</color>
+    <color name="gold">#FFD700</color>
+    <color name="silver">#C0C0C0</color>
+    <color name="bronze">#CD7F32</color>
+    <color name="highlight">#FF9A00</color>
 
     <color name="primary">#FFFFFF</color>
     <color name="on_primary">#000000</color>
