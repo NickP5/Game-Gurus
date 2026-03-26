@@ -7,12 +7,12 @@
     tools:context=".CreateFragment">
 
     <EditText
-        android:id="@+id/titleField"
+        android:id="@+id/clueField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="20dp"
-        android:text="@string/edit_clue" />
+        android:hint="@string/edit_clue" />
     
     <EditText
         android:id="@+id/ratingField"
@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="20dp"
-        android:text="@string/edit_rating" />
+        android:hint="@string/edit_rating" />
     
     <Button
         android:id="@+id/postButton"
