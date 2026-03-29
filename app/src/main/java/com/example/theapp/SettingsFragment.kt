@@ -5,11 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatDelegate
+
 import androidx.fragment.app.Fragment
 import com.example.theapp.databinding.FragmentSettingsBinding
 import com.google.android.material.snackbar.Snackbar
+import androidx.core.content.edit
 
 const val PREFS_NAME = "settings"
 const val KEY_DARK_MODE = "DARK_MODE"
@@ -33,16 +36,27 @@ class SettingsFragment : Fragment() {
         val sharedPref = requireActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         val isDarkMode = sharedPref.getBoolean(KEY_DARK_MODE, false)
 
+        val savedScale = sharedPref.getFloat("font_scale", 1.0f)
+
+        val spinnerPosition = when (savedScale) {
+            0.85f -> 0
+            1.0f -> 1
+            1.3f -> 2
+            else -> 1
+        }
+
         binding.switchDarkMode.isChecked = isDarkMode
         setDarkMode(isDarkMode)
+
         ArrayAdapter.createFromResource(
             requireContext(),
             R.array.font_size_array,
             android.R.layout.simple_spinner_item
         ).also { adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_item)
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             binding.fontSpinner.adapter = adapter
         }
+        binding.fontSpinner.setSelection(spinnerPosition)
 
         binding.accountPreferences.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
@@ -51,12 +65,43 @@ class SettingsFragment : Fragment() {
         }
 
         binding.switchDarkMode.setOnCheckedChangeListener { _, isChecked ->
-            setDarkMode(isChecked)
-            with(sharedPref.edit()) {
+            sharedPref.edit {
                 putBoolean(KEY_DARK_MODE, isChecked)
-                apply()
             }
             setDarkMode(isChecked)
+        }
+
+        var isUserInteraction = false
+
+        binding.fontSpinner.setOnTouchListener { _, _ ->
+            isUserInteraction = true
+            false
+        }
+
+        binding.fontSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                if (!isUserInteraction) return
+
+                val newScale = when(position) {
+                    0 -> 0.85f
+                    1 -> 1.0f
+                    2 -> 1.3f
+                    else -> 1.0f
+                }
+
+                val currentScale = sharedPref.getFloat("font_scale", 1.0f)
+                if (newScale != currentScale) {
+                    sharedPref.edit { putFloat("font_scale", newScale) }
+                    requireActivity().recreate()
+                }
+                isUserInteraction = false
+            }
+            override fun onNothingSelected(parent: AdapterView<*>) {}
         }
     }
 

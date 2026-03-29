@@ -1,5 +1,6 @@
 package com.example.theapp
 
+import android.content.Context
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
@@ -116,5 +117,19 @@ class MainActivity : AppCompatActivity() {
         val menuItem = menu.findItem(R.id.action_settings) // Replace action_settings with your item ID
         menuItem.isVisible = !hideOptions
         return super.onPrepareOptionsMenu(menu)
+    }
+
+    override fun attachBaseContext(newBase: Context) {
+        val sharedPref = newBase.getSharedPreferences("settings", Context.MODE_PRIVATE)
+        val scale = sharedPref.getFloat("font_scale", 1.0f)
+
+        val context = setFontScale(newBase, scale)
+        super.attachBaseContext(context)
+    }
+
+    fun setFontScale(context: Context, scale: Float): Context {
+        val configuration = context.resources.configuration
+        configuration.fontScale = scale
+        return context.createConfigurationContext(configuration)
     }
 }

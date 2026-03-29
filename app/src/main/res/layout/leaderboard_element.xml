@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:text="@string/rank"
         android:textStyle="bold"
-        android:textSize="18sp"
+        android:textSize="@dimen/font_element"
         android:textColor="@color/primary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -28,12 +28,12 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="@string/display_name"
-        android:textSize="18sp"
+        android:textSize="@dimen/font_element"
         app:layout_constraintStart_toEndOf="@id/rank_text"
         app:layout_constraintEnd_toStartOf="@id/points_text"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="20dp"
         android:layout_marginEnd="12dp" />
 
     <TextView
@@ -42,7 +42,7 @@
         android:layout_height="wrap_content"
         android:text="@string/points"
         android:textStyle="bold"
-        android:textSize="18sp"
+        android:textSize="@dimen/font_element"
         android:textColor="@color/primary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"

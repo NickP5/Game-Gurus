@@ -12,23 +12,22 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/rank"
-        android:textSize="20sp"
+        android:textSize="@dimen/font_very_small"
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/leaderboard_name_text"
         app:layout_constraintHorizontal_weight="1"/>
 
     <TextView
         android:id="@+id/leaderboard_name_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
         android:text="@string/name"
-        android:textSize="20sp"
+        android:textSize="@dimen/font_very_small"
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@id/leaderboard_rank_text"
-        app:layout_constraintEnd_toStartOf="@id/leaderboard_points_text"
         app:layout_constraintHorizontal_weight="2"/>
 
     <TextView
@@ -36,10 +35,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/points"
-        android:textSize="20sp"
+        android:textSize="@dimen/font_very_small"
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@id/leaderboard_name_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_weight="1"/>
 
