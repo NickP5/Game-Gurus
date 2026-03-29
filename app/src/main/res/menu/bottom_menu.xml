@@ -3,27 +3,27 @@
 
     <item
         android:id="@+id/HomeFragment"
-        android:title="Home"
+        android:title="@string/home_fragment_label"
         android:icon="@drawable/ic_home"/>
 
     <item
         android:id="@+id/SearchFragment"
-        android:title="Search"
+        android:title="@string/search_fragment_label"
         android:icon="@drawable/ic_search"/>
 
     <item
         android:id="@+id/CreateFragment"
-        android:title="Create"
+        android:title="@string/create_fragment_label"
         android:icon="@drawable/ic_create"/>
 
     <item
         android:id="@+id/LeaderboardFragment"
-        android:title="Leaderboard"
+        android:title="@string/leaderboard_fragment_label"
         android:icon="@drawable/ic_leaderboard"/>
 
     <item
         android:id="@+id/ProfileFragment"
-        android:title="Profile"
+        android:title="@string/profile_fragment_label"
         android:icon="@drawable/ic_profile"/>
 
 </menu>
