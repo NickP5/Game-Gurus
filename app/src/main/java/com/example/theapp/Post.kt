@@ -5,6 +5,7 @@ import com.google.firebase.firestore.firestore
 import android.util.Log
 import com.google.firebase.firestore.AggregateSource
 import com.google.firebase.firestore.SetOptions
+import com.google.firebase.firestore.Filter
 
 private const val TAG = "Post"
 public var pID = 0
@@ -38,21 +39,29 @@ class Post {
 
         )
         val postsRef = db.collection("posts")
-        val query = postsRef.whereEqualTo("clue", postClue)
-        //Log.d(TAG, "Documents count: $count"
+
         //if this v is document exists, fuck off and tell them no
         //else add document to post collection
-        db.collection("posts")
-            .whereEqualTo("pID", pID).whereEqualTo("name", postOP).get()
-            .addOnSuccessListener { documentSnapshot->
-                if (!documentSnapshot.exists()) {}
-
-
-        db.collection("posts")
-            .document("$documentID").set(user)
-                .addOnSuccessListener { documentReference ->
-                    Log.d(TAG, "DocumentSnapshot added with ID: $documentReference")
+        postsRef
+            //.whereEqualTo("pID", pID).whereEqualTo("name", postOP).get()
+            .where(
+                Filter.or(
+                Filter.equalTo("pID", pID),
+                Filter.equalTo("name", postOP)
+                )
+            ).get()
+            .addOnSuccessListener { querySnapshot->
+                if (querySnapshot.isEmpty()) {
+                    db.collection("posts")
+                        .document("$documentID")
+                        .set(user)
+                        .addOnSuccessListener { documentReference ->
+                            Log.d(TAG, "DocumentSnapshot added with ID: $documentReference")
+                        }
+                } else {
+                    Log.d(TAG, "Document already exists")
                 }
+            }
             .addOnFailureListener { e ->
                     Log.w(TAG, "Error adding document", e)
                 }
