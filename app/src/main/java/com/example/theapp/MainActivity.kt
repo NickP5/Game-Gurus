@@ -120,7 +120,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun attachBaseContext(newBase: Context) {
-        val sharedPref = newBase.getSharedPreferences("settings", Context.MODE_PRIVATE)
+        val sharedPref = newBase.getSharedPreferences("settings", MODE_PRIVATE)
         val scale = sharedPref.getFloat("font_scale", 1.0f)
 
         val context = setFontScale(newBase, scale)
