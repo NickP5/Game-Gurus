@@ -31,7 +31,6 @@ class HomeFragment : Fragment() {
         // get temporary post list, will change to pull from database later
         val postList = TestPostList.getPostData()
 
-        //
         val postAdapter = HomeAdapter(postList)
 
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)

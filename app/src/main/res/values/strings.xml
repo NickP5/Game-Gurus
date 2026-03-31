@@ -28,6 +28,12 @@
     <string name="default_op_rating">OP rating here</string>
     <string name="default_op_name">OP name here</string>
 
+    <!-- strings for edittext fields -->
+    <string name="edit_game">Write your game here</string>
+    <string name="edit_clue">Write your clue here</string>
+    <string name="edit_rating">Write your rating here</string>
+    <string name="post_button">Post</string>
+
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
         volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus
