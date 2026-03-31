@@ -24,6 +24,17 @@ class FriendsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val data = listOf(
+            "Jack",
+            "Jones",
+            "Junior",
+            "Joaps"
+        )
+
+        val adapter = FriendsAdapter(data, requireContext())
+
+        binding.friendsList.adapter = adapter
+
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             requireActivity().finish()
         }
