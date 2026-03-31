@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     tools:context=".MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -30,26 +29,14 @@
         android:layout_marginBottom="120dp"
         app:srcCompat="@android:drawable/ic_dialog_email" />
 
-    <com.google.android.material.bottomappbar.BottomAppBar
-        android:layout_width="match_parent"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/bottomAppBar"
         android:layout_gravity="bottom"
-        android:fitsSystemWindows="true"
-        app:fabCradleMargin="10dp"
-        app:fabCradleRoundedCornerRadius="50dp">
-
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottomNavigationView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            app:labelVisibilityMode="labeled"
-            app:itemTextColor="@color/list_item_selector"
-            app:itemIconTint="@color/list_item_selector"
-            app:itemActiveIndicatorStyle="@animator/nav_default_enter_anim"
-            app:menu="@menu/bottom_menu" />
-
-    </com.google.android.material.bottomappbar.BottomAppBar>
+        app:labelVisibilityMode="labeled"
+        app:itemTextColor="@color/list_item_selector"
+        app:itemIconTint="@color/list_item_selector"
+        app:menu="@menu/bottom_menu" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
