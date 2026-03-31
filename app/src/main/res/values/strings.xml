@@ -18,6 +18,13 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
+    <!-- strings for statistics -->
+    <string name="statistics">Statistics</string>
+    <string name="recent_progress">Recent Progress</string>
+    <string name="attempts">Attempts</string>
+    <string name="percentage">Percentage</string>
+    <string name="total_progress">Total Progress</string>
+
     <!-- strings for leaderboard -->
     <string name="rank">Rank</string>
     <string name="name">Name</string>
