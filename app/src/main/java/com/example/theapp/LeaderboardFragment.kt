@@ -1,11 +1,14 @@
 package com.example.theapp
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.theapp.databinding.FragmentLeaderboardBinding
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.firestore
 
 class LeaderboardFragment : Fragment() {
     private var _binding: FragmentLeaderboardBinding? = null
@@ -24,6 +27,17 @@ class LeaderboardFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val userName = "Jon"
+
+        val db = Firebase.firestore
+        val docRef = db.collection("users")
+        docRef.document().get()
+            .addOnSuccessListener { document ->
+                if (document != null) {
+                    Log.d(TAG, "DocumentSnapshot data: ${document.getString("points")}")
+                } else {
+                    Log.d(TAG, "No such document")
+                }
+            }
 
         val data = listOf(
             listOf("J", 1, "Jonathan", 20),
