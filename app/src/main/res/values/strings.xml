@@ -24,8 +24,9 @@
     <string name="default_op_name">OP name here</string>
 
     <!-- strings for edittext fields -->
-    <string name="edit_clue">Type your clue here</string>
-    <string name="edit_rating">Type your rating here</string>
+    <string name="edit_game">Write your game here</string>
+    <string name="edit_clue">Write your clue here</string>
+    <string name="edit_rating">Write your rating here</string>
     <string name="post_button">Post</string>
 
     <string name="lorem_ipsum">

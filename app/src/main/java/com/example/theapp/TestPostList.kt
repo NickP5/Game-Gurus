@@ -5,6 +5,10 @@ object TestPostList {
         val postList = ArrayList<Post>()
         val post1 = Post("I Am Placing Blocks And Shit", "5/5", "Notch")
         postList.add(post1)
+        postList.add(post1)
+        postList.add(post1)
+        postList.add(post1)
+        postList.add(post1)
         //post1.saveUserToFirestore()
         val post2 = Post("I Am Stacking Blocks And Shit", "5/5", "AlexeyPajitnov")
         postList.add(post2)
@@ -15,6 +19,7 @@ object TestPostList {
         val post4 = Post("jump over spike", "3/5", "blingus")
         postList.add(post4)
         //post4.saveUserToFirestore()
+
 
         return postList
     }

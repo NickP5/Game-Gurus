@@ -13,6 +13,7 @@ class CreateFragment : Fragment() {
     private var _binding: FragmentCreateBinding? = null
     private val binding get() = _binding!!
 
+    lateinit var gameInput: EditText
     lateinit var clueInput: EditText
     lateinit var ratingInput: EditText
 
@@ -28,10 +29,12 @@ class CreateFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        gameInput = view.findViewById(R.id.gameField)
         clueInput = view.findViewById(R.id.clueField)
         ratingInput = view.findViewById(R.id.ratingField)
 
         binding.postButton.setOnClickListener {
+            val game = gameInput.text.toString() // will discuss use case in class
             val clue = clueInput.text.toString()
             val rating = ratingInput.text.toString()
             val name = "hi nick hnzi" // replace with the user's name
