@@ -6,10 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
-import com.example.theapp.databinding.FragmentSearchBinding
+import com.example.theapp.databinding.FragmentFriendsBinding
 
-class SearchFragment : Fragment() {
-    private var _binding: FragmentSearchBinding? = null
+class FriendsFragment : Fragment() {
+    private var _binding: FragmentFriendsBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -17,7 +17,7 @@ class SearchFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentSearchBinding.inflate(inflater, container, false)
+        _binding = FragmentFriendsBinding.inflate(inflater, container, false)
         return binding.root
     }
 

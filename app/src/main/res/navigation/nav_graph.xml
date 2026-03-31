@@ -13,10 +13,10 @@
     </fragment>
 
     <fragment
-        android:id="@+id/SearchFragment"
-        android:name="com.example.theapp.SearchFragment"
-        android:label="@string/search_fragment_label"
-        tools:layout="@layout/fragment_search">
+        android:id="@+id/FriendsFragment"
+        android:name="com.example.theapp.FriendsFragment"
+        android:label="@string/friends_fragment_label"
+        tools:layout="@layout/fragment_friends">
     </fragment>
 
     <fragment

@@ -42,11 +42,9 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.SettingsFragment) {
-                binding.fab.hide()
                 hideOptions = true
                 invalidateOptionsMenu()
             } else {
-                binding.fab.show()
                 hideOptions = false
                 invalidateOptionsMenu()
             }
@@ -55,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.HomeFragment,
-                R.id.SearchFragment,
+                R.id.FriendsFragment,
                 R.id.CreateFragment,
                 R.id.LeaderboardFragment,
                 R.id.ProfileFragment
@@ -78,12 +76,6 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
             }
-        }
-
-        binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null)
-                .setAnchorView(R.id.fab).show()
         }
     }
 
