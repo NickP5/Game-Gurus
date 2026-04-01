@@ -12,6 +12,9 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
+import androidx.core.graphics.drawable.toBitmap
 import androidx.navigation.ui.setupWithNavController
 import com.example.theapp.databinding.ActivityMainBinding
 
@@ -77,6 +80,15 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
+        val drawable = ContextCompat.getDrawable(this, R.drawable.ic_profile)
+        val circular = RoundedBitmapDrawableFactory.create(resources, drawable!!.toBitmap())
+
+        circular.isCircular = true
+
+        val item = binding.bottomNavigationView.menu.findItem(R.id.ProfileFragment)
+        item.icon = circular
+        item.icon?.setTintList(null)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
