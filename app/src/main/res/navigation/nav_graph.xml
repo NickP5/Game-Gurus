@@ -10,6 +10,10 @@
         android:name="com.example.theapp.HomeFragment"
         android:label="@string/home_fragment_label"
         tools:layout="@layout/fragment_home">
+
+        <action
+            android:id="@+id/home_to_post"
+            app:destination="@id/PostFragment" />
     </fragment>
 
     <fragment
@@ -56,6 +60,13 @@
         android:name="com.example.theapp.StatisticsFragment"
         android:label="@string/recent_progress"
         tools:layout="@layout/fragment_statistics">
+    </fragment>
+
+    <fragment
+        android:id="@+id/PostFragment"
+        android:name="com.example.theapp.PostFragment"
+        android:label="Post"
+        tools:layout="@layout/fragment_post">
     </fragment>
 
     <action

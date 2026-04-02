@@ -8,6 +8,7 @@ import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.theapp.HomeAdapter
 import com.example.theapp.databinding.FragmentHomeBinding
@@ -32,16 +33,20 @@ class HomeFragment : Fragment() {
         // get temporary post list, will change to pull from database later
         val postList = TestPostList.getPostData()
 
-        val postAdapter = HomeAdapter(postList)
+        val postAdapter = HomeAdapter(postList) { post ->
+            val bundle = Bundle().apply {
+                putString("postClue", post.postClue)
+                putString("postRating", post.postRating)
+                putString("postOP", post.postOP)
+            }
+
+            findNavController().navigate(R.id.home_to_post, bundle)
+        }
 
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
 
         recyclerView.adapter = postAdapter
-
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            requireActivity().finish()
-        }
 
     }
 
