@@ -35,11 +35,20 @@
     <string name="default_op_rating">OP rating here</string>
     <string name="default_op_name">OP name here</string>
 
-    <!-- strings for edittext fields -->
+    <!-- strings for create tab -->
     <string name="edit_game">Write your game here</string>
     <string name="edit_clue">Write your clue here</string>
     <string name="edit_rating">Write your rating here</string>
     <string name="post_button">Post</string>
+
+    <!-- strings for login and account creation tabs -->
+    <string name="login_ue">Username or Email</string>
+    <string name="login_password">Password</string>
+    <string name="log_in">LOG IN</string>
+    <string name="create_username">Username</string>
+    <string name="create_email">Email</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="sign_up">SIGN UP</string>
 
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
@@ -83,5 +92,7 @@
         <item>Medium</item>
         <item>Large</item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
