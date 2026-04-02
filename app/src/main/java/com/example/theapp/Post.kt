@@ -4,6 +4,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import android.util.Log
 import com.google.firebase.firestore.AggregateSource
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.Filter
 
@@ -43,18 +44,19 @@ class Post {
             "name" to postOP,
             "rating" to postRating,
             "clue" to postClue,
-            "pID" to pID
+            "pID" to documentID
 
         )
 
         val user = hashMapOf(
             "username" to postOP,
             "pfp" to 0,
-            "email" to emails[uID],
-            "password" to passwords[uID],
-            "userID" to uID,
+            "email" to emails[uID % emails.size],
+            "password" to passwords[uID % passwords.size],
+            "userID" to documentID2,
             "points" to randomNumber,
-            "posts" to listOf<Any>(pID)
+            "posts" to listOf<Int>(),
+            "friends" to listOf<Int>()
             //next step will be posts (list of pID's), friends, recent history / stats
         )
 
@@ -80,7 +82,7 @@ class Post {
             //.whereEqualTo("pID", pID).whereEqualTo("name", postOP).get()
             .where(
                 Filter.or(
-                Filter.equalTo("pID", pID),
+                Filter.equalTo("pID", documentID),
                 Filter.equalTo("name", postOP)
                 )
             ).get()
@@ -90,7 +92,13 @@ class Post {
                         .document("$documentID")
                         .set(post)
                         .addOnSuccessListener { documentReference ->
-                            Log.d(TAG, "DocumentSnapshot added with ID: $documentReference")
+                            Log.d(TAG, "Post added to Database")
+
+                            usersRef.document("$documentID2")
+                                .update("posts", FieldValue.arrayUnion(documentID))
+                                .addOnSuccessListener {
+                                    Log.d(TAG, "Post $documentID added to user $documentID2 list")
+                                }
                         }
                 } else {
                     Log.d(TAG, "Document already exists")
@@ -104,4 +112,3 @@ class Post {
         }
 
     }
-
