@@ -33,11 +33,13 @@ class Post {
         val documentID = pID
         val documentID2 = uID
         val randomNumber = (1..100).random()
+        val postsRef = db.collection("posts")
+        val usersRef = db.collection("users")
 
         val emails = listOf("notch@minecraft.net", "ap@mail.com", "nick@mail.com", "blingus@mail.com")
         val passwords = listOf("1234", "4321", "nickHnzi", "abcd")
 
-        val userpost = hashMapOf(
+        val post = hashMapOf(
             "name" to postOP,
             "rating" to postRating,
             "clue" to postClue,
@@ -51,11 +53,11 @@ class Post {
             "email" to emails[uID],
             "password" to passwords[uID],
             "userID" to uID,
-            "points" to randomNumber
+            "points" to randomNumber,
+            "posts" to listOf<Any>(pID)
             //next step will be posts (list of pID's), friends, recent history / stats
         )
-        val postsRef = db.collection("posts")
-        val usersRef = db.collection("users")
+
         //initializing users database using four users
         usersRef
             .get()
@@ -86,7 +88,7 @@ class Post {
                 if (querySnapshot.isEmpty()) {
                     db.collection("posts")
                         .document("$documentID")
-                        .set(userpost)
+                        .set(post)
                         .addOnSuccessListener { documentReference ->
                             Log.d(TAG, "DocumentSnapshot added with ID: $documentReference")
                         }
