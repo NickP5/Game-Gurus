@@ -91,6 +91,15 @@
             android:hint="@string/write_a_reply" />
 
     </androidx.cardview.widget.CardView>
+
+    <Button
+        android:id="@+id/addFriend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:text="@string/add_friend"
+        android:textSize="16sp"/>
+
     
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/replyRecyclerView"

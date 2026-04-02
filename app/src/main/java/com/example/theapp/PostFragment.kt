@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -60,6 +61,15 @@ class PostFragment : Fragment() {
             setOnClickListener {
                 navController.navigate(R.id.post_to_addReply)
             }
+        }
+
+        // quick dumb implementation of a friend button because that's a task i still need to do,
+        // but since we haven't merged everything yet adding functionality is not possible. -Hayden
+        val friendButton = view.findViewById<Button>(R.id.addFriend)
+        val requestSent = getString(R.string.request_sent)
+        binding.addFriend.setOnClickListener {
+            // TODO: add functionality :)
+            friendButton.setText(requestSent)
         }
     }
 

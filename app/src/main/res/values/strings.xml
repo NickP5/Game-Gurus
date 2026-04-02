@@ -49,6 +49,9 @@
     <string name="write_a_reply">Write a reply…</string>
     <string name="write_answer">Write an Answer…</string>
     <string name="write_comment">Write a Comment…</string>
+    <string name="add_friend">Add friend</string>
+    <string name="request_sent">Friend request sent!</string>
+
 
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
