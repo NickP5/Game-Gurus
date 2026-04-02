@@ -9,13 +9,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.theapp.Post
 import com.example.theapp.R
 
-class HomeAdapter(private val postList: List<Post>) :
+class HomeAdapter(private val postList: List<Post>, private val onItemClick: (Post) -> Unit) :
     RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.post_preview,
             parent, false)
-        return HomeViewHolder(view)
+        return HomeViewHolder(view) {
+            onItemClick(postList[it])
+        }
     }
 
     override fun onBindViewHolder(holder: HomeViewHolder, position: Int) {
@@ -30,7 +32,15 @@ class HomeAdapter(private val postList: List<Post>) :
         return postList.size
     }
 
-    class HomeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class HomeViewHolder(itemView: View, onItemClicked: (Int) -> Unit) : RecyclerView.ViewHolder(itemView) {
+        init {
+            itemView.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    onItemClicked(position)
+                }
+            }
+        }
         val postClue: TextView = itemView.findViewById(R.id.postClue)
         val postRating: TextView = itemView.findViewById(R.id.postRating)
         val postOP: TextView = itemView.findViewById(R.id.postOP)

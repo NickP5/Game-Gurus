@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="118dp"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:cardCornerRadius="15dp"
         android:layout_margin="10dp"
         app:cardElevation="7dp"
@@ -20,62 +20,51 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/postClue"
+                android:id="@+id/replyAnswer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:text="@string/default_op_clue"
+                android:textStyle="bold"
+                android:text="@string/reply_answer"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginTop="10dp"
                 android:maxLines="1"/>
 
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/postClue"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="5dp"
-                android:src="@drawable/baseline_star_24"/>
-
             <TextView
-                android:id="@+id/postRating"
-                android:layout_below="@id/postClue"
+                android:id="@+id/replyComment"
+                android:layout_below="@id/replyAnswer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:text="@string/default_op_rating"
-                android:layout_marginStart="50dp"
-                android:layout_marginEnd="50dp"
-                android:layout_marginTop="5dp"/>
+                android:textSize="18sp"
+                android:text="@string/reply_comment"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="10dp" />
 
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/postRating"
+                android:layout_below="@id/replyComment"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:layout_marginStart="20dp"
                 android:src="@drawable/ic_profile"/>
 
             <TextView
-                android:id="@+id/postOP"
-                android:layout_below="@id/postRating"
+                android:id="@+id/replyPoster"
+                android:layout_below="@id/replyComment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
-                android:text="@string/default_op_name"
+                android:text="@string/reply_username"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:layout_marginStart="50dp"
                 android:layout_marginEnd="50dp"/>
 
         </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
-
-
-
-
-
-
-
-
 
 </LinearLayout>
