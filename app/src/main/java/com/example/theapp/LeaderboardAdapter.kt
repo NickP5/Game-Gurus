@@ -28,12 +28,12 @@ class LeaderboardAdapter(
             binding = convertView.tag as LeaderboardElementBinding
         }
 
-        val (username, rank, name, score) = getItem(position)!!
+        val (firstLetter, rank, name, score) = getItem(position)!!
         val highlightBackgroundColor = ContextCompat.getDrawable(context, R.drawable.selected_roundedcorners)
         val backgroundColor = ContextCompat.getDrawable(context, R.drawable.roundedcorners)
         val textColor = ContextCompat.getColor(context, R.color.primary)
 
-        if (username == userName) {
+        if (name.toString() == userName) {
             binding.leaderboardListItem.background = highlightBackgroundColor
             binding.rankText.setTextColor(Color.BLACK)
             binding.nameText.setTextColor(Color.BLACK)
