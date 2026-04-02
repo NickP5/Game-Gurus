@@ -35,6 +35,7 @@ class HomeFragment : Fragment() {
 
         val postAdapter = HomeAdapter(postList) { post ->
             val bundle = Bundle().apply {
+                putString("destination", post.postClue)
                 putString("postClue", post.postClue)
                 putString("postRating", post.postRating)
                 putString("postOP", post.postOP)

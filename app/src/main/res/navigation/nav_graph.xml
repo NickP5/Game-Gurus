@@ -65,8 +65,12 @@
     <fragment
         android:id="@+id/PostFragment"
         android:name="com.example.theapp.PostFragment"
-        android:label="Post"
+        android:label="@string/destination_label"
         tools:layout="@layout/fragment_post">
+
+        <argument
+            android:name="destination"
+            app:argType="string" />
     </fragment>
 
     <action

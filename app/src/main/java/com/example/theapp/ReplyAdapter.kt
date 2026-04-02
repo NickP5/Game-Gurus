@@ -27,4 +27,9 @@ class ReplyAdapter(private val replies: MutableList<Reply>) :
     }
 
     override fun getItemCount(): Int = replies.size
+
+    fun addReply(reply: Reply) {
+        replies.add(reply)
+        notifyItemInserted(replies.size - 1)
+    }
 }

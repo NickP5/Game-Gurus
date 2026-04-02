@@ -41,6 +41,12 @@
     <string name="edit_rating">Write your rating here</string>
     <string name="post_button">Post</string>
 
+    <!-- strings for post interaction -->
+    <string name="destination_label">{destination}</string>
+    <string name="reply_answer">Reply Answer</string>
+    <string name="reply_username">Reply User</string>
+    <string name="write_a_reply">Write a reply…</string>
+
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
         volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus

@@ -37,10 +37,22 @@ class PostFragment : Fragment() {
         // Give the adapter the reply list
 //        val replyAdapter = ReplyAdapter(Post.replies)
 
-//        val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
+//        val recyclerView: RecyclerView = view.findViewById(R.id.replyRecyclerView)
 //        recyclerView.layoutManager = LinearLayoutManager(context)
 //
 //        recyclerView.adapter = replyAdapter
+
+//        binding.addReply.setOnEditorActionListener { _, _, _ ->
+//            val text = binding.addReply.text.toString()
+//
+//            if (text.isNotBlank()) {
+//                val reply = Reply(text, "Temp User")
+//                replyAdapter.addReply(reply)
+//                binding.addReply.text.clear()
+//                recyclerView.scrollToPosition(replyAdapter.itemCount - 1)
+//            }
+//            true
+//        }
     }
 
     override fun onDestroyView() {
