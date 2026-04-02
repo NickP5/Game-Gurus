@@ -7,9 +7,9 @@
         android:icon="@drawable/ic_home"/>
 
     <item
-        android:id="@+id/SearchFragment"
-        android:title="@string/search_fragment_label"
-        android:icon="@drawable/ic_search"/>
+        android:id="@+id/FriendsFragment"
+        android:title="@string/friends_fragment_label"
+        android:icon="@drawable/ic_friends"/>
 
     <item
         android:id="@+id/CreateFragment"

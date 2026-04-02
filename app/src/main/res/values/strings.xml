@@ -11,7 +11,7 @@
     <string name="username">username</string>
     <!-- Strings used for fragments for navigation -->
     <string name="home_fragment_label">Home</string>
-    <string name="search_fragment_label">Search</string>
+    <string name="friends_fragment_label">Friends</string>
     <string name="create_fragment_label">Create</string>
     <string name="leaderboard_fragment_label">Leaderboard</string>
     <string name="profile_fragment_label">Profile</string>

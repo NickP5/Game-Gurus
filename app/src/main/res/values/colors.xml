@@ -35,6 +35,6 @@
     <color name="bronze">#CD7F32</color>
     <color name="highlight">#FF9A00</color>
 
-    <color name="primary">#000000</color> <!-- black -->
-    <color name="on_primary">#FFFFFF</color> <!-- text -->
+    <color name="primary">#000000</color>
+    <color name="on_primary">#FFFFFF</color>
 </resources>

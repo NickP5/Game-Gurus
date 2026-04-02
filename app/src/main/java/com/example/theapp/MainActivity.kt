@@ -12,6 +12,9 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
+import androidx.core.graphics.drawable.toBitmap
 import androidx.navigation.ui.setupWithNavController
 import com.example.theapp.databinding.ActivityMainBinding
 
@@ -42,11 +45,9 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.SettingsFragment) {
-                binding.fab.hide()
                 hideOptions = true
                 invalidateOptionsMenu()
             } else {
-                binding.fab.show()
                 hideOptions = false
                 invalidateOptionsMenu()
             }
@@ -55,7 +56,7 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.HomeFragment,
-                R.id.SearchFragment,
+                R.id.FriendsFragment,
                 R.id.CreateFragment,
                 R.id.LeaderboardFragment,
                 R.id.ProfileFragment
@@ -80,11 +81,14 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null)
-                .setAnchorView(R.id.fab).show()
-        }
+        val drawable = ContextCompat.getDrawable(this, R.drawable.ic_profile)
+        val circular = RoundedBitmapDrawableFactory.create(resources, drawable!!.toBitmap())
+
+        circular.isCircular = true
+
+        val item = binding.bottomNavigationView.menu.findItem(R.id.ProfileFragment)
+        item.icon = circular
+        item.icon?.setTintList(null)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
