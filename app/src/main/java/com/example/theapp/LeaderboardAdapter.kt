@@ -2,6 +2,7 @@ package com.example.theapp
 
 import android.content.Context
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,10 +10,11 @@ import android.widget.ArrayAdapter
 import androidx.core.content.ContextCompat
 import com.example.theapp.databinding.LeaderboardElementBinding
 
+private const val TAG4 = "Leaderboard"
 class LeaderboardAdapter(
     data: List<List<Any>>,
     context: Context,
-    private val userName: String
+    private val userName: String?
 ) : ArrayAdapter<List<Any>>(context, 0, data) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
@@ -33,7 +35,9 @@ class LeaderboardAdapter(
         val backgroundColor = ContextCompat.getDrawable(context, R.drawable.roundedcorners)
         val textColor = ContextCompat.getColor(context, R.color.primary)
 
-        if (name.toString() == userName) {
+        Log.d(TAG4, "userName is: $userName , name is: $name")
+
+        if (userName == name) {
             binding.leaderboardListItem.background = highlightBackgroundColor
             binding.rankText.setTextColor(Color.BLACK)
             binding.nameText.setTextColor(Color.BLACK)

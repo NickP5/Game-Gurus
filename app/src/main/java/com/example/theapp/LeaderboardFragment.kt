@@ -11,9 +11,12 @@ import com.google.firebase.Firebase
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.firestore
 
+private const val LeaderTAG = "Leaderboard"
 class LeaderboardFragment : Fragment() {
     private var _binding: FragmentLeaderboardBinding? = null
     private val binding get() = _binding!!
+
+    public var nameString: String? = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,10 +31,18 @@ class LeaderboardFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // this v will become the loggedInUser
+
         val userName = loggedInUser
 
         val db = Firebase.firestore
         val docRef = db.collection("users")
+
+        //Getting name of loggInUser
+        docRef.document("$loggedInUser").get()
+            .addOnSuccessListener { documentSnapshot ->
+                nameString = documentSnapshot.getString("username")
+                Log.d(TAG, "Got nameString: $nameString")
+            }
         docRef.orderBy("points", Query.Direction.DESCENDING)
             .get()
             .addOnSuccessListener { documents ->
@@ -48,7 +59,8 @@ class LeaderboardFragment : Fragment() {
                     leaderboardData.add(listOf(firstLetter, rank, name, points.toInt()))
                     rank++
                 }
-                val adapter = LeaderboardAdapter(leaderboardData, requireContext(), userName.toString())
+                Log.d(TAG, "Real nameString: $nameString")
+                val adapter = LeaderboardAdapter(leaderboardData, requireContext(), nameString)
                 binding.leaderboardList.adapter = adapter
 
 

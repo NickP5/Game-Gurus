@@ -1,6 +1,7 @@
 package com.example.theapp
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +9,11 @@ import androidx.navigation.findNavController
 import com.example.theapp.databinding.FragmentProfileBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.firestore
 
+
+private const val ProfileTAG = "Profile"
 class ProfileFragment : BottomSheetDialogFragment() {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
@@ -26,15 +31,28 @@ class ProfileFragment : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // loggedInUser and get username
-        val displayName = "Chip Peterson"
-        val username = "@chippete"
+        val db = Firebase.firestore
+        val docRef = db.collection("users")
+        //Not working for some reason.
+        var nameString = ""
 
+        //Getting name of loggInUser
+        docRef.document("$loggedInUser").get()
+            .addOnSuccessListener { documentSnapshot ->
+                nameString = documentSnapshot.getString("username").toString()
+                Log.d(ProfileTAG, "Got nameString: $nameString")
+        Log.d(ProfileTAG, "Real nameString: $nameString")
+        val displayName = "Blingus"
+        val username = "Blingus"
+
+        binding.displayNameText.text = displayName
+        binding.usernameText.text = username
+    }
         // Requirement for switching outside of profile fragment
         val navController = requireActivity()
             .findNavController(R.id.nav_host_fragment_content_main)
 
-        binding.displayNameText.text = displayName
-        binding.usernameText.text = username
+
 
         // Temporary Profile Image
         binding.profilePic.setImageResource(R.drawable.mountain)
