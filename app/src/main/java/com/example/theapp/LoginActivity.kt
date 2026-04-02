@@ -11,31 +11,36 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.viewpager2.widget.ViewPager2
 import com.example.theapp.databinding.ActivityLoginBinding
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
 
-    lateinit var ue_input: EditText
-    lateinit var pass_input: EditText
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        ue_input = binding.root.findViewById<EditText>(R.id.loginUE)
-        pass_input = binding.root.findViewById<EditText>(R.id.loginPass)
+        val tabLayout = findViewById<TabLayout>(R.id.tabLayout)
+        val viewPager = findViewById<ViewPager2>(R.id.viewPager)
+        val loginAdapter = LoginAdapter(this)
+        viewPager.adapter = loginAdapter
 
-        binding.loginButton.setOnClickListener {
-            val ue = ue_input.text.toString()
-            val pass = pass_input.text.toString()
-
-            //eventually only run this is ue/pass check works
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-        }
-
+        TabLayoutMediator(tabLayout, viewPager) { tab: TabLayout.Tab, position: Int ->
+            when (position) {
+                0 -> {
+                    tab.text = "Log In"
+                }
+                1 -> {
+                    tab.text = "Sign Up"
+                }
+            }
+        }.attach()
         // code to animate background
         val drawable : AnimationDrawable = binding.root.background as AnimationDrawable
 
