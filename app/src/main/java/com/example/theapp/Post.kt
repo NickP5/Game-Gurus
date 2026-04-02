@@ -28,6 +28,7 @@ class Post {
 
 
     fun saveUserToFirestore() {
+        Log.d(TAG, "saveUserToFirestore() is called")
         val db = Firebase.firestore
         val documentID = pID
 
@@ -52,6 +53,7 @@ class Post {
             ).get()
             .addOnSuccessListener { querySnapshot->
                 if (querySnapshot.isEmpty()) {
+                    Log.d(TAG, "Document is: $documentID")
                     db.collection("posts")
                         .document("$documentID")
                         .set(user)
