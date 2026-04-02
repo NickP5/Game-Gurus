@@ -41,6 +41,15 @@
     <string name="edit_rating">Write your rating here</string>
     <string name="post_button">Post</string>
 
+    <!-- strings for login and account creation tabs -->
+    <string name="login_ue">Username or Email</string>
+    <string name="login_password">Password</string>
+    <string name="log_in">LOG IN</string>
+    <string name="create_username">Username</string>
+    <string name="create_email">Email</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="sign_up">SIGN UP</string>
+
     <!-- strings for post interaction -->
     <string name="destination_label">{destination}</string>
     <string name="reply_answer">Reply Answer</string>
