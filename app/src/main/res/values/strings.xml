@@ -44,8 +44,11 @@
     <!-- strings for post interaction -->
     <string name="destination_label">{destination}</string>
     <string name="reply_answer">Reply Answer</string>
+    <string name="reply_comment">Reply Comment</string>
     <string name="reply_username">Reply User</string>
     <string name="write_a_reply">Write a reply…</string>
+    <string name="write_answer">Write an Answer…</string>
+    <string name="write_comment">Write a Comment…</string>
 
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris

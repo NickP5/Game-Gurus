@@ -9,8 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 class ReplyAdapter(private val replies: MutableList<Reply>) :
     RecyclerView.Adapter<ReplyAdapter.ReplyViewHolder>() {
 
-    inner class ReplyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ReplyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val replyUser: TextView = itemView.findViewById(R.id.replyPoster)
+        val replyComment: TextView = itemView.findViewById(R.id.replyComment)
         val replyMessage: TextView = itemView.findViewById(R.id.replyAnswer)
     }
 
@@ -23,6 +24,7 @@ class ReplyAdapter(private val replies: MutableList<Reply>) :
     override fun onBindViewHolder(holder: ReplyViewHolder, position: Int) {
         val reply = replies[position]
         holder.replyUser.text = reply.replyPoster
+        holder.replyComment.text = reply.replyComment
         holder.replyMessage.text = reply.replyAnswer
     }
 
