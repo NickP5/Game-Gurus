@@ -27,7 +27,8 @@ class LeaderboardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val userName = "Jon"
+        // this v will become the loggedInUser
+        val userName = "Notch"
 
         val db = Firebase.firestore
         val docRef = db.collection("users")

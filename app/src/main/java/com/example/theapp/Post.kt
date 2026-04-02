@@ -68,6 +68,7 @@ class Post {
                     db.collection("users")
                         .document("$documentID2")
                         .set(user)
+                        //Bug here, not adding new posts to same user post list
                         .addOnSuccessListener { documentReference ->
                             Log.d(TAG, "DocumentSnapshot added with ID: $postOP")
                         }

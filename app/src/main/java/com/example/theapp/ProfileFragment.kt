@@ -23,7 +23,7 @@ class ProfileFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Temporary Strings
+        // loggedInUser and get username
         val displayName = "Chip Peterson"
         val username = "@chippete"
 

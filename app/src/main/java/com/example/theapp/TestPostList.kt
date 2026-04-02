@@ -15,6 +15,9 @@ object TestPostList {
         val post4 = Post("jump over spike", "3/5", "Blingus")
         postList.add(post4)
         post4.saveUserToFirestore()
+        val post5 = Post("clicking circles", "4/5", "Hnzi")
+        postList.add(post5)
+        post5.saveUserToFirestore()
 
 
         return postList
