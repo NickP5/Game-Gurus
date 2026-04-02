@@ -9,6 +9,7 @@ import com.google.firebase.firestore.Filter
 
 private const val TAG = "Post"
 public var pID = 0
+public var uID = 4
 
 
 
