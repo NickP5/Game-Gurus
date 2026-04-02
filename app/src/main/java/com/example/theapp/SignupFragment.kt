@@ -14,7 +14,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.firestore.Filter
 import com.google.firebase.firestore.firestore
 
-private const val TAG = "SignUp"
+private const val TAG3 = "SignUp"
 class SignupFragment : Fragment() {
     private var _binding: FragmentSignupBinding? = null
     private val binding get() = _binding!!
@@ -81,18 +81,18 @@ class SignupFragment : Fragment() {
                             userRef
                                 .document("$userID")
                                 .set(user)
-                            Log.d(TAG, "User successfully added to database")
+                            Log.d(TAG3, "User successfully added to database")
                             loggedInUser = userID
                             //eventually only run this is ue/pass check works
                             val intent = Intent(activity, MainActivity::class.java)
                             startActivity(intent)
                         } else {
                             //Filter returned something, meaning that a user with the same username or email already exists
-                            Log.d(TAG, "User with same username/email already exists")
+                            Log.d(TAG3, "User with same username/email already exists")
                         }
                     } else {
                         //Passwords do not match, error popup
-                        Log.d(TAG, "Passwords do not match")
+                        Log.d(TAG3, "Passwords do not match")
                     }
                 }
         }

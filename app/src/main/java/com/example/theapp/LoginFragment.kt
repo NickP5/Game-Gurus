@@ -16,7 +16,7 @@ import com.google.firebase.firestore.firestore
 
 public var loggedInUser = 0
 
-private const val TAG = "Login"
+private const val TAG2 = "Login"
 
 class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
@@ -64,23 +64,23 @@ class LoginFragment : Fragment() {
                             val document = documentSnapshots.documents[0]
                             val correctPass = document.getString("password")
 
-                            Log.d(TAG, "User exists in database, check for password")
+                            Log.d(TAG2, "User exists in database, check for password")
 
                             if (correctPass == pass) {
-                                Log.d(TAG, "Correct Password, Login Successful")
+                                Log.d(TAG2, "Correct Password, Login Successful")
                                 loggedInUser = document.getLong("userID")?.toInt() ?: 0
 
-                                Log.d(TAG, "Logged in user: $loggedInUser")
+                                Log.d(TAG2, "Logged in user: $loggedInUser")
                                 
                                 val intent = Intent(activity, MainActivity::class.java)
                                 startActivity(intent)
                             } else {
                                 // where anything to display incorrect password would happen
-                                Log.d(TAG, "Incorrect Password")
+                                Log.d(TAG2, "Incorrect Password")
                             }
                         } else {
                             // This is where we would tell them that no user with that username/email exists
-                            Log.d(TAG, "No user with that Username/Email")
+                            Log.d(TAG2, "No user with that Username/Email")
                         }
                     }
             }

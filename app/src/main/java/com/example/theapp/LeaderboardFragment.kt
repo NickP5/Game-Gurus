@@ -28,7 +28,7 @@ class LeaderboardFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // this v will become the loggedInUser
-        val userName = "Notch"
+        val userName = loggedInUser
 
         val db = Firebase.firestore
         val docRef = db.collection("users")
@@ -48,7 +48,7 @@ class LeaderboardFragment : Fragment() {
                     leaderboardData.add(listOf(firstLetter, rank, name, points.toInt()))
                     rank++
                 }
-                val adapter = LeaderboardAdapter(leaderboardData, requireContext(), userName)
+                val adapter = LeaderboardAdapter(leaderboardData, requireContext(), userName.toString())
                 binding.leaderboardList.adapter = adapter
 
 
