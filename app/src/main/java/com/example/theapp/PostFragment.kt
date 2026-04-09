@@ -45,6 +45,7 @@ class PostFragment : Fragment() {
         val recyclerView: RecyclerView = view.findViewById(R.id.replyRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
 
+        // if userID == CurrentPost.Replies
         recyclerView.adapter = replyAdapter
 
         parentFragmentManager.setFragmentResultListener("newReplyKey", viewLifecycleOwner) { key, bundle ->

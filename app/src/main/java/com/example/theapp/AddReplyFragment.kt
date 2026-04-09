@@ -33,7 +33,7 @@ class AddReplyFragment() : Fragment() {
             val commentText = binding.commentField.text.toString()
 
             if (answerText.isNotBlank() && commentText.isNotBlank()) {
-                val reply = Reply(answerText, commentText, "Temp User")
+                val reply = Reply(0, answerText, commentText, "Temp User", loggedInUser, gradeReply(answerText))
                 parentFragmentManager.setFragmentResult(
                     "newReplyKey",
                     bundleOf("reply" to reply)
@@ -51,5 +51,15 @@ class AddReplyFragment() : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    fun gradeReply(replyAnswer: String): Int {
+        val lowerReply = replyAnswer.lowercase()
+        val lowerAnswer = "Minecraft".lowercase()
+
+        if (lowerReply == lowerAnswer) {
+            return 1
+        }
+        return -1
     }
 }

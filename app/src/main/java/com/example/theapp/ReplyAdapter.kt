@@ -27,7 +27,7 @@ class ReplyAdapter(private val replies: MutableList<Reply>) :
         holder.replyUser.text = reply.replyPoster
         holder.replyComment.text = reply.replyComment
         holder.replyMessage.text = reply.replyAnswer
-        holder.replyGrade.text = gradeReply(replyAnswer = reply.replyAnswer)
+        holder.replyGrade.text = reply.replyGrade.toString()
     }
 
     override fun getItemCount(): Int = replies.size
@@ -35,15 +35,5 @@ class ReplyAdapter(private val replies: MutableList<Reply>) :
     fun addReply(reply: Reply) {
         replies.add(reply)
         notifyItemInserted(replies.size - 1)
-    }
-
-    fun gradeReply(replyAnswer: String): String {
-        val lowerReply = replyAnswer.lowercase()
-        val lowerAnswer = "Minecraft".lowercase()
-
-        if (lowerReply == lowerAnswer) {
-            return "1"
-        }
-        return "-1"
     }
 }
