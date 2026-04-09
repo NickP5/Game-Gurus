@@ -7,6 +7,7 @@
     <string name="dark_mode">Dark Mode</string>
     <string name="font_size">Font Size</string>
     <string name="close_profile">Close Profile</string>
+    <string name="change_pfp">Change Profile Picture</string>
     <string name="display_name">Display Name</string>
     <string name="username">username</string>
     <!-- Strings used for fragments for navigation -->

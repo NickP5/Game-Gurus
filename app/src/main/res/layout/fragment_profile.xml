@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:imagesList="@drawable/mountain, @drawable/black_mountain, @drawable/mountains_minimal_background_78370_9589, @drawable/nyan_cat_cartoon_video_games_wallpaper_preview"
+    android:currentPfpImage="imagesList.1"
     android:orientation="vertical"
     android:padding="16dp"
     tools:context=".ProfileFragment">
@@ -20,10 +21,23 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <ImageButton
+        android:id="@+id/change_pfp_button"
+        android:layout_width="25dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="228dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/change_pfp"
+        android:padding="12dp"
+        android:src="@drawable/ic_settings"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profilePic"
         app:civ_border_width="2dp"
-        android:src="@drawable/black_mountain"
+        android:src="currentPfpImage"
         app:civ_border_color="@color/profile_border"
         android:layout_width="80dp"
         android:layout_height="80dp"
