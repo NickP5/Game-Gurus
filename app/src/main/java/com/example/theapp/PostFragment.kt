@@ -30,9 +30,11 @@ class PostFragment : Fragment() {
         val navController = requireActivity()
             .findNavController(R.id.nav_host_fragment_content_main)
 
+        // Pass the post to the this fragment
         val postClue = arguments?.getString("postClue")
         val postRating = arguments?.getString("postRating")
         val postOP = arguments?.getString("postOP")
+        val postAnswer = arguments?.getString("postAnswer")
 
         binding.originalPostClue.text = postClue
         binding.originalPostRating.text = postRating
@@ -61,7 +63,10 @@ class PostFragment : Fragment() {
             isFocusable = false
             isClickable = true
             setOnClickListener {
-                navController.navigate(R.id.post_to_addReply)
+                val bundle = Bundle().apply {
+                    putString("postAnswer", postAnswer)
+                }
+                navController.navigate(R.id.post_to_addReply, bundle)
             }
         }
 

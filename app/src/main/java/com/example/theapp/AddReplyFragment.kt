@@ -28,13 +28,15 @@ class AddReplyFragment() : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val postAnswer = arguments?.getString("postAnswer")
+
         binding.postButton.setOnClickListener {
             val answerText = binding.answerField.text.toString()
             val commentText = binding.commentField.text.toString()
 
             if (answerText.isNotBlank() && commentText.isNotBlank()) {
                 val reply = Reply(0, answerText, commentText, "Temp User", loggedInUser)
-                reply.gradeReply("Minecraft")   // replace with the actual game answer
+                reply.gradeReply(postAnswer)
                 parentFragmentManager.setFragmentResult(
                     "newReplyKey",
                     bundleOf("reply" to reply)

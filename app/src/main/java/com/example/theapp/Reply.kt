@@ -37,9 +37,9 @@ class Reply(
         override fun newArray(size: Int) = arrayOfNulls<Reply?>(size)
     }
 
-    fun gradeReply(postAnswer: String) {
+    fun gradeReply(postAnswer: String?) {
         val lowerReply = replyAnswer.lowercase()
-        val lowerAnswer = postAnswer.lowercase()
+        val lowerAnswer = postAnswer?.lowercase()
 
         replyGrade = if (lowerReply == lowerAnswer) {
             1
