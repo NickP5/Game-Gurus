@@ -37,7 +37,7 @@
         tools:layout="@layout/fragment_leaderboard">
     </fragment>
 
-    <fragment
+    <dialog
         android:id="@+id/ProfileFragment"
         android:name="com.example.theapp.ProfileFragment"
         android:label="@string/profile_fragment_label"
@@ -46,7 +46,10 @@
         <action
             android:id="@+id/profile_to_statistics"
             app:destination="@+id/StatisticsFragment" />
-    </fragment>
+        <action
+            android:id="@+id/profile_to_notifications"
+            app:destination="@id/NotificationsFragment" />
+    </dialog>
 
     <fragment
         android:id="@+id/SettingsFragment"
@@ -82,6 +85,24 @@
         android:name="com.example.theapp.AddReplyFragment"
         android:label="@string/write_a_reply"
         tools:layout="@layout/fragment_add_reply">
+    </fragment>
+
+    <fragment
+        android:id="@+id/NotificationsFragment"
+        android:name="com.example.theapp.NotificationsFragment"
+        android:label="@string/notifications"
+        tools:layout="@layout/fragment_notifications">
+
+        <action
+            android:id="@+id/notifications_to_notificationitem"
+            app:destination="@id/NotificationItemFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/NotificationItemFragment"
+        android:name="com.example.theapp.NotificationItemFragment"
+        android:label="@string/destination_label"
+        tools:layout="@layout/fragment_notification_item">
     </fragment>
 
     <action

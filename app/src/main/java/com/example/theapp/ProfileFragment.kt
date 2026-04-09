@@ -49,8 +49,6 @@ class ProfileFragment : BottomSheetDialogFragment() {
         val navController = requireActivity()
             .findNavController(R.id.nav_host_fragment_content_main)
 
-
-
         // Temporary Profile Image
         binding.profilePic.setImageResource(R.drawable.mountain)
 
@@ -60,6 +58,11 @@ class ProfileFragment : BottomSheetDialogFragment() {
 
         binding.statistics.setOnClickListener { view ->
             navController.navigate(R.id.StatisticsFragment)
+        }
+
+        binding.notifications.setOnClickListener { view ->
+            dismiss()
+            navController.navigate(R.id.NotificationsFragment)
         }
 
         binding.logOut.setOnClickListener { view ->

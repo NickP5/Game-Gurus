@@ -15,6 +15,7 @@
     <string name="create_fragment_label">Create</string>
     <string name="leaderboard_fragment_label">Leaderboard</string>
     <string name="profile_fragment_label">Profile</string>
+    <string name="notifications">Notifications</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
