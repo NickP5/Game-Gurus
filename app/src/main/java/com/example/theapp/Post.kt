@@ -21,11 +21,14 @@ class Post {
     var postRating: String? = null // will need to discuss rating system a bit further
     var postOP: String? = null
 
+    var postAnswer: String? = null
 
-    constructor(postClue: String?, postRating: String?, postOP: String?) {
+
+    constructor(postClue: String?, postRating: String?, postOP: String?, postAnswer: String?) {
         this.postClue = postClue
         this.postRating = postRating
         this.postOP = postOP
+        this.postAnswer = postAnswer
     }
 
 
@@ -44,6 +47,7 @@ class Post {
             "name" to postOP,
             "rating" to postRating,
             "clue" to postClue,
+            "answer" to postAnswer,
             "pID" to documentID
 
         )
@@ -61,11 +65,12 @@ class Post {
         )
 
         //initializing users database using four users
-        usersRef
+        usersRef.document("$documentID2")
             .get()
-            .addOnSuccessListener { querySnapshot ->
-                if (querySnapshot.isEmpty()) {
-                    db.collection("users")
+            //If user doesn't exist, create document
+            .addOnSuccessListener { documentSnapshot ->
+                if (!documentSnapshot.exists()) {
+                    usersRef
                         .document("$documentID2")
                         .set(user)
                         //Bug here, not adding new posts to same user post list
@@ -73,7 +78,7 @@ class Post {
                             Log.d(TAG, "DocumentSnapshot added with ID: $postOP")
                         }
                 } else {
-                    Log.d(TAG, "Document already exists")
+                    Log.d(TAG, "Document: $documentID2 already exists")
                 }
             }
 
@@ -102,7 +107,7 @@ class Post {
                                 }
                         }
                 } else {
-                    Log.d(TAG, "Document already exists")
+                    Log.d(TAG, "Post already exists")
                 }
             }
             .addOnFailureListener { e ->
