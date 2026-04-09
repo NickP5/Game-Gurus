@@ -34,6 +34,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Spinner
+        android:id="@+id/pfpSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="260dp"
+        android:gravity="center"
+        android:padding="13dp"
+        android:spinnerMode="dropdown"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/change_pfp_button" />
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profilePic"
         app:civ_border_width="2dp"
@@ -75,37 +86,40 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/primary"
+        app:layout_constraintBottom_toTopOf="@id/statistics"
         app:layout_constraintTop_toBottomOf="@+id/usernameText"
-        app:layout_constraintBottom_toTopOf="@id/statistics"/>
+        app:layout_constraintVertical_bias="0.812"
+        tools:layout_editor_absoluteX="16dp" />
 
     <TextView
         android:id="@+id/statistics"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/statistics"
-        android:drawablePadding="10dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:textSize="20sp"
-        android:padding="12dp"
+        android:layout_marginTop="52dp"
         android:background="?attr/selectableItemBackground"
-        android:layout_marginTop="20dp"
+        android:clickable="true"
+        android:drawablePadding="10dp"
+        android:focusable="true"
+        android:padding="12dp"
+        android:text="@string/statistics"
+        android:textSize="20sp"
         app:drawableStartCompat="@drawable/ic_recent_progress"
-        app:layout_constraintTop_toBottomOf="@id/usernameText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/usernameText" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/log_out"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/log_out"
-        android:textSize="15sp"
+        android:layout_marginTop="32dp"
         android:backgroundTint="@color/primary"
+        android:text="@string/log_out"
         android:textColor="@color/on_primary"
-        android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@id/statistics"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/statistics" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
