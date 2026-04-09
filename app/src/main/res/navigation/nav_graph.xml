@@ -55,12 +55,12 @@
         tools:layout="@layout/fragment_settings">
     </fragment>
 
-    <fragment
+    <dialog
         android:id="@+id/StatisticsFragment"
         android:name="com.example.theapp.StatisticsFragment"
         android:label="@string/recent_progress"
         tools:layout="@layout/fragment_statistics">
-    </fragment>
+    </dialog>
 
     <fragment
         android:id="@+id/PostFragment"

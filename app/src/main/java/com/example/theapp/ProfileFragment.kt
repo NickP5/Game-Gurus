@@ -42,11 +42,8 @@ class ProfileFragment : BottomSheetDialogFragment() {
                 nameString = documentSnapshot.getString("username").toString()
                 Log.d(ProfileTAG, "Got nameString: $nameString")
         Log.d(ProfileTAG, "Real nameString: $nameString")
-        val displayName = "Blingus"
-        val username = "Blingus"
 
-        binding.displayNameText.text = displayName
-        binding.usernameText.text = username
+        binding.displayNameText.text = nameString
     }
         // Requirement for switching outside of profile fragment
         val navController = requireActivity()
@@ -63,7 +60,6 @@ class ProfileFragment : BottomSheetDialogFragment() {
 
         binding.statistics.setOnClickListener { view ->
             navController.navigate(R.id.StatisticsFragment)
-            dismiss()
         }
 
         binding.logOut.setOnClickListener { view ->

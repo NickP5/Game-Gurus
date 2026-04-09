@@ -24,6 +24,16 @@
     <string name="attempts">Attempts</string>
     <string name="percentage">Percentage</string>
     <string name="total_progress">Total Progress</string>
+    <string name="recent_guesses">Recent Guesses</string>
+    <string name="actual_percent">72.13</string>
+    <string name="win_percent">Win Percent</string>
+    <string name="temp_max_streak">36</string>
+    <string name="max_streak">Max Streak</string>
+    <string name="streak">24</string>
+    <string name="current_streak">Current Streak</string>
+    <string name="points_earned">Points Earned</string>
+    <string name="rank_stat">Rank</string>
+    <string name="global_ranking">Global Ranking:</string>
 
     <!-- strings for leaderboard -->
     <string name="rank">Rank</string>

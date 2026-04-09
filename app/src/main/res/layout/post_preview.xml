@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="118dp"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:cardCornerRadius="15dp"
         android:layout_margin="10dp"
         app:cardElevation="7dp"
@@ -50,10 +50,12 @@
                 android:layout_marginTop="5dp"/>
 
             <ImageView
+                android:id="@+id/postPfp"
                 android:layout_width="20dp"
-                android:layout_height="wrap_content"
+                android:layout_height="32dp"
                 android:layout_below="@id/postRating"
                 android:layout_marginStart="20dp"
+                android:layout_marginEnd="10dp"
                 android:src="@drawable/ic_profile"/>
 
             <TextView
@@ -63,9 +65,10 @@
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
                 android:text="@string/default_op_name"
-                android:layout_marginTop="6dp"
-                android:layout_marginStart="50dp"
-                android:layout_marginEnd="50dp"/>
+                android:layout_toEndOf="@id/postPfp"
+                android:layout_alignTop="@id/postPfp"
+                android:layout_alignBottom="@id/postPfp"
+                android:layout_marginTop="5dp"/>
 
         </RelativeLayout>
 

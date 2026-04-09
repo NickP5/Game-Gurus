@@ -53,7 +53,7 @@ class FriendsFragment : Fragment() {
                             val friendUserID = documentSnapshot.getString("userID")?.toInt()
 
                             friends = listOf(
-                                Friend(0, "$friendName", "$friendUsername")
+                                Friend(0, "$friendUsername")
                             )
 
                             val friendsSection = listSections(friends)
@@ -112,11 +112,11 @@ class FriendsFragment : Fragment() {
     }
 
     fun listSections(friends: List<Friend>): List<ListItem> {
-        val sorted = friends.sortedBy { it.name.lowercase() }
+        val sorted = friends.sortedBy { it.username.lowercase() }
         val result = mutableListOf<ListItem>()
         var currentLetter: Char? = null
         for (friend in sorted) {
-            var firstLetter = friend.name.first().uppercaseChar()
+            var firstLetter = friend.username.first().uppercaseChar()
             if (!firstLetter.isLetter()) firstLetter = '#'
 
             if (firstLetter != currentLetter) {

@@ -20,8 +20,7 @@ class FriendsAdapter(private val items: List<ListItem>) :
     }
 
     class FriendViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val nameText: TextView = view.findViewById(R.id.friend_name_text)
-        val usernameText: TextView = view.findViewById(R.id.friend_username_text)
+        val usernameText: TextView = view.findViewById(R.id.friend_name_text)
         val profileImage: ImageView = view.findViewById(R.id.friend_profile_pic)
     }
 
@@ -57,7 +56,6 @@ class FriendsAdapter(private val items: List<ListItem>) :
                 val profileImages = arrayOf(
                     R.drawable.ic_profile
                 )
-                vh.nameText.text = friend.name
                 vh.usernameText.text = friend.username
                 vh.profileImage.setImageResource(profileImages[friend.profileIndex])
             }

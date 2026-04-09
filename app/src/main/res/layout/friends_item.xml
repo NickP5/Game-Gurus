@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     app:cardCornerRadius="12dp"
     app:cardElevation="8dp"
-    app:cardBackgroundColor="@color/on_primary"
+    app:cardBackgroundColor="@color/card_color"
     android:layout_margin="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,19 +29,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/display_name"
-            android:textSize="@dimen/font_element"
+            android:textSize="@dimen/font_medium"
+            android:layout_marginStart="4dp"
             app:layout_constraintStart_toEndOf="@id/friend_profile_pic"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
-        <TextView
-            android:id="@+id/friend_username_text"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/username"
-            android:textSize="@dimen/font_small"
-            app:layout_constraintStart_toEndOf="@id/friend_profile_pic"
-            app:layout_constraintTop_toBottomOf="@id/friend_name_text"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

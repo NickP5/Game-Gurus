@@ -41,7 +41,7 @@ class AddReplyFragment() : Fragment() {
 
                 findNavController().popBackStack()
             } else {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Text field cannot be left blank", Snackbar.LENGTH_LONG)
                     .setAction("Action", null)
                     .setAnchorView(R.id.postButton).show()
             }
