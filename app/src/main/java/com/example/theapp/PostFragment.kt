@@ -45,7 +45,8 @@ class PostFragment : Fragment() {
         val recyclerView: RecyclerView = view.findViewById(R.id.replyRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
 
-        // if userID == CurrentPost.Replies
+        // if userID == CurrentPost.Replies.userID
+        // do not show unless a user has already replied to this specific post
         recyclerView.adapter = replyAdapter
 
         parentFragmentManager.setFragmentResultListener("newReplyKey", viewLifecycleOwner) { key, bundle ->

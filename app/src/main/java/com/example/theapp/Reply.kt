@@ -9,7 +9,7 @@ class Reply(
     val replyComment: String,
     val replyPoster: String,
     val replyPosterID: Int,
-    val replyGrade: Int
+    var replyGrade: Int = 0
     ) :
     Parcelable {
     constructor(parcel: Parcel) : this(
@@ -35,5 +35,16 @@ class Reply(
     companion object CREATOR : Parcelable.Creator<Reply> {
         override fun createFromParcel(parcel: Parcel) = Reply(parcel)
         override fun newArray(size: Int) = arrayOfNulls<Reply?>(size)
+    }
+
+    fun gradeReply(postAnswer: String) {
+        val lowerReply = replyAnswer.lowercase()
+        val lowerAnswer = postAnswer.lowercase()
+
+        replyGrade = if (lowerReply == lowerAnswer) {
+            1
+        } else {
+            -1
+        }
     }
 }
