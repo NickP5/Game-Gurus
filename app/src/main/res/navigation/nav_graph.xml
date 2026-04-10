@@ -105,8 +105,18 @@
         tools:layout="@layout/fragment_notification_item">
     </fragment>
 
+    <fragment
+        android:id="@+id/UserLookupFragment"
+        android:name="com.example.theapp.UserLookupFragment"
+        android:label="@string/user_lookup"
+        tools:layout="@layout/fragment_user_lookup">
+    </fragment>
+
     <action
         android:id="@+id/action_global_settings"
         app:destination="@+id/SettingsFragment" />
+    <action
+        android:id="@+id/action_global_user_lookup"
+        app:destination="@+id/UserLookupFragment" />
 
 </navigation>
