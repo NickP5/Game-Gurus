@@ -19,15 +19,35 @@ data class User(
         friendList?.removeIf { it.friendId == friendUserId }
     }
 
-    fun newNotification(username: String, subject: String, message: String, addFriend: Boolean) {
-        var nid = 0
+    fun newNotification(username: String?, subject: String?, message: String?, addFriend: Boolean?) {
+        var nid: Int? = 0
         if (notificationList?.isNotEmpty() == true) {
-            nid = notificationList!![notificationList!!.size - 1].notificationId + 1
+            nid = notificationList!![notificationList!!.size - 1].notificationId?.plus(1)
         }
         notificationList?.add(Notification(nid, subject, message, username, addFriend))
     }
 
-    fun removeNotification(nid: Int) {
+    fun removeNotification(nid: Int?) {
         notificationList?.removeIf { it.notificationId == nid }
+    }
+
+    fun addPost() {
+
+    }
+
+    fun deletePost() {
+
+    }
+
+    fun addReply() {
+
+    }
+
+    fun deleteReply() {
+
+    }
+
+    fun changePfp() {
+
     }
 }

@@ -42,7 +42,6 @@ class NotificationsFragment : Fragment() {
 
         val notificationAdapter = NotificationsAdapter(notificationList) { notification ->
             val bundle = Bundle().apply {
-                putString("destination", notification.subject)
                 putParcelable("notification", notification)
             }
 
