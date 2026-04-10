@@ -56,8 +56,8 @@ class FriendsAdapter(private val items: List<ListItem>) :
                 val profileImages = arrayOf(
                     R.drawable.ic_profile
                 )
-                vh.usernameText.text = friend.username
-                vh.profileImage.setImageResource(profileImages[friend.profileIndex])
+                vh.usernameText.text = friend?.username
+                vh.profileImage.setImageResource(profileImages[friend?.profileIndex ?: 0])
             }
         }
     }

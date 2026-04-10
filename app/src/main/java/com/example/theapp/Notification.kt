@@ -1,18 +1,17 @@
 package com.example.theapp
 
-class Notification {
-    var read: Boolean = false
-    val subject: String
-    val message: String
-    val senderUsername: String
-    val addFriendMessage: Boolean
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
-    constructor(subject: String, message: String, senderUsername: String, addFriendMessage: Boolean) {
-        this.subject = subject
-        this.message = message
-        this.senderUsername = senderUsername
-        this.addFriendMessage = addFriendMessage
-    }
+@Parcelize
+data class Notification(
+    val notificationId: Int = 0,
+    val subject: String = "",
+    val message: String = "",
+    val senderUsername: String = "",
+    val addFriendMessage: Boolean = false,
+    var read: Boolean = false
+) : Parcelable {
 
     fun readByUser() {
         read = true

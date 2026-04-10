@@ -103,6 +103,10 @@
         android:name="com.example.theapp.NotificationItemFragment"
         android:label="@string/destination_label"
         tools:layout="@layout/fragment_notification_item">
+
+        <argument
+            android:name="notification"
+            app:argType="com.example.theapp.Notification" />
     </fragment>
 
     <action

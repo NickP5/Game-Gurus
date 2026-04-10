@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.theapp.databinding.FragmentNotificationItemBinding
+import com.google.android.material.snackbar.Snackbar
 
 class NotificationItemFragment : Fragment() {
     private var _binding: FragmentNotificationItemBinding? = null
@@ -23,16 +25,13 @@ class NotificationItemFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val senderUsername = arguments?.getString("senderUsername")
-        val subject = arguments?.getString("subject")
-        val content = arguments?.getString("content")
-        val friendMessage = arguments?.getBoolean("friendMessage")
+        val notification = arguments?.getParcelable("notification", Notification::class.java)
 
-        binding.senderUsername.text = senderUsername
-        binding.subjectLine.text = subject
-        binding.contentLine.text = content
+        binding.senderUsername.text = notification?.senderUsername
+        binding.subjectLine.text = notification?.subject
+        binding.contentLine.text = notification?.message
 
-        if (friendMessage == false) {
+        if (notification?.addFriendMessage == false) {
             binding.friendAccept.visibility = View.GONE
             binding.friendReject.visibility = View.GONE
         }
@@ -40,11 +39,18 @@ class NotificationItemFragment : Fragment() {
         binding.friendAccept.setOnClickListener { view ->
             // make each user friends of each other
             // remove the notification
+            Snackbar.make(view, "Friend Request Accepted!", Snackbar.LENGTH_LONG)
+                .setAction("Action", null)
+                .setAnchorView(R.id.nav_host_fragment_content_main).show()
+            findNavController().popBackStack()
         }
 
         binding.friendReject.setOnClickListener { view ->
             // remove the notification
-            // do nothing
+            Snackbar.make(view, "Rejected Friend Request", Snackbar.LENGTH_LONG)
+                .setAction("Action", null)
+                .setAnchorView(R.id.nav_host_fragment_content_main).show()
+            findNavController().popBackStack()
         }
     }
 

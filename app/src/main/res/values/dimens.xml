@@ -5,4 +5,5 @@
     <dimen name="font_element">18sp</dimen>
     <dimen name="font_medium">21sp</dimen>
     <dimen name="font_title">24sp</dimen>
+    <dimen name="divider_thickness">1dp</dimen>
 </resources>
