@@ -1,5 +1,6 @@
 package com.example.theapp
 
+import OuterAdapter
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -31,77 +32,82 @@ class FriendsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val recyclerView = binding.friendsRecyclerView
+        val recyclerView = binding.outerRecyclerView
 
-        val db = Firebase.firestore
-        val docRef = db.collection("users")
+//        val db = Firebase.firestore
+//        val docRef = db.collection("users")
+//
+//        //Getting name of loggedInUser
+//        docRef.document("$loggedInUser").get()
+//            .addOnSuccessListener { documentSnapshot ->
+//                if (documentSnapshot.get("friends") != null){
+//
+//                    val listOfFriendIDs = documentSnapshot.getField("friends") as List<String>?
+//
+//                    var friends = listOf<Friend>()
+//                    //They have at leat one friend, get necessary data to make a friend object using it
+//                    val friendID = listOfFriendIDs?.get(0)
+//                    docRef.document("$friendID").get()
+//                        .addOnSuccessListener { documentSnapshot ->
+//                            val friendUsername = documentSnapshot.getString("username")
+//                            val friendUserID = documentSnapshot.getString("userID")?.toInt()
+//
+//                            friends = listOf(
+//                                Friend(friendUserID, 0, "$friendUsername")
+//                            )
+//
+//                            val friendsSection = listSections(friends)
+//
+//                            recyclerView.layoutManager = LinearLayoutManager(context)
+//                            recyclerView.adapter = OuterAdapter(friendsSection)
+//
+//                            requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+//                                requireActivity().finish()
+//                            }
+//                        }
+//                        .addOnFailureListener { exception ->
+//                            Log.d(FriendsTAG, "Error getting documents: ", exception)
+//                        }
+//
+//
+//                    Log.d(FriendsTAG, "Got friends: $friends")
+//
+//
+//                    val friendsSection = listSections(friends)
+//
+//                    recyclerView.layoutManager = LinearLayoutManager(context)
+//                    recyclerView.adapter = OuterAdapter(friendsSection)
+//
+//                    requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+//                        requireActivity().finish()
+//                    }
+//            }
+//
+//
+//
+//            }
+//
+//
 
-        //Getting name of loggedInUser
-        docRef.document("$loggedInUser").get()
-            .addOnSuccessListener { documentSnapshot ->
-                if (documentSnapshot.get("friends") != null){
+        val friends = listOf(
+            Friend(0, 0, "Achane"),
+            Friend(1, 0, "Bob"),
+            Friend(2, 0, "Charles"),
+            Friend(3, 0, "Richard"),
+            Friend(4, 0, "Joodles"),
+            Friend(5, 0, "Jonathan"),
+            Friend(6, 0, "Justin"),
+            Friend(7, 0, "Pooh Shiesty"),
+            Friend(8, 0, "Rick"),
+            Friend(9, 0, "Bob"),
+            Friend(10, 0, "Thomas"),
+            Friend(11, 0, "Louis Yu")
+        )
 
-                    val listOfFriendIDs = documentSnapshot.getField("friends") as List<String>?
-
-                    var friends = listOf<Friend>()
-                    //They have at leat one friend, get necessary data to make a friend object using it
-                    val friendID = listOfFriendIDs?.get(0)
-                    docRef.document("$friendID").get()
-                        .addOnSuccessListener { documentSnapshot ->
-                            val friendUsername = documentSnapshot.getString("username")
-                            val friendUserID = documentSnapshot.getString("userID")?.toInt()
-
-                            friends = listOf(
-                                Friend(friendUserID, 0, "$friendUsername")
-                            )
-
-                            val friendsSection = listSections(friends)
-
-                            recyclerView.layoutManager = LinearLayoutManager(context)
-                            recyclerView.adapter = FriendsAdapter(friendsSection)
-
-                            requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-                                requireActivity().finish()
-                            }
-                        }
-                        .addOnFailureListener { exception ->
-                            Log.d(FriendsTAG, "Error getting documents: ", exception)
-                        }
-
-
-                    Log.d(FriendsTAG, "Got friends: $friends")
-
-
-                    val friendsSection = listSections(friends)
-
-                    recyclerView.layoutManager = LinearLayoutManager(context)
-                    recyclerView.adapter = FriendsAdapter(friendsSection)
-
-                    requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-                        requireActivity().finish()
-                    }
-            }
-
-
-
-            }
-
-            }
-
-//        val friends = listOf(
-//            Friend(0, "Achane", "totallyNotFRENCH"),
-//            Friend(0, "Bob", "bobby"),
-//            Friend(0, "Charles", "chuck_cause_why_not"),
-//            Friend(0, "Richard", "dick_also_cause_why_not"),
-//            Friend(0, "Joodles", "TheBigFrenchman"),
-//            Friend(0, "Jonathan", "jjj"),
-//            Friend(0, "Justin", "Ajustinmygrip"),
-//            Friend(0, "Pooh Shiesty", "ThePoohShiesty"),
-//            Friend(0, "Rick", "picklerick"),
-//            Friend(0, "Bob", "TheOtherBob"),
-//            Friend(0, "Thomas", "PimpinAintEasy"),
-//            Friend(0, "Louis Yu", "WorldsNumber1CrossFitFan")
-//        )
+        val friendsSection = buildSections(friends)
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.adapter = OuterAdapter(friendsSection)
+    }
 
 
 
@@ -110,20 +116,14 @@ class FriendsFragment : Fragment() {
         _binding = null
     }
 
-    fun listSections(friends: List<Friend>): List<ListItem> {
+    fun buildSections(friends: List<Friend>): List<FriendSection> {
         val sorted = friends.sortedBy { it.username?.lowercase() }
-        val result = mutableListOf<ListItem>()
-        var currentLetter: Char? = null
-        for (friend in sorted) {
-            var firstLetter = friend.username?.first()?.uppercaseChar()
-            firstLetter?.isLetter()?.let { if (!it) firstLetter = '#' }
-
-            if (firstLetter != currentLetter) {
-                currentLetter = firstLetter
-                result.add(ListItem.Header(currentLetter))
-            }
-            result.add(ListItem.FriendItem(friend))
+        val map = sorted.groupBy { friend ->
+            val first = friend.username?.firstOrNull()?.uppercaseChar() ?: '#'
+            if (!first.isLetter()) '#' else first
         }
-        return result
+        return map.toSortedMap().map { (letter, list) ->
+            FriendSection(letter, list)
+        }
     }
 }

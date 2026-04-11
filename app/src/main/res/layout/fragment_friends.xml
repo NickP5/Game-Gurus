@@ -8,7 +8,7 @@
     tools:context=".FriendsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/friendsRecyclerView"
+        android:id="@+id/outerRecyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:clipToPadding="false"
