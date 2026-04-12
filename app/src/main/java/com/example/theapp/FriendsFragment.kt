@@ -1,18 +1,13 @@
 package com.example.theapp
 
-import OuterAdapter
+import OuterFriendsAdapter
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.theapp.databinding.FragmentFriendsBinding
-import com.google.firebase.Firebase
-import com.google.firebase.firestore.firestore
-import com.google.firebase.firestore.getField
 
 private const val FriendsTAG = "Friends"
 
@@ -106,7 +101,7 @@ class FriendsFragment : Fragment() {
 
         val friendsSection = buildSections(friends)
         recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = OuterAdapter(friendsSection)
+        recyclerView.adapter = OuterFriendsAdapter(friendsSection)
     }
 
 
