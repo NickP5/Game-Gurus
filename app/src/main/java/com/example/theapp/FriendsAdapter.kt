@@ -7,36 +7,30 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class FriendsAdapter : RecyclerView.Adapter<FriendsAdapter.VH>() {
+class FriendsAdapter(private val friends: List<Friend>) :
+    RecyclerView.Adapter<FriendsAdapter.FriendsViewHolder>() {
 
-    private val items = mutableListOf<ListItem.FriendItem>()
-
-    fun submitList(newItems: List<ListItem.FriendItem>) {
-        items.clear()
-        items.addAll(newItems)
-        notifyDataSetChanged()
+    class FriendsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val usernameText: TextView = itemView.findViewById(R.id.friend_name_text)
+        val profileImage: ImageView = itemView.findViewById(R.id.friend_profile_pic)
     }
 
-    class VH(view: View) : RecyclerView.ViewHolder(view) {
-        val username: TextView = view.findViewById(R.id.friend_name_text)
-        val image: ImageView = view.findViewById(R.id.friend_profile_pic)
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FriendsViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.inner_item, parent, false)
-        return VH(view)
+            .inflate(R.layout.friends_item, parent, false)
+        return FriendsViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: VH, position: Int) {
-        val friend = items[position].friend
-
-        val profileImages = arrayOf(
-            R.drawable.ic_profile
+    override fun onBindViewHolder(holder: FriendsViewHolder, position: Int) {
+        val friend = friends[position]
+        holder.usernameText.text = friend.username
+        holder.profileImage.setImageResource(
+            when (friend.profileIndex ?: 0) {
+                0 -> R.drawable.ic_profile
+                else -> R.drawable.ic_profile
+            }
         )
-
-        holder.username.text = friend?.username ?: ""
-        holder.image.setImageResource(profileImages[friend?.profileIndex ?: 0])
     }
-    override fun getItemCount(): Int = items.size
+
+    override fun getItemCount(): Int = friends.size
 }

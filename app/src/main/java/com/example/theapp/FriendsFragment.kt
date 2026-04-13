@@ -1,6 +1,5 @@
 package com.example.theapp
 
-import OuterFriendsAdapter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -99,9 +98,9 @@ class FriendsFragment : Fragment() {
             Friend(11, 0, "Louis Yu")
         )
 
-        val friendsSection = buildSections(friends)
+        val friendsSection = organizeFriends(friends)
         recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = OuterFriendsAdapter(friendsSection)
+        recyclerView.adapter = FriendsAdapter(friendsSection)
     }
 
 
@@ -111,14 +110,8 @@ class FriendsFragment : Fragment() {
         _binding = null
     }
 
-    fun buildSections(friends: List<Friend>): List<FriendSection> {
+    fun organizeFriends(friends: List<Friend>): List<Friend> {
         val sorted = friends.sortedBy { it.username?.lowercase() }
-        val map = sorted.groupBy { friend ->
-            val first = friend.username?.firstOrNull()?.uppercaseChar() ?: '#'
-            if (!first.isLetter()) '#' else first
-        }
-        return map.toSortedMap().map { (letter, list) ->
-            FriendSection(letter, list)
-        }
+        return sorted
     }
 }
