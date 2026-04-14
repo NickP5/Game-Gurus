@@ -1,5 +1,6 @@
 package com.example.theapp
 
+import android.graphics.pdf.models.ListItem
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -30,7 +31,7 @@ class FriendsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val recyclerView = binding.friendsRecyclerView
+        val recyclerView = binding.outerRecyclerView
 
         val db = Firebase.firestore
         val docRef = db.collection("users")
@@ -38,7 +39,7 @@ class FriendsFragment : Fragment() {
         //Getting name of loggedInUser
         docRef.document("$loggedInUser").get()
             .addOnSuccessListener { documentSnapshot ->
-                if (documentSnapshot.get("friends") != null){
+                if (documentSnapshot.get("friends") != null) {
 
                     val listOfFriendIDs = documentSnapshot.get("friends") as? List<Long>
 
@@ -47,17 +48,21 @@ class FriendsFragment : Fragment() {
                     var fetchedCount = 0
                     //They have at leat one friend, get necessary data to make a friend object using it
                     for (id in listOfFriendIDs!!) {
+                        Log.d(FriendsTAG, "Got id: $id")
                         docRef.document("$id").get()
                             .addOnSuccessListener { friendDoc ->
-                                if (friendDoc.exists()){
-                                val friendName = friendDoc.getString("username")
-                                val friendUsername = friendDoc.getString("username")
-                                val friendUserID = friendDoc.getLong("userID")?.toInt()
+                                if (friendDoc.exists()) {
+                                    val friendPfp = (friendDoc.get("pfp") as? Long)?.toInt() ?: 0
+                                    val friendUsername = friendDoc.getString("username")
+                                    val friendUserID = (friendDoc.getLong("userID") as? Long)?.toInt() ?: 0
+                                    Log.d(FriendsTAG, "Got friend: $friendUsername, $friendPfp, $friendUserID")
 
-                                friends.add(
-                                    Friend(0, "$friendName", "$friendUsername")
-                                )
-                            }
+
+
+                                    friends.add(
+                                        Friend(friendUserID, friendPfp, "$friendUsername")
+                                    )
+                                }
 
                                 fetchedCount++
                                 if (fetchedCount == listOfFriendIDs.size) {
@@ -84,23 +89,19 @@ class FriendsFragment : Fragment() {
                     }
 
 
+                    //val friendsSection = listSections(friends)
 
+                    //recyclerView.layoutManager = LinearLayoutManager(context)
+                    //recyclerView.adapter = FriendsAdapter(friendsSection)
 
-                    val friendsSection = listSections(friends)
-
-                    recyclerView.layoutManager = LinearLayoutManager(context)
-                    recyclerView.adapter = FriendsAdapter(friendsSection)
-
-                    requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-                        requireActivity().finish()
-                    }
+                    //requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+                    //requireActivity().finish()
+                }
             }
 
 
+    }
 
-            }
-
-            }
 
 //        val friends = listOf(
 //            Friend(0, "Achane", "totallyNotFRENCH"),
@@ -118,26 +119,13 @@ class FriendsFragment : Fragment() {
 //        )
 
 
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
-    fun listSections(friends: List<Friend>): List<ListItem> {
-        val sorted = friends.sortedBy { it.name.lowercase() }
-        val result = mutableListOf<ListItem>()
-        var currentLetter: Char? = null
-        for (friend in sorted) {
-            var firstLetter = friend.name.first().uppercaseChar()
-            if (!firstLetter.isLetter()) firstLetter = '#'
-
-            if (firstLetter != currentLetter) {
-                currentLetter = firstLetter
-                result.add(ListItem.Header(currentLetter))
-            }
-            result.add(ListItem.FriendItem(friend))
-        }
-        return result
+    fun listSections(friends: List<Friend>): List<Friend> {
+        val sorted = friends.sortedBy { it.username!!.lowercase() }
+        return sorted
     }
 }

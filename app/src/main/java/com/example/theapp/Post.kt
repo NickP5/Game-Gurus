@@ -9,6 +9,8 @@ import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.Filter
 
 public const val TAG = "Post"
+
+public const val TAG5 = "User"
 public var pID = 0
 public var uID = 0
 
@@ -64,6 +66,9 @@ class Post {
             //next step will be posts (list of pID's), friends, recent history / stats
         )
 
+        //Currently going to home fragment is adding new users because we have
+        //a uID variable that doesnt reset to 0
+
         //initializing users database using four users
         usersRef.document("$documentID2")
             .get()
@@ -75,10 +80,10 @@ class Post {
                         .set(user)
                         //Bug here, not adding new posts to same user post list
                         .addOnSuccessListener { documentReference ->
-                            Log.d(TAG, "DocumentSnapshot added with ID: $postOP")
+                            Log.d(TAG5, "User added with ID: $documentID2")
                         }
                 } else {
-                    Log.d(TAG, "Document: $documentID2 already exists")
+                    Log.d(TAG5, "Document: $documentID2 already exists")
                 }
             }
 

@@ -29,6 +29,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        uID = 0
 
         // get temporary post list, will change to pull from database later
         val postList = TestPostList.getPostData()
