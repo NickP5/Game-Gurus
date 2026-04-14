@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.theapp.databinding.FragmentFriendsBinding
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
-import com.google.firebase.firestore.getField
 
 private const val FriendsTAG = "Friends"
 
@@ -41,36 +40,50 @@ class FriendsFragment : Fragment() {
             .addOnSuccessListener { documentSnapshot ->
                 if (documentSnapshot.get("friends") != null){
 
-                    val listOfFriendIDs = documentSnapshot.getField("friends") as List<String>?
+                    val listOfFriendIDs = documentSnapshot.get("friends") as? List<Long>
 
-                    var friends = listOf<Friend>()
+                    var friends = mutableListOf<Friend>()
+
+                    var fetchedCount = 0
                     //They have at leat one friend, get necessary data to make a friend object using it
-                    val friendID = listOfFriendIDs?.get(0)
-                    docRef.document("$friendID").get()
-                        .addOnSuccessListener { documentSnapshot ->
-                            val friendName = documentSnapshot.getString("username")
-                            val friendUsername = documentSnapshot.getString("username")
-                            val friendUserID = documentSnapshot.getString("userID")?.toInt()
+                    for (id in listOfFriendIDs!!) {
+                        docRef.document("$id").get()
+                            .addOnSuccessListener { friendDoc ->
+                                if (friendDoc.exists()){
+                                val friendName = friendDoc.getString("username")
+                                val friendUsername = friendDoc.getString("username")
+                                val friendUserID = friendDoc.getLong("userID")?.toInt()
 
-                            friends = listOf(
-                                Friend(0, "$friendName", "$friendUsername")
-                            )
-
-                            val friendsSection = listSections(friends)
-
-                            recyclerView.layoutManager = LinearLayoutManager(context)
-                            recyclerView.adapter = FriendsAdapter(friendsSection)
-
-                            requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-                                requireActivity().finish()
+                                friends.add(
+                                    Friend(0, "$friendName", "$friendUsername")
+                                )
                             }
-                        }
-                        .addOnFailureListener { exception ->
-                            Log.d(FriendsTAG, "Error getting documents: ", exception)
-                        }
+
+                                fetchedCount++
+                                if (fetchedCount == listOfFriendIDs.size) {
+
+                                    Log.d(FriendsTAG, "Got friends: $friends")
+
+                                    val friendsSection = listSections(friends)
+
+                                    recyclerView.layoutManager = LinearLayoutManager(context)
+                                    recyclerView.adapter = FriendsAdapter(friendsSection)
+
+                                    requireActivity().onBackPressedDispatcher.addCallback(
+                                        viewLifecycleOwner
+                                    ) {
+                                        requireActivity().finish()
+
+                                    }
+                                }
+                            }
+                            .addOnFailureListener { exception ->
+                                Log.d(FriendsTAG, "Error getting documents: ", exception)
+                            }
+
+                    }
 
 
-                    Log.d(FriendsTAG, "Got friends: $friends")
 
 
                     val friendsSection = listSections(friends)

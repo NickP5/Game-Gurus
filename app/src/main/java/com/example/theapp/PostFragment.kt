@@ -10,6 +10,9 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.theapp.databinding.FragmentPostBinding
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.firestore
 
 class PostFragment : Fragment() {
     private var _binding: FragmentPostBinding? = null
@@ -68,7 +71,38 @@ class PostFragment : Fragment() {
         val friendButton = view.findViewById<Button>(R.id.addFriend)
         val requestSent = getString(R.string.request_sent)
         binding.addFriend.setOnClickListener {
-            // TODO: add functionality :)
+            val db = Firebase.firestore
+            val usersRef = db.collection("users")
+            var loggedInUserName = ""
+
+            usersRef.document("$loggedInUser").get()
+                .addOnSuccessListener { documentSnapshot ->
+                    loggedInUserName = documentSnapshot.getString("username").toString()
+
+                    //Checking if the loggedinUser is not looking at their post so they can't friend themselves
+                    //If they aren't they add the postOP's userID to their friends array
+                    if (loggedInUserName != postOP){
+
+                    //Getting the postOP's userID
+                        usersRef
+                            .whereEqualTo("username", postOP)
+                            .get()
+                            .addOnSuccessListener { querySnapshot ->
+                               val postOPID = querySnapshot.documents[0].getLong("userID")?.toInt()
+                                if (postOPID != null) {
+                                    //Adding the postOP's userID to the loggedinUser's friends array
+                                    usersRef
+                                        .document("$loggedInUser")
+                                        .update("friends", FieldValue.arrayUnion(postOPID))
+                                        .addOnSuccessListener {
+                                            friendButton.setText(requestSent)
+                                        }
+                                }
+                            }
+                    } else {
+                        friendButton.setText(R.string.cant_friend_yourself)
+                    }
+                }
             friendButton.setText(requestSent)
         }
     }
