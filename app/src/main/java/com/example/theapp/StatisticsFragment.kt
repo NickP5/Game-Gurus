@@ -4,10 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.example.theapp.databinding.FragmentStatisticsBinding
 
-class StatisticsFragment : Fragment() {
+class StatisticsFragment : DialogFragment() {
     private var _binding: FragmentStatisticsBinding? = null
     private val binding get() = _binding!!
 
@@ -24,22 +25,23 @@ class StatisticsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Temporary values for the statistics page
-        val displayName = "Jonathan"
-        val recentPoints = 9
-        val recentAttempts = 90
-        val recentPercentage = 10.0
-        val totalPoints = 9
-        val totalAttempts = 90
-        val totalPercentage = 10.0
+        val points = 9
+        val percentage = 66.67
+        val recentStreak = 2
 
-        binding.displayNameText.text = displayName
-        binding.recentPoints.text = recentPoints.toString()
-        binding.recentAttempts.text = recentAttempts.toString()
-        binding.recentCorrectPercent.text = "$recentPercentage%"
-        binding.totalPoints.text = totalPoints.toString()
-        binding.totalAttempts.text = totalAttempts.toString()
-        binding.totalCorrectPercent.text = "$totalPercentage%"
+        binding.totalPoints.text = points.toString()
+        binding.winPercent.text = percentage.toString()
+        binding.recentStreak.text = recentStreak.toString()
+    }
 
+    override fun onStart() {
+        super.onStart()
+        dialog?.window?.apply {
+            val width = ViewGroup.LayoutParams.MATCH_PARENT
+            val height = ViewGroup.LayoutParams.WRAP_CONTENT
+
+            setLayout(width, height)
+        }
     }
 
     override fun onDestroyView() {

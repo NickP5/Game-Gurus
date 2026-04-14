@@ -13,6 +13,7 @@ class ReplyAdapter(private val replies: MutableList<Reply>) :
         val replyUser: TextView = itemView.findViewById(R.id.replyPoster)
         val replyComment: TextView = itemView.findViewById(R.id.replyComment)
         val replyMessage: TextView = itemView.findViewById(R.id.replyAnswer)
+        val replyGrade: TextView = itemView.findViewById(R.id.replyGrade)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReplyViewHolder {
@@ -26,6 +27,7 @@ class ReplyAdapter(private val replies: MutableList<Reply>) :
         holder.replyUser.text = reply.replyPoster
         holder.replyComment.text = reply.replyComment
         holder.replyMessage.text = reply.replyAnswer
+        holder.replyGrade.text = reply.replyGrade.toString()
     }
 
     override fun getItemCount(): Int = replies.size

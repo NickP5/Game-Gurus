@@ -33,13 +33,14 @@ class CreateFragment : Fragment() {
         clueInput = view.findViewById(R.id.clueField)
         ratingInput = view.findViewById(R.id.ratingField)
 
+
         binding.postButton.setOnClickListener {
             val game = gameInput.text.toString() // will discuss use case in class
             val clue = clueInput.text.toString()
             val rating = ratingInput.text.toString()
             val name = "hi nick hnzi" // replace with the user's name
 
-            val newPost = Post(clue, rating, name)
+            val newPost = Post(clue, rating, name, game)
             newPost.saveUserToFirestore()
 
             Toast.makeText(context, "test", Toast.LENGTH_SHORT).show()

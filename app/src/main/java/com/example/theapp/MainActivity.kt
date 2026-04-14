@@ -107,6 +107,11 @@ class MainActivity : AppCompatActivity() {
                     .navigate(R.id.SettingsFragment)
                 true
             }
+            R.id.user_lookup -> {
+                findNavController(R.id.nav_host_fragment_content_main)
+                    .navigate(R.id.UserLookupFragment)
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }

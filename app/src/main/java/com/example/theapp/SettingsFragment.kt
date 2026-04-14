@@ -64,6 +64,10 @@ class SettingsFragment : Fragment() {
                 .setAnchorView(R.id.accountPreferences).show()
         }
 
+        binding.darkMode.setOnClickListener { view ->
+            binding.switchDarkMode.performClick()
+        }
+
         binding.switchDarkMode.setOnCheckedChangeListener { _, isChecked ->
             sharedPref.edit {
                 putBoolean(KEY_DARK_MODE, isChecked)
@@ -72,6 +76,11 @@ class SettingsFragment : Fragment() {
         }
 
         var isUserInteraction = false
+
+        binding.fontSize.setOnClickListener { view ->
+            isUserInteraction = true
+            binding.fontSpinner.performClick()
+        }
 
         binding.fontSpinner.setOnTouchListener { _, _ ->
             isUserInteraction = true
@@ -99,7 +108,6 @@ class SettingsFragment : Fragment() {
                     sharedPref.edit { putFloat("font_scale", newScale) }
                     requireActivity().recreate()
                 }
-                isUserInteraction = false
             }
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }

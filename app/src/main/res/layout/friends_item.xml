@@ -1,49 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="12dp"
-    app:cardElevation="8dp"
-    app:cardBackgroundColor="@color/on_primary"
-    android:layout_margin="8dp">
+    android:padding="4dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="12dp">
+        android:elevation="8dp"
+        android:backgroundTint="@color/card_color"
+        app:strokeColor="@color/divider_color"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-        <ImageView
-            android:id="@+id/friend_profile_pic"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:src="@drawable/ic_profile"
-            android:paddingStart="0dp"
-            android:paddingEnd="10dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/friend_name_text"
-            android:layout_width="0dp"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/display_name"
-            android:textSize="@dimen/font_element"
-            app:layout_constraintStart_toEndOf="@id/friend_profile_pic"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            android:padding="8dp">
 
-        <TextView
-            android:id="@+id/friend_username_text"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/username"
-            android:textSize="@dimen/font_small"
-            app:layout_constraintStart_toEndOf="@id/friend_profile_pic"
-            app:layout_constraintTop_toBottomOf="@id/friend_name_text"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            <ImageView
+                android:id="@+id/friend_profile_pic"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_profile"
+                android:paddingStart="0dp"
+                android:paddingEnd="10dp" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/friend_name_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/display_name"
+                android:textSize="@dimen/font_medium"
+                android:layout_marginStart="4dp"
+                android:layout_toEndOf="@id/friend_profile_pic"
+                android:layout_centerVertical="true"/>
 
-</com.google.android.material.card.MaterialCardView>
+        </RelativeLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

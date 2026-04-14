@@ -39,6 +39,7 @@ class HomeFragment : Fragment() {
                 putString("postClue", post.postClue)
                 putString("postRating", post.postRating)
                 putString("postOP", post.postOP)
+                putSerializable("postAnswer", post.postAnswer)
             }
 
             findNavController().navigate(R.id.home_to_post, bundle)
