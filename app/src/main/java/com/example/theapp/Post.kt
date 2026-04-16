@@ -4,6 +4,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import android.util.Log
 import com.google.firebase.firestore.AggregateSource
+import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.Filter
@@ -11,6 +12,7 @@ import com.google.firebase.firestore.Filter
 public const val TAG = "Post"
 
 public const val TAG5 = "User"
+public const val TAG6 = "Post2"
 public var pID = 0
 public var uID = 0
 
@@ -22,7 +24,6 @@ class Post {
     var postClue: String? = null
     var postRating: String? = null // will need to discuss rating system a bit further
     var postOP: String? = null
-
     var postAnswer: String? = null
 
 
@@ -33,6 +34,77 @@ class Post {
         this.postAnswer = postAnswer
     }
 
+    fun getDbCount(database: CollectionReference, callback: (Long) -> Unit) {
+        val countQuery = database.count()
+
+        countQuery.get(AggregateSource.SERVER).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val snapshot = task.result
+                val count = snapshot.count
+                Log.d(TAG6, "Total count: $count")
+
+                // Send the result back via the callback
+                callback(count)
+            } else {
+                Log.e(TAG6, "Count failed: ", task.exception)
+                callback(0L) // Or handle error
+            }
+            //How to call it
+//            getDbCount(db.collection("posts")) { count ->
+//                // Use the count here    println("The count is: $count")
+//                // You could call savePostToFirestore(count) here
+//            }
+        }
+    }
+
+    fun savePostToFirestore() {
+        val db = Firebase.firestore
+        val documentID = pID
+        val documentID2 = uID
+
+        val post = hashMapOf(
+            "name" to postOP,
+            "rating" to postRating,
+            "clue" to postClue,
+            "answer" to postAnswer,
+            "pID" to documentID
+
+        )
+
+        val postsRef = db.collection("posts")
+        val usersRef = db.collection("users")
+
+        postsRef
+            .whereEqualTo("pID", pID)
+            .whereEqualTo("clue", postClue)
+            .whereEqualTo("rating", postRating).get()
+//            .where(
+//                Filter.or(
+//                    Filter.equalTo("pID", documentID),
+//                    Filter.equalTo("clue", postClue)
+//                )
+            //)
+            .addOnSuccessListener { querySnapshot ->
+                if (querySnapshot.isEmpty) {
+                    getDbCount(db.collection("posts")) { count ->
+
+                    db.collection("posts")
+                        .document("$count")
+                        .set(post)
+                        .addOnSuccessListener { documentReference ->
+                            Log.d(TAG6, "Post added to Database")
+
+                            usersRef.document("$documentID2")
+                                .update("posts", FieldValue.arrayUnion(documentID))
+                                .addOnSuccessListener {
+                                    Log.d(TAG6, "Post $documentID added to user $documentID2 list")
+                                }
+                        }
+                } else {
+                    Log.d(TAG6, "Post already exists with pID, $pID")
+                }
+            }
+    }
 
     fun saveUserToFirestore() {
         val db = Firebase.firestore
@@ -81,11 +153,15 @@ class Post {
                         //Bug here, not adding new posts to same user post list
                         .addOnSuccessListener { documentReference ->
                             Log.d(TAG5, "User added with ID: $documentID2")
+                            uID++
                         }
                 } else {
                     Log.d(TAG5, "Document: $documentID2 already exists")
                 }
             }
+
+        val countQuery = postsRef.count()
+
 
         //if this v is document exists, fuck off and tell them no
         //else add document to post collection
@@ -105,6 +181,7 @@ class Post {
                         .addOnSuccessListener { documentReference ->
                             Log.d(TAG, "Post added to Database")
 
+                            pID++
                             usersRef.document("$documentID2")
                                 .update("posts", FieldValue.arrayUnion(documentID))
                                 .addOnSuccessListener {
@@ -112,14 +189,20 @@ class Post {
                                 }
                         }
                 } else {
-                    Log.d(TAG, "Post already exists")
+                    Log.d(TAG, "Post already exists, pID = $pID")
+                    db.collection("posts")
+                        .document("$documentID").get()
+                        .addOnSuccessListener { documentReference ->
+
+                            usersRef.document("$documentID2")
+                                .update("posts", FieldValue.arrayUnion(documentID))
+                            Log.d(TAG, "Update user documents with postIDs")
+                        }
                 }
             }
             .addOnFailureListener { e ->
                     Log.w(TAG, "Error adding document", e)
                 }
-        pID += 1
-        uID += 1
         }
 
     }

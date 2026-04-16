@@ -64,8 +64,7 @@ class ProfileFragment : BottomSheetDialogFragment() {
                 nameString = documentSnapshot.getString("username").toString()
                 Log.d(ProfileTAG, "Got nameString: $nameString")
                 Log.d(ProfileTAG, "Real nameString: $nameString")
-                val displayName = "Blingus"
-                val username = "Blingus"
+                val displayName = nameString
 
                 binding.displayNameText.text = displayName
 
@@ -113,23 +112,23 @@ class ProfileFragment : BottomSheetDialogFragment() {
             }
 
             // Requirement for switching outside of profile fragment
-            val navController = requireActivity()
-                .findNavController(R.id.nav_host_fragment_content_main)
+        val navController = requireActivity()
+            .findNavController(R.id.nav_host_fragment_content_main)
 
                 // Temporary Profile Image
 
-                binding.statistics.setOnClickListener { view ->
-                    navController.navigate(R.id.StatisticsFragment)
-                }
+        binding.statistics.setOnClickListener { view ->
+            navController.navigate(R.id.StatisticsFragment)
+        }
 
-                binding.notifications.setOnClickListener { view ->
-                    dismiss()
-                    navController.navigate(R.id.NotificationsFragment)
-                }
+        binding.notifications.setOnClickListener { view ->
+            dismiss()
+            navController.navigate(R.id.NotificationsFragment)
+        }
 
-                binding.closeProfileButton.setOnClickListener { view ->
-                    dismiss()
-                }
+        binding.closeProfileButton.setOnClickListener { view ->
+            dismiss()
+        }
 
                 binding.logOut.setOnClickListener { view ->
                     Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
