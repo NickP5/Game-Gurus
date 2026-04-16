@@ -7,6 +7,9 @@ import com.google.firebase.firestore.AggregateSource
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.Filter
+import kotlin.math.pow
+import kotlin.math.round
+import kotlin.math.truncate
 
 public const val TAG = "Post"
 
@@ -32,6 +35,23 @@ class Post {
         this.postOP = postOP
         this.postAnswer = postAnswer
     }
+
+//    fun calculateDifficultyScore(): Double {
+//        var correctGuesses = 0
+//        for (i in this.postReplies) {
+//            if (i.grade == 1) {
+//                correctGuesses += 1
+//            }
+//        }
+//        val guessRatio = correctGuesses / this.postReplies.length
+//        val difficultyScore = 10 - guessRatio * 10
+//        return difficultyScore.roundTo(1)
+//    }
+//
+//    fun Double.roundTo(decimals: Int): Double {
+//        val factor = 10.0.pow(decimals)
+//        return round(this * factor) / factor
+//    }
 
 
     fun saveUserToFirestore() {
