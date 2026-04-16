@@ -27,8 +27,11 @@ class FriendsAdapter(private val friends: List<Friend>) :
         holder.usernameText.text = friend.username
         holder.profileImage.setImageResource(
             when (friend.profileIndex ?: 0) {
-                0 -> R.drawable.ic_profile
-                else -> R.drawable.ic_profile
+                0 -> R.drawable.black_mountain
+                1 -> R.drawable.cropped_circle_image
+                2 -> R.drawable.blue_mountain
+                3 -> R.drawable.nyan_cat
+                else -> R.drawable.cropped_circle_image
             }
         )
     }

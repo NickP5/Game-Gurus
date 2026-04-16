@@ -42,16 +42,16 @@ class ProfileFragment : BottomSheetDialogFragment() {
 
         // Profile picture options
         val pfpOptions = listOf(
-            "black_mountain.jpg",
-            "mountain.jpg",
-            "mountains_minimal_background_78370_9589.jpg",
-            "nyan_cat_cartoon_video_games_wallpaper_preview.jpg"
+            "Black Mountain",
+            "Mountain",
+            "Blue Mountain",
+            "Nyan Cat"
         )
         val pfpDrawables = mapOf(
             0 to R.drawable.black_mountain,
-            1 to R.drawable.mountain,
-            2 to R.drawable.mountains_minimal_background_78370_9589,
-            3 to R.drawable.nyan_cat_cartoon_video_games_wallpaper_preview
+            1 to R.drawable.cropped_circle_image,
+            2 to R.drawable.blue_mountain,
+            3 to R.drawable.nyan_cat
         )
 
         // Set up the spinner
