@@ -49,6 +49,9 @@
         <action
             android:id="@+id/profile_to_notifications"
             app:destination="@id/NotificationsFragment" />
+        <action
+            android:id="@+id/profile_to_post_history"
+            app:destination="@id/PostHistoryFragment" />
     </dialog>
 
     <fragment
@@ -110,6 +113,17 @@
         android:name="com.example.theapp.UserLookupFragment"
         android:label="@string/user_lookup"
         tools:layout="@layout/fragment_user_lookup">
+    </fragment>
+
+    <fragment
+        android:id="@+id/PostHistoryFragment"
+        android:name="com.example.theapp.PostHistoryFragment"
+        android:label="@string/post_history"
+        tools:layout="@layout/fragment_post_history">
+
+        <action
+            android:id="@+id/post_history_to_post"
+            app:destination="@id/PostFragment"/>
     </fragment>
 
     <action

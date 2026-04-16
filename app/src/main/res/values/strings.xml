@@ -6,10 +6,6 @@
     <string name="account_preferences">Account Preferences</string>
     <string name="dark_mode">Dark Mode</string>
     <string name="font_size">Font Size</string>
-    <string name="close_profile">Close Profile</string>
-    <string name="change_pfp">Change Profile Picture</string>
-    <string name="change_profile_image">Change Profile Image</string>
-    <string name="display_name">Display Name</string>
     <string name="username">username</string>
     <!-- Strings used for fragments for navigation -->
     <string name="home_fragment_label">Home</string>
@@ -76,7 +72,11 @@
     <string name="cant_friend_yourself">This is your own post!</string>
 
     <!-- strings for profile -->
-
+    <string name="close_profile">Close Profile</string>
+    <string name="change_pfp">Change Profile Picture</string>
+    <string name="change_profile_image">Change Profile Image</string>
+    <string name="display_name">Display Name</string>
+    <string name="post_history">Post History</string>
 
     <!-- strings for user lookup -->
     <string name="user_lookup">User Lookup</string>
