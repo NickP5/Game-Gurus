@@ -1,5 +1,6 @@
 package com.example.theapp
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,6 +17,7 @@ import com.google.firebase.firestore.firestore
 
 
 private const val ProfileTAG = "Profile"
+
 class ProfileFragment : BottomSheetDialogFragment() {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
@@ -107,39 +109,40 @@ class ProfileFragment : BottomSheetDialogFragment() {
                     .addOnFailureListener { e ->
                         Log.w(ProfileTAG, "Error updating profile picture", e)
                     }
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
 
-            // Requirement for switching outside of profile fragment
-            val navController = requireActivity()
-                .findNavController(R.id.nav_host_fragment_content_main)
-
-                // Temporary Profile Image
-
-                binding.statistics.setOnClickListener { view ->
-                    navController.navigate(R.id.StatisticsFragment)
-                }
-
-                binding.notifications.setOnClickListener { view ->
-                    dismiss()
-                    navController.navigate(R.id.NotificationsFragment)
-                }
-
-                binding.closeProfileButton.setOnClickListener { view ->
-                    dismiss()
-                }
-
-                binding.logOut.setOnClickListener { view ->
-                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null)
-                        .setAnchorView(R.id.log_out).show()
-                }
-            }
-
-            override fun onDestroyView() {
-                super.onDestroyView()
-                _binding = null
-            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
+
+        // Requirement for switching outside of profile fragment
+        val navController = requireActivity()
+            .findNavController(R.id.nav_host_fragment_content_main)
+
+        // Temporary Profile Image
+
+        binding.statistics.setOnClickListener { view ->
+            navController.navigate(R.id.StatisticsFragment)
+        }
+
+        binding.notifications.setOnClickListener { view ->
+            dismiss()
+            navController.navigate(R.id.NotificationsFragment)
+        }
+
+        binding.closeProfileButton.setOnClickListener { view ->
+            dismiss()
+        }
+
+        binding.logOut.setOnClickListener { view ->
+            val intent = Intent(requireActivity(), LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            requireActivity().finish()
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+}
