@@ -50,16 +50,16 @@ class UserLookupFragment : Fragment() {
 
         val allUsers = mutableListOf(
             User(0, "Jarvis", 0),
-            User(1, "Hulk", 0),
-            User(2, "Mark", 0),
+            User(1, "Hulk", 1),
+            User(2, "Mark", 3),
             User(3, "Joggins", 0),
-            User(4, "Liasas", 0),
-            User(5, "JumpingWilly", 0),
-            User(6, "Rad", 0),
-            User(7, "Poaster", 0),
-            User(8, "Batman", 0),
+            User(4, "Liasas", 2),
+            User(5, "JumpingWilly", 1),
+            User(6, "Rad", 1),
+            User(7, "Poaster", 3),
+            User(8, "Batman", 3),
             User(9, "IronMan", 0),
-            User(10, "CaptainAmerica", 0)
+            User(10, "CaptainAmerica", 2)
         )
 
         val adapter = UserAdapter()

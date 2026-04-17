@@ -125,8 +125,6 @@ class ProfileFragment : BottomSheetDialogFragment() {
         val navController = requireActivity()
             .findNavController(R.id.nav_host_fragment_content_main)
 
-        // Temporary Profile Image
-
         binding.statistics.setOnClickListener { view ->
             navController.navigate(R.id.StatisticsFragment)
         }

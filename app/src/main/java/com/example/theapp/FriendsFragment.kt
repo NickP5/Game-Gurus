@@ -85,38 +85,10 @@ class FriendsFragment : Fragment() {
                             .addOnFailureListener { exception ->
                                 Log.d(FriendsTAG, "Error getting documents: ", exception)
                             }
-
                     }
-
-
-                    //val friendsSection = listSections(friends)
-
-                    //recyclerView.layoutManager = LinearLayoutManager(context)
-                    //recyclerView.adapter = FriendsAdapter(friendsSection)
-
-                    //requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-                    //requireActivity().finish()
                 }
             }
-
-
     }
-
-
-//        val friends = listOf(
-//            Friend(0, "Achane", "totallyNotFRENCH"),
-//            Friend(0, "Bob", "bobby"),
-//            Friend(0, "Charles", "chuck_cause_why_not"),
-//            Friend(0, "Richard", "dick_also_cause_why_not"),
-//            Friend(0, "Joodles", "TheBigFrenchman"),
-//            Friend(0, "Jonathan", "jjj"),
-//            Friend(0, "Justin", "Ajustinmygrip"),
-//            Friend(0, "Pooh Shiesty", "ThePoohShiesty"),
-//            Friend(0, "Rick", "picklerick"),
-//            Friend(0, "Bob", "TheOtherBob"),
-//            Friend(0, "Thomas", "PimpinAintEasy"),
-//            Friend(0, "Louis Yu", "WorldsNumber1CrossFitFan")
-//        )
 
 
     override fun onDestroyView() {
