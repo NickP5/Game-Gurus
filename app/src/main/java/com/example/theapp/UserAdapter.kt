@@ -23,13 +23,13 @@ class UserAdapter :
     }
 
     class UserViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val usernameText: TextView = view.findViewById(R.id.friend_name_text)
-        val profileImage: ImageView = view.findViewById(R.id.friend_profile_pic)
+        val usernameText: TextView = view.findViewById(R.id.userNameText)
+        val profileImage: ImageView = view.findViewById(R.id.userProfilePic)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.friends_item, parent, false)
+            .inflate(R.layout.user_item, parent, false)
         return UserViewHolder(view)
     }
 
