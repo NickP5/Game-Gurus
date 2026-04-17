@@ -76,7 +76,7 @@
     <string name="change_pfp">Change Profile Picture</string>
     <string name="change_profile_image">Change Profile Image</string>
     <string name="display_name">Display Name</string>
-    <string name="post_history">Post History</string>
+    <string name="history">History</string>
 
     <!-- strings for user lookup -->
     <string name="user_lookup">User Lookup</string>

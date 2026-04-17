@@ -50,8 +50,8 @@
             android:id="@+id/profile_to_notifications"
             app:destination="@id/NotificationsFragment" />
         <action
-            android:id="@+id/profile_to_post_history"
-            app:destination="@id/PostHistoryFragment" />
+            android:id="@+id/profile_to_history"
+            app:destination="@id/PageFragment" />
     </dialog>
 
     <fragment
@@ -116,13 +116,13 @@
     </fragment>
 
     <fragment
-        android:id="@+id/PostHistoryFragment"
-        android:name="com.example.theapp.PostHistoryFragment"
-        android:label="@string/post_history"
-        tools:layout="@layout/fragment_post_history">
+        android:id="@+id/PageFragment"
+        android:name="com.example.theapp.PageFragment"
+        android:label="@string/history"
+        tools:layout="@layout/fragment_history">
 
         <action
-            android:id="@+id/post_history_to_post"
+            android:id="@+id/history_to_post"
             app:destination="@id/PostFragment"/>
     </fragment>
 

@@ -136,9 +136,9 @@ class ProfileFragment : BottomSheetDialogFragment() {
             navController.navigate(R.id.NotificationsFragment)
         }
 
-        binding.postHistory.setOnClickListener { view ->
+        binding.history.setOnClickListener { view ->
             dismiss()
-            navController.navigate(R.id.PostHistoryFragment)
+            navController.navigate(R.id.PageFragment)
         }
 
         binding.closeProfileButton.setOnClickListener { view ->

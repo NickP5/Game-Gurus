@@ -39,7 +39,7 @@ class PostHistoryFragment : Fragment() {
                 putSerializable("postAnswer", post.postAnswer)
             }
 
-            findNavController().navigate(R.id.post_history_to_post, bundle)
+            findNavController().navigate(R.id.history_to_post, bundle)
         }
 
         val recyclerView: RecyclerView = view.findViewById(R.id.postHistoryRecyclerView)

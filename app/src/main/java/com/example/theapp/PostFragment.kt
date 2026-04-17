@@ -1,10 +1,12 @@
 package com.example.theapp
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -29,6 +31,7 @@ class PostFragment : Fragment() {
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -51,7 +54,8 @@ class PostFragment : Fragment() {
             viewLifecycleOwner
         ) { _, bundle ->
 
-            val newReply = bundle.getParcelable<Reply>("reply")
+            val newReply =
+                bundle.getParcelable("reply", Reply::class.java)
 
             newReply?.let {
                 replyAdapter.addReply(it)
