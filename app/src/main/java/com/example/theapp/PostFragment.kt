@@ -16,6 +16,7 @@ import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.firestore
 
 class PostFragment : Fragment() {
+
     private var _binding: FragmentPostBinding? = null
     private val binding get() = _binding!!
 
@@ -31,10 +32,6 @@ class PostFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val navController = requireActivity()
-            .findNavController(R.id.nav_host_fragment_content_main)
-
-        // Pass the post to the this fragment
         val postClue = arguments?.getString("postClue")
         val postRating = arguments?.getString("postRating")
         val postOP = arguments?.getString("postOP")
@@ -44,41 +41,36 @@ class PostFragment : Fragment() {
         binding.originalPostRating.text = postRating
         binding.originalPostOP.text = postOP
 
-        // Add replies as a attribute of Post
-        // Give the adapter the reply list
         val replyAdapter = ReplyAdapter(mutableListOf())
 
-        val recyclerView: RecyclerView = view.findViewById(R.id.replyRecyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(context)
+        binding.replyRecyclerView.layoutManager = LinearLayoutManager(context)
+        binding.replyRecyclerView.adapter = replyAdapter
 
-        // if userID == CurrentPost.Replies.userID
-        // do not show unless a user has already replied to this specific post
-        recyclerView.adapter = replyAdapter
+        parentFragmentManager.setFragmentResultListener(
+            "reply_key",
+            viewLifecycleOwner
+        ) { _, bundle ->
 
-        findNavController().currentBackStackEntry
-            ?.savedStateHandle
-            ?.getLiveData<Reply>("reply")
-            ?.observe(viewLifecycleOwner) { newReply ->
-                newReply?.let {
-                    replyAdapter.addReply(it)
-                    binding.replyRecyclerView.scrollToPosition(replyAdapter.itemCount - 1)
+            val newReply = bundle.getParcelable<Reply>("reply")
 
-                    findNavController().currentBackStackEntry
-                        ?.savedStateHandle
-                        ?.set("reply", null)
-                }
+            newReply?.let {
+                replyAdapter.addReply(it)
+                binding.replyRecyclerView.scrollToPosition(replyAdapter.itemCount - 1)
             }
+        }
 
-        binding.addReply.setOnClickListener { view ->
+        binding.addReply.setOnClickListener {
             val bundle = Bundle().apply {
                 putString("postAnswer", postAnswer)
             }
-            navController.navigate(R.id.post_to_addReply, bundle)
+
+            AddReplyFragment().apply {
+                arguments = bundle
+            }.show(parentFragmentManager, "AddReply")
         }
 
         // quick dumb implementation of a friend button because that's a task i still need to do,
         // but since we haven't merged everything yet adding functionality is not possible. -Hayden
-        val friendButton = view.findViewById<Button>(R.id.addFriend)
         val requestSent = getString(R.string.request_sent)
         binding.addFriend.setOnClickListener {
             val db = Firebase.firestore
@@ -105,15 +97,15 @@ class PostFragment : Fragment() {
                                         .document("$loggedInUser")
                                         .update("friends", FieldValue.arrayUnion(postOPID))
                                         .addOnSuccessListener {
-                                            friendButton.setText(requestSent)
+                                            binding.addFriend.setText(requestSent)
                                         }
                                 }
                             }
                     } else {
-                        friendButton.setText(R.string.cant_friend_yourself)
+                        binding.addFriend.setText(R.string.cant_friend_yourself)
                     }
                 }
-            friendButton.setText(requestSent)
+            binding.addFriend.setText(requestSent)
         }
     }
 
