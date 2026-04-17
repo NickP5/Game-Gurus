@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.theapp.databinding.FragmentPostBinding
@@ -54,23 +55,25 @@ class PostFragment : Fragment() {
         // do not show unless a user has already replied to this specific post
         recyclerView.adapter = replyAdapter
 
-        parentFragmentManager.setFragmentResultListener("newReplyKey", viewLifecycleOwner) { key, bundle ->
-            val newReply = bundle.getParcelable<Reply>("reply")
-            if (newReply != null) {
-                replyAdapter.addReply(newReply)
-                binding.replyRecyclerView.scrollToPosition(replyAdapter.itemCount - 1)
-            }
-        }
+        findNavController().currentBackStackEntry
+            ?.savedStateHandle
+            ?.getLiveData<Reply>("reply")
+            ?.observe(viewLifecycleOwner) { newReply ->
+                newReply?.let {
+                    replyAdapter.addReply(it)
+                    binding.replyRecyclerView.scrollToPosition(replyAdapter.itemCount - 1)
 
-        binding.addReply.apply {
-            isFocusable = false
-            isClickable = true
-            setOnClickListener {
-                val bundle = Bundle().apply {
-                    putString("postAnswer", postAnswer)
+                    findNavController().currentBackStackEntry
+                        ?.savedStateHandle
+                        ?.set("reply", null)
                 }
-                navController.navigate(R.id.post_to_addReply, bundle)
             }
+
+        binding.addReply.setOnClickListener { view ->
+            val bundle = Bundle().apply {
+                putString("postAnswer", postAnswer)
+            }
+            navController.navigate(R.id.post_to_addReply, bundle)
         }
 
         // quick dumb implementation of a friend button because that's a task i still need to do,

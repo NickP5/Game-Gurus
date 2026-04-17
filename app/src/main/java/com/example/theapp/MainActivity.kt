@@ -18,12 +18,12 @@ import com.example.theapp.databinding.ActivityMainBinding
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import androidx.core.graphics.scale
+import androidx.navigation.NavOptions
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
-    private var hideOptions = false
     private var userPfp = R.drawable.ic_profile
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,16 +45,6 @@ class MainActivity : AppCompatActivity() {
 
         val navController = findNavController(R.id.nav_host_fragment_content_main)
 
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.SettingsFragment) {
-                hideOptions = true
-                invalidateOptionsMenu()
-            } else {
-                hideOptions = false
-                invalidateOptionsMenu()
-            }
-        }
-
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.HomeFragment,
@@ -69,6 +59,12 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigationView.setupWithNavController(navController)
 
         binding.bottomNavigationView.setOnItemSelectedListener { item ->
+            val options = NavOptions.Builder()
+                .setLaunchSingleTop(true)
+                .setRestoreState(true)
+                .setPopUpTo(navController.graph.startDestinationId, false)
+                .build()
+
             when (item.itemId) {
                 R.id.ProfileFragment -> {
                     val sheet = ProfileFragment()
@@ -76,8 +72,9 @@ class MainActivity : AppCompatActivity() {
                     false
                 }
                 else -> {
-                    findNavController(R.id.nav_host_fragment_content_main)
-                        .navigate(item.itemId)
+                    if (navController.currentDestination?.id != item.itemId) {
+                        navController.navigate(item.itemId, null, options)
+                    }
                     true
                 }
             }
@@ -130,13 +127,17 @@ class MainActivity : AppCompatActivity() {
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
             R.id.action_settings -> {
-                findNavController(R.id.nav_host_fragment_content_main)
-                    .navigate(R.id.SettingsFragment)
+                findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.SettingsFragment, null, NavOptions.Builder()
+                    .setLaunchSingleTop(true)
+                    .build()
+                )
                 true
             }
             R.id.user_lookup -> {
-                findNavController(R.id.nav_host_fragment_content_main)
-                    .navigate(R.id.UserLookupFragment)
+                findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.UserLookupFragment, null, NavOptions.Builder()
+                    .setLaunchSingleTop(true)
+                    .build()
+                )
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -147,12 +148,6 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()
-    }
-
-    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
-        val menuItem = menu.findItem(R.id.action_settings) // Replace action_settings with your item ID
-        menuItem.isVisible = !hideOptions
-        return super.onPrepareOptionsMenu(menu)
     }
 
     override fun attachBaseContext(newBase: Context) {

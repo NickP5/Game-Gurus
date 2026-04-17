@@ -41,7 +41,7 @@ class NotificationItemFragment : Fragment() {
             // remove the notification
             Snackbar.make(view, "Friend Request Accepted!", Snackbar.LENGTH_LONG)
                 .setAction("Action", null)
-                .setAnchorView(R.id.nav_host_fragment_content_main).show()
+                .setAnchorView(R.id.bottomNavigationView).show()
             findNavController().popBackStack()
         }
 
@@ -49,7 +49,7 @@ class NotificationItemFragment : Fragment() {
             // remove the notification
             Snackbar.make(view, "Rejected Friend Request", Snackbar.LENGTH_LONG)
                 .setAction("Action", null)
-                .setAnchorView(R.id.nav_host_fragment_content_main).show()
+                .setAnchorView(R.id.bottomNavigationView).show()
             findNavController().popBackStack()
         }
     }

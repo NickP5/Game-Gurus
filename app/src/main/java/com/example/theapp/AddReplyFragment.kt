@@ -5,15 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.theapp.databinding.FragmentAddReplyBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 
 class AddReplyFragment() : Fragment() {
 
     private var _binding: FragmentAddReplyBinding? = null
     private val binding get() = _binding!!
+    private lateinit var bottomNav: BottomNavigationView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,6 +32,15 @@ class AddReplyFragment() : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        bottomNav = requireActivity().findViewById(R.id.bottomNavigationView)
+        ViewCompat.setOnApplyWindowInsetsListener(requireActivity().findViewById(android.R.id.content)) { _, insets ->
+            val isKeyboardVisible = insets.isVisible(WindowInsetsCompat.Type.ime())
+
+            bottomNav.isVisible = !isKeyboardVisible
+
+            insets
+        }
+
         val postAnswer = arguments?.getString("postAnswer")
 
         binding.postButton.setOnClickListener {
@@ -36,11 +50,9 @@ class AddReplyFragment() : Fragment() {
             if (answerText.isNotBlank() && commentText.isNotBlank()) {
                 val reply = Reply(0, answerText, commentText, "Temp User", loggedInUser)
                 reply.gradeReply(postAnswer)
-                parentFragmentManager.setFragmentResult(
-                    "newReplyKey",
-                    bundleOf("reply" to reply)
-                )
-
+                findNavController().previousBackStackEntry
+                    ?.savedStateHandle
+                    ?.set("reply", reply)
                 findNavController().popBackStack()
             } else {
                 Snackbar.make(view, "Text field cannot be left blank", Snackbar.LENGTH_LONG)

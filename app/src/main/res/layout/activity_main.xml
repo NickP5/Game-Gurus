@@ -31,6 +31,11 @@
         app:labelVisibilityMode="labeled"
         app:itemTextColor="@color/list_item_selector"
         app:itemIconTint="@color/list_item_selector"
+        app:itemIconSize="20dp"
+        app:itemPaddingTop="4dp"
+        app:itemPaddingBottom="4dp"
+        app:labelFontScalingEnabled="true"
+        app:layout_behavior="com.google.android.material.behavior.HideViewOnScrollBehavior"
         app:menu="@menu/bottom_menu" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
