@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import com.example.theapp.databinding.FragmentProfileBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -21,6 +22,7 @@ private const val ProfileTAG = "Profile"
 class ProfileFragment : BottomSheetDialogFragment() {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
+    private val viewModel: SharedViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,11 +36,10 @@ class ProfileFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        var isSpinnerInitialized = false
         // loggedInUser and get username
         val db = Firebase.firestore
         val docRef = db.collection("users")
-        //Not working for some reason.
-        var nameString = ""
 
         // Profile picture options
         val pfpOptions = listOf(
@@ -55,64 +56,70 @@ class ProfileFragment : BottomSheetDialogFragment() {
         )
 
         // Set up the spinner
-        val adapter =
-            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, pfpOptions)
+        val adapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_item,
+            pfpOptions
+        )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.pfpSpinner.adapter = adapter
 
         //Getting name of loggInUser
         docRef.document("$loggedInUser").get()
             .addOnSuccessListener { documentSnapshot ->
-                nameString = documentSnapshot.getString("username").toString()
+                val nameString = documentSnapshot.getString("username").toString()
                 Log.d(ProfileTAG, "Got nameString: $nameString")
                 Log.d(ProfileTAG, "Real nameString: $nameString")
-                val displayName = "Blingus"
-                val username = "Blingus"
-
-                binding.displayNameText.text = displayName
-
+                binding.displayNameText.text = nameString
 
                 // Load saved profile picture if it exists
                 val savedPfp = documentSnapshot.getString("pfp")
-                savedPfp?.let {
-                    val index = pfpOptions.indexOf(it)
+
+                if (savedPfp != null) {
+                    val index = pfpOptions.indexOf(savedPfp)
                     if (index >= 0) {
                         binding.pfpSpinner.setSelection(index, false)
                         binding.profilePic.setImageResource(pfpDrawables[index]!!)
+                        viewModel.iconState.value = pfpDrawables[index]
                     }
                 }
+                isSpinnerInitialized = true
             }
         //Log.d(ProfileTAG, "Real nameString: $nameString")
 
-        binding.displayNameText.text = nameString
-
         // Handle profile picture change
-        binding.pfpSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                val selectedPfp = pfpOptions[position]
-                val drawableId = pfpDrawables[position]
+        binding.pfpSpinner.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    val selectedPfp = pfpOptions[position]
+                    val drawableId = pfpDrawables[position] ?: return
 
-                // Update UI
-                binding.profilePic.setImageResource(drawableId!!)
+                    // Update UI
+                    binding.profilePic.setImageResource(drawableId)
 
-                // Save to Firestore
-                docRef.document("$loggedInUser")
-                    .update("pfp", selectedPfp)
-                    .addOnSuccessListener {
-                        Log.d(ProfileTAG, "Profile picture updated in Firestore to $selectedPfp")
-                    }
-                    .addOnFailureListener { e ->
-                        Log.w(ProfileTAG, "Error updating profile picture", e)
-                    }
+                    if (!isSpinnerInitialized) return
+
+                    // Save to Firestore
+                    docRef.document("$loggedInUser")
+                        .update("pfp", selectedPfp)
+                        .addOnSuccessListener {
+                            Log.d(
+                                ProfileTAG,
+                                "Profile picture updated in Firestore to $selectedPfp"
+                            )
+                        }
+                        .addOnFailureListener { e ->
+                            Log.w(ProfileTAG, "Error updating profile picture", e)
+                        }
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-        }
 
         // Requirement for switching outside of profile fragment
         val navController = requireActivity()

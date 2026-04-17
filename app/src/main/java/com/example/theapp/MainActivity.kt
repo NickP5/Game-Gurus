@@ -2,6 +2,7 @@ package com.example.theapp
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -9,6 +10,8 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ArrayAdapter
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
@@ -24,7 +27,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
-    private var userPfp = R.drawable.ic_profile
+    private val viewModel: SharedViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val sharedPref = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
@@ -37,6 +40,41 @@ class MainActivity : AppCompatActivity() {
         }
 
         super.onCreate(savedInstanceState)
+
+        // loggedInUser and get username
+        val db = Firebase.firestore
+        val docRef = db.collection("users")
+
+        // Profile picture options
+        val pfpOptions = listOf(
+            "Black Mountain",
+            "Mountain",
+            "Blue Mountain",
+            "Nyan Cat"
+        )
+        val pfpDrawables = mapOf(
+            0 to R.drawable.black_mountain,
+            1 to R.drawable.cropped_circle_image,
+            2 to R.drawable.blue_mountain,
+            3 to R.drawable.nyan_cat
+        )
+
+        //Getting name of loggInUser
+        docRef.document("$loggedInUser").get()
+            .addOnSuccessListener { documentSnapshot ->
+                // Load saved profile picture if it exists
+                val savedPfp = documentSnapshot.getString("pfp")
+                savedPfp?.let {
+                    val index = pfpOptions.indexOf(it)
+                    if (index >= 0) {
+                        viewModel.iconState.value = pfpDrawables[index]
+                    }
+                }
+            }
+
+        viewModel.iconState.observe(this) { iconRes ->
+            setCircularProfileImage(iconRes)
+        }
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -71,6 +109,7 @@ class MainActivity : AppCompatActivity() {
                     sheet.show(supportFragmentManager, "HalfPageSheet")
                     false
                 }
+
                 else -> {
                     if (navController.currentDestination?.id != item.itemId) {
                         navController.navigate(item.itemId, null, options)
@@ -79,40 +118,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
-        // loggedInUser and get username
-        val db = Firebase.firestore
-        val docRef = db.collection("users")
-        //Not working for some reason
-        var nameString = ""
-        // Profile picture options
-        val pfpOptions = listOf(
-            "Black Mountain",
-            "Mountain",
-            "Blue Mountain",
-            "Nyan Cat"
-        )
-        val pfpDrawables = mapOf(
-            0 to R.drawable.black_mountain,
-            1 to R.drawable.cropped_circle_image,
-            2 to R.drawable.blue_mountain,
-            3 to R.drawable.nyan_cat
-        )
-
-        docRef.document("$loggedInUser").get()
-            .addOnSuccessListener { documentSnapshot ->
-                nameString = documentSnapshot.getString("username").toString()
-
-                // Load saved profile picture if it exists
-                val savedPfp = documentSnapshot.getString("pfp")
-                savedPfp?.let {
-                    val index = pfpOptions.indexOf(it)
-                    if (index >= 0) {
-                        userPfp = pfpDrawables[index]!!
-                    }
-                }
-                setCircularProfileImage()
-            }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -164,8 +169,8 @@ class MainActivity : AppCompatActivity() {
         return context.createConfigurationContext(configuration)
     }
 
-    fun setCircularProfileImage() {
-        val drawable = ContextCompat.getDrawable(this, userPfp)!!
+    fun setCircularProfileImage(icon: Int) {
+        val drawable = ContextCompat.getDrawable(this, icon)!!
         val bitmap = drawable.toBitmap()
 
         val scaledBitmap =
