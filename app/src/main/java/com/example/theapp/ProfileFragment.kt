@@ -136,6 +136,7 @@ class ProfileFragment : BottomSheetDialogFragment() {
 
         binding.history.setOnClickListener { view ->
             dismiss()
+            viewModel.historyID = loggedInUser
             navController.navigate(R.id.PageFragment)
         }
 

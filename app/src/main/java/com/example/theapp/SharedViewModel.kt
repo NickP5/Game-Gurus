@@ -5,4 +5,5 @@ import androidx.lifecycle.ViewModel
 
 class SharedViewModel: ViewModel() {
     val iconState = MutableLiveData<Int>()
+    var historyID = 0
 }

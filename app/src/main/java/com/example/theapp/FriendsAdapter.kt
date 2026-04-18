@@ -6,14 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 
-class FriendsAdapter(private val friends: List<Friend>) :
-    RecyclerView.Adapter<FriendsAdapter.FriendsViewHolder>() {
+class FriendsAdapter(
+    private val friends: List<Friend>,
+    private val onViewHistory: (Friend) -> Unit,
+    private val onRemoveFriend: (Friend) -> Unit
+) : RecyclerView.Adapter<FriendsAdapter.FriendsViewHolder>() {
 
     class FriendsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val usernameText: TextView = itemView.findViewById(R.id.friend_name_text)
         val profileImage: ImageView = itemView.findViewById(R.id.friend_profile_pic)
+        val options: ImageView = itemView.findViewById(R.id.overflowOptions)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FriendsViewHolder {
@@ -34,6 +39,25 @@ class FriendsAdapter(private val friends: List<Friend>) :
                 else -> R.drawable.cropped_circle_image
             }
         )
+        holder.options.setOnClickListener { view ->
+            val popup = PopupMenu(view.context, holder.options)
+            popup.inflate(R.menu.friend_options_menu)
+
+            popup.setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.action_view_history -> {
+                        onViewHistory(friend)
+                        true
+                    }
+                    R.id.action_remove_friend -> {
+                        onRemoveFriend(friend)
+                        true
+                    }
+                    else -> true
+                }
+            }
+            popup.show()
+        }
     }
 
     override fun getItemCount(): Int = friends.size

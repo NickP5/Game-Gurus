@@ -21,6 +21,10 @@
         android:name="com.example.theapp.FriendsFragment"
         android:label="@string/friends_fragment_label"
         tools:layout="@layout/fragment_friends">
+
+        <action
+            android:id="@+id/friends_to_history"
+            app:destination="@id/PageFragment"/>
     </fragment>
 
     <fragment
