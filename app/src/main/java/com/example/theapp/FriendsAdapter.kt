@@ -9,7 +9,7 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 
 class FriendsAdapter(
-    private val friends: List<Friend>,
+    private val friends: MutableList<Friend>?,
     private val onViewHistory: (Friend) -> Unit,
     private val onRemoveFriend: (Friend) -> Unit
 ) : RecyclerView.Adapter<FriendsAdapter.FriendsViewHolder>() {
@@ -20,6 +20,12 @@ class FriendsAdapter(
         val options: ImageView = itemView.findViewById(R.id.overflowOptions)
     }
 
+    fun updateData(newList: List<Friend>) {
+        friends?.clear()
+        friends?.addAll(newList)
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FriendsViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.friends_item, parent, false)
@@ -27,7 +33,7 @@ class FriendsAdapter(
     }
 
     override fun onBindViewHolder(holder: FriendsViewHolder, position: Int) {
-        val friend = friends[position]
+        val friend = friends!![position]
         holder.usernameText.text = friend.username
         holder.profileImage.setImageResource(
             when (friend.profileIndex ?: 0) {
@@ -59,5 +65,5 @@ class FriendsAdapter(
         }
     }
 
-    override fun getItemCount(): Int = friends.size
+    override fun getItemCount(): Int = friends!!.size
 }
