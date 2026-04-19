@@ -55,7 +55,7 @@ class FriendsFragment : Fragment() {
                         docRef.document("$id").get()
                             .addOnSuccessListener { friendDoc ->
                                 if (friendDoc.exists()) {
-                                       val friendPfp = (friendDoc.get("pfp") as? Long)?.toInt()
+                                    val friendPfp = (friendDoc.get("pfp") as? Long)?.toInt()
                                     val friendUsername = friendDoc.getString("username")
                                     val friendUserID = (friendDoc.getLong("userID") as? Long)?.toInt() ?: 0
                                     Log.d(FriendsTAG, "Got friend: $friendUsername, $friendPfp, $friendUserID")

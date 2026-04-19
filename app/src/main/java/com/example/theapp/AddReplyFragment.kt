@@ -50,6 +50,10 @@ class AddReplyFragment() : BottomSheetDialogFragment() {
                     .setAnchorView(R.id.postButton).show()
             }
         }
+
+        binding.closeReplyButton.setOnClickListener { view ->
+            dismiss()
+        }
     }
 
     override fun onStart() {

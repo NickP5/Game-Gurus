@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/nav_view"
     android:orientation="vertical"
     tools:context=".AddReplyFragment">
+
+    <ImageButton
+        android:id="@+id/close_reply_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:padding="12dp"
+        android:src="@drawable/ic_close"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <EditText
         android:id="@+id/answerField"
@@ -14,7 +26,10 @@
         android:layout_gravity="center"
         android:layout_margin="20dp"
         android:padding="12dp"
-        android:hint="@string/write_answer"/>
+        android:hint="@string/write_answer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/close_reply_button"/>
 
     <EditText
         android:id="@+id/commentField"
@@ -23,16 +38,29 @@
         android:layout_gravity="center"
         android:layout_margin="20dp"
         android:padding="12dp"
-        android:hint="@string/write_comment" />
+        android:hint="@string/write_comment"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/answerField"/>
 
     <Button
         android:id="@+id/postButton"
-        android:layout_width="96dp"
-        android:layout_height="48dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginBottom="24dp"
+        android:layout_margin="10dp"
         android:backgroundTint="@color/primary"
         android:textColor="@color/on_primary"
-        android:text="@string/post_button" />
+        android:text="@string/post_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/commentField"/>
 
-</LinearLayout>
+    <View
+        android:layout_width="0dp"
+        android:layout_height="16dp"
+        app:layout_constraintTop_toBottomOf="@id/postButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

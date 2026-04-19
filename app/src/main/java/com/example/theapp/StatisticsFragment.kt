@@ -32,6 +32,10 @@ class StatisticsFragment : DialogFragment() {
         binding.totalPoints.text = points.toString()
         binding.winPercent.text = percentage.toString()
         binding.recentStreak.text = recentStreak.toString()
+
+        binding.closeStatsButton.setOnClickListener { view ->
+            dismiss()
+        }
     }
 
     override fun onStart() {
