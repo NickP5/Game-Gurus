@@ -110,8 +110,9 @@ class Post {
             val usersRef = db.collection("users")
 
             postsRef
+                //.where(Filter.or(Filter.equalTo("pID", pID)))
                 //checking if post exists by using and statement against pID, postClue, and postRating
-                .whereEqualTo("pID", pID)
+                //.whereEqualTo("pID", pID)
                 .whereEqualTo("clue", postClue)
                 .whereEqualTo("rating", postRating).get()
                 .addOnSuccessListener { querySnapshot ->
@@ -122,11 +123,11 @@ class Post {
                             .addOnSuccessListener { documentReference ->
                                 Log.d(TAG6, "Post added to Database")
 
-                                usersRef.document("$documentID2")
+                                usersRef.document("$loggedInUser")
                                     .update("posts", FieldValue.arrayUnion(documentID))
                                     .addOnSuccessListener {
                                         Log.d(
-                                            TAG6, "Post $documentID added to user $documentID2 list"
+                                            TAG6, "Post $documentID added to logged in user list"
                                         )
                                     }
                             }

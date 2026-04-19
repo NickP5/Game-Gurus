@@ -18,6 +18,7 @@ googleid = "1.2.0"
 cardview = "1.0.0"
 activity = "1.13.0"
 volley = "1.2.1"
+generativeai = "0.9.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -36,9 +37,9 @@ googleid = { group = "com.google.android.libraries.identity.googleid", name = "g
 androidx-cardview = { group = "androidx.cardview", name = "cardview", version.ref = "cardview" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
+generativeai = { group = "com.google.ai.client.generativeai", name = "generativeai", version.ref = "generativeai" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
-
