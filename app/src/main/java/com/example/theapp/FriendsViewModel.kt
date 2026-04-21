@@ -7,7 +7,7 @@ import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-class FriendsLiveData : ViewModel() {
+class FriendsViewModel : ViewModel() {
     private val db = Firebase.firestore
 
     private val _friends = MutableStateFlow<List<Friend>?>(null)

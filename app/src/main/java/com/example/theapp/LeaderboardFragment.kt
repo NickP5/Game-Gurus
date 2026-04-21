@@ -1,21 +1,23 @@
 package com.example.theapp
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.example.theapp.databinding.FragmentLeaderboardBinding
-import com.google.firebase.Firebase
-import com.google.firebase.firestore.Query
-import com.google.firebase.firestore.firestore
+import kotlinx.coroutines.launch
 
 private const val LeaderTAG = "Leaderboard"
 
 class LeaderboardFragment : Fragment() {
     private var _binding: FragmentLeaderboardBinding? = null
     private val binding get() = _binding!!
+    private val viewModel: LeaderboardViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,42 +31,19 @@ class LeaderboardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // this v will become the loggedInUser
+        val adapter = LeaderboardAdapter(emptyList(), requireContext())
+        binding.leaderboardList.adapter = adapter
 
-        val userName = loggedInUser
-
-        val db = Firebase.firestore
-        val docRef = db.collection("users")
-
-        //Getting name of loggInUser
-        docRef.document("$loggedInUser").get()
-            .addOnSuccessListener { documentSnapshot ->
-                val nameString = documentSnapshot.getString("username")
-                Log.d(TAG, "Got nameString: $nameString")
-                docRef.orderBy("points", Query.Direction.DESCENDING)
-                    .get()
-                    .addOnSuccessListener { documents ->
-                        val leaderboardData = mutableListOf<List<Any>>()
-                        var rank = 1
-
-                        for (document in documents) {
-                            val points = document.getLong("points") ?: 0L
-                            val name = document.getString("username") ?: "Anonymous"
-                            val firstLetter = name.take(1)
-                            Log.d(TAG, "DocumentSnapshot data: $firstLetter, $points, $name")
-
-                            //Formatting to same structure as below
-                            leaderboardData.add(listOf(firstLetter, rank, name, points.toInt()))
-                            rank++
-                        }
-
-                        Log.d(TAG, "Real nameString: $nameString")
-                        val adapter =
-                            LeaderboardAdapter(leaderboardData, requireContext(), nameString)
-
-                        binding.leaderboardList.adapter = adapter
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    viewModel.leaderboard.collect { data ->
+                        adapter.updateData(data)
                     }
+                }
             }
+        }
+        viewModel.loadLeaderboard(loggedInUser)
     }
 
     override fun onDestroyView() {
