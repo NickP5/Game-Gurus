@@ -56,8 +56,7 @@ class SignupFragment : Fragment() {
             val userRef = db.collection("users")
 
             userRef
-                .where(
-                    Filter.or(
+                .where(Filter.or(
                         Filter.equalTo("username",user),
                         Filter.equalTo("email", email)
                     )
@@ -83,7 +82,6 @@ class SignupFragment : Fragment() {
                                 .set(user)
                             Log.d(TAG3, "User successfully added to database")
                             loggedInUser = userID
-                            //eventually only run this is ue/pass check works
                             val intent = Intent(activity, MainActivity::class.java)
                             startActivity(intent)
                         } else {

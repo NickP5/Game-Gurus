@@ -7,9 +7,7 @@ plugins {
 
 android {
     namespace = "com.example.theapp"
-    compileSdk {
-        version = release(36)
-    }
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.theapp"
@@ -59,6 +57,7 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore")
     implementation(libs.googleid)
     implementation("de.hdodenhof:circleimageview:3.1.0")
+    implementation(libs.generativeai)
     implementation(libs.androidx.activity)
     implementation(libs.volley)
     testImplementation(libs.junit)
