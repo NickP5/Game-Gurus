@@ -75,42 +75,42 @@ class PostFragment : Fragment() {
 
         // quick dumb implementation of a friend button because that's a task i still need to do,
         // but since we haven't merged everything yet adding functionality is not possible. -Hayden
-        val requestSent = getString(R.string.request_sent)
-        binding.addFriend.setOnClickListener {
-            val db = Firebase.firestore
-            val usersRef = db.collection("users")
-            var loggedInUserName = ""
-
-            usersRef.document("$loggedInUser").get()
-                .addOnSuccessListener { documentSnapshot ->
-                    loggedInUserName = documentSnapshot.getString("username").toString()
-
-                    //Checking if the loggedinUser is not looking at their post so they can't friend themselves
-                    //If they aren't they add the postOP's userID to their friends array
-                    if (loggedInUserName != postOP){
-
-                    //Getting the postOP's userID
-                        usersRef
-                            .whereEqualTo("username", postOP)
-                            .get()
-                            .addOnSuccessListener { querySnapshot ->
-                               val postOPID = querySnapshot.documents[0].getLong("userID")?.toInt()
-                                if (postOPID != null) {
-                                    //Adding the postOP's userID to the loggedinUser's friends array
-                                    usersRef
-                                        .document("$loggedInUser")
-                                        .update("friends", FieldValue.arrayUnion(postOPID))
-                                        .addOnSuccessListener {
-                                            binding.addFriend.setText(requestSent)
-                                        }
-                                }
-                            }
-                    } else {
-                        binding.addFriend.setText(R.string.cant_friend_yourself)
-                    }
-                }
-            binding.addFriend.setText(requestSent)
-        }
+//        val requestSent = getString(R.string.request_sent)
+//        binding.addFriend.setOnClickListener {
+//            val db = Firebase.firestore
+//            val usersRef = db.collection("users")
+//            var loggedInUserName = ""
+//
+//            usersRef.document("$loggedInUser").get()
+//                .addOnSuccessListener { documentSnapshot ->
+//                    loggedInUserName = documentSnapshot.getString("username").toString()
+//
+//                    //Checking if the loggedinUser is not looking at their post so they can't friend themselves
+//                    //If they aren't they add the postOP's userID to their friends array
+//                    if (loggedInUserName != postOP){
+//
+//                    //Getting the postOP's userID
+//                        usersRef
+//                            .whereEqualTo("username", postOP)
+//                            .get()
+//                            .addOnSuccessListener { querySnapshot ->
+//                               val postOPID = querySnapshot.documents[0].getLong("userID")?.toInt()
+//                                if (postOPID != null) {
+//                                    //Adding the postOP's userID to the loggedinUser's friends array
+//                                    usersRef
+//                                        .document("$loggedInUser")
+//                                        .update("friends", FieldValue.arrayUnion(postOPID))
+//                                        .addOnSuccessListener {
+//                                            binding.addFriend.setText(requestSent)
+//                                        }
+//                                }
+//                            }
+//                    } else {
+//                        binding.addFriend.setText(R.string.cant_friend_yourself)
+//                    }
+//                }
+//            binding.addFriend.setText(requestSent)
+//        }
     }
 
     override fun onDestroyView() {
