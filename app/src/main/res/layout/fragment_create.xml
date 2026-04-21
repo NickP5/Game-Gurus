@@ -22,20 +22,23 @@
         android:layout_gravity="center"
         android:layout_marginHorizontal="20dp"
         android:hint="@string/edit_clue" />
-    
-    <EditText
-        android:id="@+id/ratingField"
-        android:layout_width="match_parent"
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginHorizontal="20dp"
-        android:hint="@string/edit_rating" />
+        android:numStars="5"
+        android:stepSize="0.5"/>
     
     <Button
         android:id="@+id/postButton"
-        android:layout_width="96dp"
-        android:layout_height="48dp"
+        android:background="@drawable/button_bg"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
         android:layout_gravity="center"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="250dp"
         android:text="@string/post_button" />
 
 </LinearLayout>
