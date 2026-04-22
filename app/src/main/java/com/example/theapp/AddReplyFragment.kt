@@ -58,7 +58,8 @@ class AddReplyFragment() : BottomSheetDialogFragment() {
                                 putParcelable("reply", reply)
                             }
                         )
-                        findNavController().popBackStack()
+
+                        dismiss()
                     } catch (e: Exception) {
                         binding.postButton.isEnabled = true
                         binding.postButton.text = "Post"
