@@ -1,6 +1,7 @@
 package com.example.theapp
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -74,6 +75,45 @@ class AddReplyFragment() : BottomSheetDialogFragment() {
                         )
 
                         repliesRef.document(newReplyID.toString()).set(replyData).await()
+
+                        val grade = reply.replyGrade
+                        var replyPosterPointsToAdd = 0
+                        var postOPPointsToAdd = 0
+
+                        if (grade != null) {
+                            if (grade >= 100) {
+                                //perfect guess
+                                replyPosterPointsToAdd = 150
+                                postOPPointsToAdd = 0
+                            } else {
+                                //incorrect but
+                                replyPosterPointsToAdd = grade / 2
+                                postOPPointsToAdd = grade * 2
+                            }
+                        }
+
+                        //update reply poster's points
+                        usersRef.document("$loggedInUser")
+                            .update("points", com.google.firebase.firestore.FieldValue.increment(replyPosterPointsToAdd.toLong()))
+                            .await()
+
+                        // get original postOP to give them points
+                        val postSnapshot = db.collection("posts").document(postID.toString()).get().await()
+                        val postOP = postSnapshot.getString("name")
+
+                        if (postOP != null) {
+                            val postOPQuery = usersRef.whereEqualTo("username", postOP).get().await()
+                            if (!postOPQuery.isEmpty) {
+                                val postOPID = postOPQuery.documents[0].id
+                                usersRef.document(postOPID)
+                                    .update("points", com.google.firebase.firestore.FieldValue.increment(postOPPointsToAdd.toLong()))
+                                    .await()
+
+                                Log.d("Scoring", "Added $postOPPointsToAdd to creator: $postOP")
+                            }
+                        }
+
+                        Log.d("Scoring", "Added $replyPosterPointsToAdd to guesser")
 
                         parentFragmentManager.setFragmentResult(
                             "reply_key",
