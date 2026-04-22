@@ -30,6 +30,8 @@ class Post {
     var postOP: String? = null
     @get:PropertyName("answer") @set:PropertyName("answer")
     var postAnswer: String? = null
+    @get:PropertyName("pID") @set:PropertyName("pID")
+    var postID: Int? = null
 
     constructor()
 

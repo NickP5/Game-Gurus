@@ -4,15 +4,24 @@ import android.os.Parcelable
 import android.util.Log
 import com.google.ai.client.generativeai.GenerativeModel
 import com.google.ai.client.generativeai.type.generationConfig
+import com.google.firebase.firestore.PropertyName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Reply(
-    val replyID: Int? = 0,
-    val replyAnswer: String? = "",
-    val replyComment: String? = "",
-    val replyPoster: String? = "",
-    val replyPosterID: Int? = 0,
+    @get:PropertyName("postID") @set:PropertyName("postID")
+    var postID: Int? = 0,
+    @get:PropertyName("replyID") @set:PropertyName("replyID")
+    var replyID: Int? = 0,
+    @get:PropertyName("answer") @set:PropertyName("answer")
+    var replyAnswer: String? = "",
+    @get:PropertyName("comment") @set:PropertyName("comment")
+    var replyComment: String? = "",
+    @get:PropertyName("name") @set:PropertyName("name")
+    var replyPoster: String? = "",
+    @get:PropertyName("userID") @set:PropertyName("userID")
+    var replyPosterID: Int? = 0,
+    @get:PropertyName("grade") @set:PropertyName("grade")
     var replyGrade: Int? = 0
 ) : Parcelable {
 
