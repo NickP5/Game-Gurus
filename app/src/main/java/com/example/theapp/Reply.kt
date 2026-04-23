@@ -4,15 +4,24 @@ import android.os.Parcelable
 import android.util.Log
 import com.google.ai.client.generativeai.GenerativeModel
 import com.google.ai.client.generativeai.type.generationConfig
+import com.google.firebase.firestore.PropertyName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Reply(
-    val replyID: Int? = 0,
-    val replyAnswer: String? = "",
-    val replyComment: String? = "",
-    val replyPoster: String? = "",
-    val replyPosterID: Int? = 0,
+    @get:PropertyName("postID") @set:PropertyName("postID")
+    var postID: Int? = 0,
+    @get:PropertyName("replyID") @set:PropertyName("replyID")
+    var replyID: Int? = 0,
+    @get:PropertyName("answer") @set:PropertyName("answer")
+    var replyAnswer: String? = "",
+    @get:PropertyName("comment") @set:PropertyName("comment")
+    var replyComment: String? = "",
+    @get:PropertyName("name") @set:PropertyName("name")
+    var replyPoster: String? = "",
+    @get:PropertyName("userID") @set:PropertyName("userID")
+    var replyPosterID: Int? = 0,
+    @get:PropertyName("grade") @set:PropertyName("grade")
     var replyGrade: Int? = 0
 ) : Parcelable {
 
@@ -41,7 +50,15 @@ data class Reply(
     
             Instructions:
             1. If the answer is perfectly correct, synonymous, or an acronym (e.g., "LOL" vs "League of Legends"), give it 100.
-            2. If it is partially correct or contains parts of the answer, give a score between 10 and 90 based on accuracy.
+            2. If it is partially correct or contains parts of the answer, give a score between 10 and 90 based on accuracy. 
+                Some partially correct sample cases:
+                Correct Answer: Minecraft
+                User's Answer: Vintage Story
+                Grade: 30 (A block-based sandbox survival game)
+                Example 2:
+                Correct Answer: Halo Reach
+                User's Answer: Halo Combat Evolved
+                Grade: 60 (Same franchise, wrong game)
             3. If it is completely wrong, give it 0.
     
             Return ONLY a single integer between 0 and 100.

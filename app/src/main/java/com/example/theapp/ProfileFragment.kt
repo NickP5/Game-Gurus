@@ -68,8 +68,6 @@ class ProfileFragment : BottomSheetDialogFragment() {
         docRef.document("$loggedInUser").get()
             .addOnSuccessListener { documentSnapshot ->
                 val nameString = documentSnapshot.getString("username").toString()
-                Log.d(ProfileTAG, "Got nameString: $nameString")
-                Log.d(ProfileTAG, "Real nameString: $nameString")
                 binding.displayNameText.text = nameString
 
                 // Load saved profile picture if it exists

@@ -72,7 +72,7 @@
     <string name="actual_percent">72.13</string>
     <string name="win_percent">Win Percent</string>
     <string name="temp_max_streak">36</string>
-    <string name="max_streak">Max Streak</string>
+    <string name="points_to_next_position">Gap To Next</string>
     <string name="streak">24</string>
     <string name="current_streak">Current Streak</string>
     <string name="points_earned">Points Earned</string>

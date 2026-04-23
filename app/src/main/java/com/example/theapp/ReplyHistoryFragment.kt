@@ -1,6 +1,7 @@
 package com.example.theapp
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.theapp.databinding.FragmentReplyHistoryBinding
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.firestore
 import kotlin.getValue
 
 class ReplyHistoryFragment : Fragment() {
@@ -30,11 +33,32 @@ class ReplyHistoryFragment : Fragment() {
         // Retrieve user's replies from their ID
         // userHistoryID contains the ID needed to retrieve all of user's replies
         val userHistoryID = viewModel.historyID
+        val db = Firebase.firestore
 
-        val replyAdapter = ReplyAdapter(mutableListOf())
+        db.collection("users").document("$userHistoryID").get()
+            .addOnSuccessListener { documentSnapshot ->
+                val username = documentSnapshot.getString("username")
 
-        binding.replyHistoryRecyclerView.layoutManager = LinearLayoutManager(context)
-        binding.replyHistoryRecyclerView.adapter = replyAdapter
+                db.collection("replies")
+                    .whereEqualTo("name", username)
+                    .get()
+                    .addOnSuccessListener { documents ->
+                        val firestoreReplies = documents.toObjects(Reply::class.java)
+
+                        val replyAdapter = ReplyAdapter(firestoreReplies.toMutableList())
+
+                        binding.replyHistoryRecyclerView.layoutManager =
+                            LinearLayoutManager(context)
+                        binding.replyHistoryRecyclerView.adapter = replyAdapter
+
+                        if (firestoreReplies.isEmpty()) {
+                            Log.d("ReplyHistory", "No replies found for user: $username")
+                        }
+                    }
+                    .addOnFailureListener { exception ->
+                        Log.e("ReplyHistory", "Error getting replies: ", exception)
+                    }
+            }
 
     }
 

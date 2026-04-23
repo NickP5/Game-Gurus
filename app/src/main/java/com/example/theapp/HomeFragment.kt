@@ -51,6 +51,7 @@ class HomeFragment : Fragment() {
                 //Putting adapter in successlistener so homepage only displays after all data is retrieved
                 val postAdapter = HomeAdapter(postList) { post ->
                     val bundle = Bundle().apply {
+                        putInt("postID", post.postID ?: 0)
                         putString("destination", post.postClue)
                         putString("postClue", post.postClue)
                         putString("postRating", post.postRating)

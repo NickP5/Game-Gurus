@@ -2,6 +2,7 @@ package com.example.theapp
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,6 +36,7 @@ class PostFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val postID = arguments?.getInt("postID") ?: 0
         val postClue = arguments?.getString("postClue")
         val postRating = arguments?.getString("postRating")
         val postOP = arguments?.getString("postOP")
@@ -44,27 +46,64 @@ class PostFragment : Fragment() {
         binding.originalPostRating.text = postRating
         binding.originalPostOP.text = postOP
 
-        val replyAdapter = ReplyAdapter(mutableListOf())
-
         binding.replyRecyclerView.layoutManager = LinearLayoutManager(context)
-        binding.replyRecyclerView.adapter = replyAdapter
+        binding.replyRecyclerView.visibility = View.GONE
 
-        parentFragmentManager.setFragmentResultListener(
-            "reply_key",
-            viewLifecycleOwner
-        ) { _, bundle ->
+        val db = Firebase.firestore
+        db.collection("users").document("$loggedInUser").get()
+            .addOnSuccessListener { documentSnapshot ->
+                val currentUserName = documentSnapshot.getString("username")
 
-            val newReply =
-                bundle.getParcelable("reply", Reply::class.java)
-
-            newReply?.let {
-                replyAdapter.addReply(it)
-                binding.replyRecyclerView.scrollToPosition(replyAdapter.itemCount - 1)
+                //checking if the post is the logged in user's post
+                if (currentUserName == postOP) {
+                    // if it is, hide reply button and show all replies
+                    binding.addReply.visibility = View.GONE
+                    unlockAndLoadReplies(postID)
+                } else {
+                    // not user's own post, we now check if they already replied
+                    db.collection("replies")
+                        .whereEqualTo("postID", postID)
+                        .whereEqualTo("userID", loggedInUser)
+                        .get()
+                        .addOnSuccessListener { querySnapshot ->
+                            if (!querySnapshot.isEmpty) {
+                                // user has already replied
+                                unlockAndLoadReplies(postID)
+                                binding.addReply.visibility = View.GONE
+                            } else {
+                                // user has not replied
+                                binding.addReply.visibility = View.VISIBLE
+                            }
+                        }
+                }
             }
+
+        parentFragmentManager.setFragmentResultListener("reply_key", viewLifecycleOwner) { _, bundle ->
+            unlockAndLoadReplies(postID)
+            binding.addReply.visibility = View.GONE
         }
+
+//        val replyAdapter = ReplyAdapter(mutableListOf())
+//
+//        binding.replyRecyclerView.adapter = replyAdapter
+//
+//        parentFragmentManager.setFragmentResultListener(
+//            "reply_key",
+//            viewLifecycleOwner
+//        ) { _, bundle ->
+//
+//            val newReply =
+//                bundle.getParcelable("reply", Reply::class.java)
+//
+//            newReply?.let {
+//                replyAdapter.addReply(it)
+//                binding.replyRecyclerView.scrollToPosition(replyAdapter.itemCount - 1)
+//            }
+
 
         binding.addReply.setOnClickListener {
             val bundle = Bundle().apply {
+                putInt("postID", postID)
                 putString("postAnswer", postAnswer)
             }
 
@@ -72,9 +111,10 @@ class PostFragment : Fragment() {
                 arguments = bundle
             }.show(parentFragmentManager, "AddReply")
         }
+    }
 
-        // quick dumb implementation of a friend button because that's a task i still need to do,
-        // but since we haven't merged everything yet adding functionality is not possible. -Hayden
+                // quick dumb implementation of a friend button because that's a task i still need to do,
+                // but since we haven't merged everything yet adding functionality is not possible. -Hayden
 //        val requestSent = getString(R.string.request_sent)
 //        binding.addFriend.setOnClickListener {
 //            val db = Firebase.firestore
@@ -111,7 +151,28 @@ class PostFragment : Fragment() {
 //                }
 //            binding.addFriend.setText(requestSent)
 //        }
-    }
+
+        private fun unlockAndLoadReplies(postID: Int) {
+            val db = Firebase.firestore
+            db.collection("replies")
+                .whereEqualTo("postID", postID)
+                .get()
+                .addOnSuccessListener { documents ->
+                    val replyList = mutableListOf<Reply>()
+                    for (doc in documents) {
+                        val reply = doc.toObject(Reply::class.java)
+                        replyList.add(reply)
+                    }
+
+                    binding.replyRecyclerView.visibility = View.VISIBLE
+
+                    binding.replyRecyclerView.layoutManager = LinearLayoutManager(context)
+                    binding.replyRecyclerView.adapter = ReplyAdapter(replyList)
+                }
+                .addOnFailureListener { e ->
+                    Log.e("PostFragment", "Error getting replies", e)
+                }
+        }
 
     override fun onDestroyView() {
         super.onDestroyView()

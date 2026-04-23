@@ -1,25 +1,23 @@
 package com.example.theapp
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.addCallback
-import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import com.example.theapp.databinding.FragmentAddReplyBinding
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 class AddReplyFragment() : BottomSheetDialogFragment() {
 
     private var _binding: FragmentAddReplyBinding? = null
     private val binding get() = _binding!!
-    private lateinit var bottomNav: BottomNavigationView
 
     private val GEMINI_API_KEY = "AIzaSyC6N4Naja3jrpH03SL9ZbJM-XjVMdFrjLQ"
 
@@ -36,6 +34,7 @@ class AddReplyFragment() : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val postAnswer = arguments?.getString("postAnswer")
+        val postID = arguments?.getInt("postID") ?: 0
 
         binding.postButton.setOnClickListener {
             val answerText = binding.answerField.text.toString()
@@ -48,9 +47,73 @@ class AddReplyFragment() : BottomSheetDialogFragment() {
                         binding.postButton.isEnabled = false
                         binding.postButton.text = "Grading..."
 
-                        val reply = Reply(0, answerText, commentText, "Temp User", loggedInUser)
+                        val db = Firebase.firestore
+                        val repliesRef = db.collection("replies")
+                        val usersRef = db.collection("users")
+
+                        // Getting username of loggedinUser
+                        val userSnapshot = usersRef.document(loggedInUser.toString()).get().await()
+                        val username = userSnapshot.getString("username") ?: "Unknown User"
+
+                        //Getting number of documents in replies collection for new replyID int
+                        val dbCount = repliesRef.count().get(com.google.firebase.firestore.AggregateSource.SERVER).await()
+                        val newReplyID = dbCount.count.toInt()
+
+
+                        val reply = Reply(postID, newReplyID, answerText, commentText, username, loggedInUser)
 
                         reply.gradeReply(postAnswer, GEMINI_API_KEY)
+
+                        val replyData = hashMapOf(
+                            "postID" to reply.postID,
+                            "replyID" to reply.replyID,
+                            "answer" to reply.replyAnswer,
+                            "comment" to reply.replyComment,
+                            "name" to reply.replyPoster,
+                            "userID" to reply.replyPosterID,
+                            "grade" to reply.replyGrade
+                        )
+
+                        repliesRef.document(newReplyID.toString()).set(replyData).await()
+
+                        val grade = reply.replyGrade
+                        var replyPosterPointsToAdd = 0
+                        var postOPPointsToAdd = 0
+
+                        if (grade != null) {
+                            if (grade >= 100) {
+                                //perfect guess
+                                replyPosterPointsToAdd = 150
+                                postOPPointsToAdd = 0
+                            } else {
+                                //incorrect but
+                                replyPosterPointsToAdd = grade / 2
+                                postOPPointsToAdd = grade * 2
+                            }
+                        }
+
+                        //update reply poster's points
+                        usersRef.document("$loggedInUser")
+                            .update("points", com.google.firebase.firestore.FieldValue.increment(replyPosterPointsToAdd.toLong()))
+                            .await()
+
+                        // get original postOP to give them points
+                        val postSnapshot = db.collection("posts").document(postID.toString()).get().await()
+                        val postOP = postSnapshot.getString("name")
+
+                        if (postOP != null) {
+                            val postOPQuery = usersRef.whereEqualTo("username", postOP).get().await()
+                            if (!postOPQuery.isEmpty) {
+                                val postOPID = postOPQuery.documents[0].id
+                                usersRef.document(postOPID)
+                                    .update("points", com.google.firebase.firestore.FieldValue.increment(postOPPointsToAdd.toLong()))
+                                    .await()
+
+                                Log.d("Scoring", "Added $postOPPointsToAdd to creator: $postOP")
+                            }
+                        }
+
+                        Log.d("Scoring", "Added $replyPosterPointsToAdd to guesser")
 
                         parentFragmentManager.setFragmentResult(
                             "reply_key",
@@ -86,7 +149,7 @@ class AddReplyFragment() : BottomSheetDialogFragment() {
             }
         }
 
-        binding.closeReplyButton.setOnClickListener { view ->
+        binding.closeReplyButton.setOnClickListener {
             dismiss()
         }
     }
