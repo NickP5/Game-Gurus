@@ -127,11 +127,6 @@ class ProfileFragment : BottomSheetDialogFragment() {
             navController.navigate(R.id.StatisticsFragment)
         }
 
-        binding.notifications.setOnClickListener { view ->
-            dismiss()
-            navController.navigate(R.id.NotificationsFragment)
-        }
-
         binding.history.setOnClickListener { view ->
             dismiss()
             viewModel.historyID = loggedInUser

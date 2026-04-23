@@ -7,7 +7,6 @@ data class User(
     var postList: MutableList<Post>? = mutableListOf(),
     var replyList: MutableList<Reply>? = mutableListOf(),
     var friendList: MutableList<Friend>? = mutableListOf(),
-    var notificationList: MutableList<Notification>? = mutableListOf(),
     var points: Long? = 0
 ) {
 
@@ -17,18 +16,6 @@ data class User(
 
     fun removeFriend(friendUserId: Int?) {
         friendList?.removeIf { it.friendId == friendUserId }
-    }
-
-    fun newNotification(username: String?, subject: String?, message: String?, addFriend: Boolean?) {
-        var nid: Int? = 0
-        if (notificationList?.isNotEmpty() == true) {
-            nid = notificationList!![notificationList!!.size - 1].notificationId?.plus(1)
-        }
-        notificationList?.add(Notification(nid, subject, message, username, addFriend))
-    }
-
-    fun removeNotification(nid: Int?) {
-        notificationList?.removeIf { it.notificationId == nid }
     }
 
     fun addPost() {
