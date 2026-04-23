@@ -30,6 +30,7 @@ class UserLookupFragment : Fragment() {
     private val TAG = "UserLookupFragment"
 
     private val allUsers = mutableListOf<User>()
+    private val db = FirebaseFirestore.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -73,7 +74,7 @@ class UserLookupFragment : Fragment() {
 //        )
 
         val adapter = UserAdapter { userToAdd ->
-            addFriend(db, userToAdd)
+            addFriend(userToAdd)
         }
 
         val recyclerView: RecyclerView = view.findViewById(R.id.userRecyclerView)
@@ -81,7 +82,6 @@ class UserLookupFragment : Fragment() {
 
         recyclerView.adapter = adapter
 
-        val db = FirebaseFirestore.getInstance()
         db.collection("users")
             .orderBy("points", Query.Direction.DESCENDING)
             .get()
@@ -90,7 +90,8 @@ class UserLookupFragment : Fragment() {
                 for ((index, document) in querySnapshot.documents.withIndex()) {
                     val username = document.getString("username") ?: continue
                     val points = document.getLong("points")?.toInt() ?: 0
-                    allUsers.add(User(index, username, points))
+                    val userId = document.getLong("userID")?.toInt() ?: index
+                    allUsers.add(User(userId, username, points))
                     Log.d(TAG, "Loaded user: $username with $points points")
                 }
                 val currentQuery = binding.searchEditText.text.toString()
@@ -105,20 +106,15 @@ class UserLookupFragment : Fragment() {
         }
     }
 
-    private fun addFriend(db: FirebaseFirestore, userToAdd: User) {
-        val loggedInUserId = FirebaseAuth.getInstance().currentUser?.uid ?: run {
-            Log.e(TAG, "No logged-in user found")
-            return
-        }
-
-        val loggedInUserDoc = db.collection("users").document(loggedInUserId)
+    private fun addFriend(userToAdd: User) {
+        val loggedInUserDoc = db.collection("users").document("$loggedInUser")
 
         loggedInUserDoc.get()
             .addOnSuccessListener { snapshot ->
                 @Suppress("UNCHECKED_CAST")
-                val currentFriends = snapshot.get("friends") as? List<String> ?: emptyList()
+                val currentFriends = snapshot.get("friends") as? List<Long> ?: emptyList()
 
-                if (currentFriends.contains(userToAdd.username)) {
+                if (currentFriends.contains(userToAdd.uid?.toLong())) {
                     Toast.makeText(
                         requireContext(),
                         "${userToAdd.username} is already your friend!",
@@ -126,7 +122,7 @@ class UserLookupFragment : Fragment() {
                     ).show()
                     Log.d(TAG, "${userToAdd.username} already in friends list, skipping")
                 } else {
-                    loggedInUserDoc.update("friends", FieldValue.arrayUnion(userToAdd.username))
+                    loggedInUserDoc.update("friends", FieldValue.arrayUnion(userToAdd.uid ?: return@addOnSuccessListener))
                         .addOnSuccessListener {
                             Toast.makeText(
                                 requireContext(),

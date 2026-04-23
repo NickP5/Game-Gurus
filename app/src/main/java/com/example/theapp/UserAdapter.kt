@@ -8,7 +8,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.button.MaterialButton
 
 class UserAdapter(private val onAddFriend: (User) -> Unit):
     ListAdapter<User, UserAdapter.UserViewHolder>(DIFF_CALLBACK) {
@@ -26,6 +25,7 @@ class UserAdapter(private val onAddFriend: (User) -> Unit):
     class UserViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val usernameText: TextView = view.findViewById(R.id.userNameText)
         val profileImage: ImageView = view.findViewById(R.id.userProfilePic)
+        val addFriendButton: View = view.findViewById(R.id.addUserAsFriend)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
