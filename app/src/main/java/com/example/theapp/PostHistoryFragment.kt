@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.theapp.databinding.FragmentPostHistoryBinding
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.firestore
 import kotlin.getValue
 
 class PostHistoryFragment : Fragment() {
@@ -29,33 +31,49 @@ class PostHistoryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        uID = 0
 
         // Retrieve user's posts from their ID
         // userHistoryID contains the ID needed to check for post history
         val userHistoryID = viewModel.historyID
 
+        binding.postHistoryRecyclerView.layoutManager = LinearLayoutManager(context)
+
+
         // get posts of the user and send them through the home adapter
-        val postList = TestPostList.getPostData()
+        val db = Firebase.firestore
+        val postsRef = db.collection("posts")
+        val usersRef = db.collection("users")
 
-        val postAdapter = HomeAdapter(postList) { post ->
-            val bundle = Bundle().apply {
-                putString("destination", post.postClue)
-                putString("postClue", post.postClue)
-                putString("postRating", post.postRating)
-                putString("postOP", post.postOP)
-                putSerializable("postAnswer", post.postAnswer)
+        usersRef.document("$userHistoryID").get()
+            .addOnSuccessListener { documentSnapshot ->
+                val username = documentSnapshot.getString("username")
+                postsRef
+                    .whereEqualTo("name", username)
+                    .get()
+                    .addOnSuccessListener { documents ->
+                        val firestorePosts = documents.toObjects(Post::class.java)
+                        if (firestorePosts.isEmpty()) {
+                            Log.d("PostHistory", "No posts found for user: $userHistoryID")
+                        }
+
+                        val postAdapter = HomeAdapter(firestorePosts) { post ->
+                            val bundle = Bundle().apply {
+                                putString("destination", post.postClue)
+                                putString("postClue", post.postClue)
+                                putString("postRating", post.postRating)
+                                putString("postOP", post.postOP)
+                                putString("postAnswer", post.postAnswer)
+                            }
+                            findNavController().navigate(R.id.history_to_post, bundle)
+                        }
+                        binding.postHistoryRecyclerView.adapter = postAdapter
+                    }
+                    .addOnFailureListener { exception ->
+                        Log.e("PostHistory", "Error getting posts: ", exception)
+                    }
             }
-
-            findNavController().navigate(R.id.history_to_post, bundle)
-        }
-
-        val recyclerView: RecyclerView = view.findViewById(R.id.postHistoryRecyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(context)
-
-        recyclerView.adapter = postAdapter
-
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

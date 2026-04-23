@@ -50,7 +50,15 @@ data class Reply(
     
             Instructions:
             1. If the answer is perfectly correct, synonymous, or an acronym (e.g., "LOL" vs "League of Legends"), give it 100.
-            2. If it is partially correct or contains parts of the answer, give a score between 10 and 90 based on accuracy.
+            2. If it is partially correct or contains parts of the answer, give a score between 10 and 90 based on accuracy. 
+                Some partially correct sample cases:
+                Correct Answer: Minecraft
+                User's Answer: Vintage Story
+                Grade: 30 (A block-based sandbox survival game)
+                Example 2:
+                Correct Answer: Halo Reach
+                User's Answer: Halo Combat Evolved
+                Grade: 60 (Same franchise, wrong game)
             3. If it is completely wrong, give it 0.
     
             Return ONLY a single integer between 0 and 100.
