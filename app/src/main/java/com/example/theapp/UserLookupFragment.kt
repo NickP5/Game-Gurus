@@ -15,11 +15,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.theapp.databinding.FragmentUserLookupBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import android.util.Log
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 
 class UserLookupFragment : Fragment() {
     private var _binding: FragmentUserLookupBinding? = null
     private val binding get() = _binding!!
     private lateinit var bottomNav: BottomNavigationView
+
+    private val TAG = "UserLookupFragment"
+
+    private val allUsers = mutableListOf<User>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,19 +55,19 @@ class UserLookupFragment : Fragment() {
             imm.showSoftInput(binding.searchEditText, InputMethodManager.SHOW_IMPLICIT)
         }
 
-        val allUsers = mutableListOf(
-            User(0, "Jarvis", 0),
-            User(1, "Hulk", 1),
-            User(2, "Mark", 3),
-            User(3, "Joggins", 0),
-            User(4, "Liasas", 2),
-            User(5, "JumpingWilly", 1),
-            User(6, "Rad", 1),
-            User(7, "Poaster", 3),
-            User(8, "Batman", 3),
-            User(9, "IronMan", 0),
-            User(10, "CaptainAmerica", 2)
-        )
+//        val allUsers = mutableListOf(
+//            User(0, "Jarvis", 0),
+//            User(1, "Hulk", 1),
+//            User(2, "Mark", 3),
+//            User(3, "Joggins", 0),
+//            User(4, "Liasas", 2),
+//            User(5, "JumpingWilly", 1),
+//            User(6, "Rad", 1),
+//            User(7, "Poaster", 3),
+//            User(8, "Batman", 3),
+//            User(9, "IronMan", 0),
+//            User(10, "CaptainAmerica", 2)
+//        )
 
         val adapter = UserAdapter()
 
@@ -69,20 +76,39 @@ class UserLookupFragment : Fragment() {
 
         recyclerView.adapter = adapter
 
-        binding.searchEditText.addTextChangedListener { text ->
-            val query = text.toString()
-
-            val filtered = if (query.isEmpty()) {
-                emptyList()
-            } else {
-                allUsers.filter {
-                    it.username?.contains(query, ignoreCase = true) == true
+        val db = FirebaseFirestore.getInstance()
+        db.collection("users")
+            .orderBy("points", Query.Direction.DESCENDING)
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                allUsers.clear()
+                for ((index, document) in querySnapshot.documents.withIndex()) {
+                    val username = document.getString("username") ?: continue
+                    val points = document.getLong("points")?.toInt() ?: 0
+                    allUsers.add(User(index, username, points))
+                    Log.d(TAG, "Loaded user: $username with $points points")
                 }
+                val currentQuery = binding.searchEditText.text.toString()
+                adapter.submitList(filterUsers(currentQuery))
             }
-            adapter.submitList(filtered)
+            .addOnFailureListener { e ->
+                Log.e(TAG, "Error fetching users", e)
+            }
+        // --- Search filter (works on the live Firestore-populated list) ---
+        binding.searchEditText.addTextChangedListener { text ->
+            adapter.submitList(filterUsers(text.toString()))
         }
     }
-
+    private fun filterUsers(query: String): List<User> {
+        return if (query.isEmpty()) {
+            // Show full leaderboard when search is empty
+            allUsers.toList()
+        } else {
+            allUsers.filter {
+                it.username?.contains(query, ignoreCase = true) == true
+            }
+        }
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
