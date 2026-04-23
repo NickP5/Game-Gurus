@@ -41,6 +41,7 @@
     <color name="nav_view">#121212</color>
     <color name="card_color">#212122</color>
     <color name="divider_color">#343434</color>
+    <color name="login_color">#000000</color>
 
     <color name="grad1">#5A3E63</color>
     <color name="grad2">#4A3F66</color>
