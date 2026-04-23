@@ -31,6 +31,9 @@ class LoginActivity : AppCompatActivity() {
         val loginAdapter = LoginAdapter(this)
         viewPager.adapter = loginAdapter
 
+        // stop the user from accidentally swiping left or right when logging in/signing up
+        viewPager.isUserInputEnabled = false
+
         TabLayoutMediator(tabLayout, viewPager) { tab: TabLayout.Tab, position: Int ->
             when (position) {
                 0 -> {
@@ -42,10 +45,10 @@ class LoginActivity : AppCompatActivity() {
             }
         }.attach()
         // code to animate background
-        val drawable : AnimationDrawable = binding.root.background as AnimationDrawable
-
-        drawable.setEnterFadeDuration(1250)
-        drawable.setExitFadeDuration(2500)
-        drawable.start()
+//        val drawable : AnimationDrawable = binding.root.background as AnimationDrawable
+//
+//        drawable.setEnterFadeDuration(1250)
+//        drawable.setExitFadeDuration(2500)
+//        drawable.start()
     }
 }
