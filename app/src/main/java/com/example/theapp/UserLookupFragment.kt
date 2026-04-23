@@ -18,6 +18,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 
 class UserLookupFragment : Fragment() {
     private var _binding: FragmentUserLookupBinding? = null
@@ -69,7 +72,9 @@ class UserLookupFragment : Fragment() {
 //            User(10, "CaptainAmerica", 2)
 //        )
 
-        val adapter = UserAdapter()
+        val adapter = UserAdapter { userToAdd ->
+            addFriend(db, userToAdd)
+        }
 
         val recyclerView: RecyclerView = view.findViewById(R.id.userRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
@@ -98,6 +103,51 @@ class UserLookupFragment : Fragment() {
         binding.searchEditText.addTextChangedListener { text ->
             adapter.submitList(filterUsers(text.toString()))
         }
+    }
+
+    private fun addFriend(db: FirebaseFirestore, userToAdd: User) {
+        val loggedInUserId = FirebaseAuth.getInstance().currentUser?.uid ?: run {
+            Log.e(TAG, "No logged-in user found")
+            return
+        }
+
+        val loggedInUserDoc = db.collection("users").document(loggedInUserId)
+
+        loggedInUserDoc.get()
+            .addOnSuccessListener { snapshot ->
+                @Suppress("UNCHECKED_CAST")
+                val currentFriends = snapshot.get("friends") as? List<String> ?: emptyList()
+
+                if (currentFriends.contains(userToAdd.username)) {
+                    Toast.makeText(
+                        requireContext(),
+                        "${userToAdd.username} is already your friend!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    Log.d(TAG, "${userToAdd.username} already in friends list, skipping")
+                } else {
+                    loggedInUserDoc.update("friends", FieldValue.arrayUnion(userToAdd.username))
+                        .addOnSuccessListener {
+                            Toast.makeText(
+                                requireContext(),
+                                "${userToAdd.username} added as a friend!",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            Log.d(TAG, "Successfully added ${userToAdd.username} as friend")
+                        }
+                        .addOnFailureListener { e ->
+                            Toast.makeText(
+                                requireContext(),
+                                "Failed to add friend. Try again.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            Log.e(TAG, "Error adding friend", e)
+                        }
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.e(TAG, "Error reading current user's friends list", e)
+            }
     }
     private fun filterUsers(query: String): List<User> {
         return if (query.isEmpty()) {

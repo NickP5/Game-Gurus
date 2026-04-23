@@ -8,8 +8,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.button.MaterialButton
 
-class UserAdapter :
+class UserAdapter(private val onAddFriend: (User) -> Unit):
     ListAdapter<User, UserAdapter.UserViewHolder>(DIFF_CALLBACK) {
 
     companion object {
@@ -46,5 +47,8 @@ class UserAdapter :
                 else -> R.drawable.cropped_circle_image
             }
         )
+        holder.addFriendButton.setOnClickListener {
+            onAddFriend(user)
+        }
     }
 }
