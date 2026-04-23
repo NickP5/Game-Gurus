@@ -19,6 +19,9 @@ import com.example.theapp.databinding.ActivityMainBinding
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import androidx.core.graphics.scale
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.NavOptions
 
 class MainActivity : AppCompatActivity() {
@@ -26,6 +29,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
     private val viewModel: SharedViewModel by viewModels()
+    private var hideOptions = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val sharedPref = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
@@ -79,7 +83,42 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
 
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.appbarLayout) { view, insets ->
+            val statusBarInsets = insets.getInsets(WindowInsetsCompat.Type.statusBars())
+            view.setPadding(0, statusBarInsets.top, 0, 0)
+            insets
+        }
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.contentContainer) { view, insets ->
+
+            val systemBottom = insets.getInsets(WindowInsetsCompat.Type.systemBars()).bottom
+
+            view.setPadding(
+                view.paddingLeft,
+                view.paddingTop,
+                view.paddingRight,
+                systemBottom
+            )
+
+            insets
+        }
+
         val navController = findNavController(R.id.nav_host_fragment_content_main)
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id == R.id.SettingsFragment) {
+                hideOptions = true
+                invalidateOptionsMenu()
+            } else if (destination.id == R.id.UserLookupFragment) {
+                hideOptions = true
+                invalidateOptionsMenu()
+            } else {
+                hideOptions = false
+                invalidateOptionsMenu()
+            }
+        }
 
         appBarConfiguration = AppBarConfiguration(
             setOf(
@@ -116,6 +155,11 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
+        navController.addOnDestinationChangedListener { _, _, _ ->
+
+            binding.appbarLayout.setExpanded(true, false)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -145,6 +189,14 @@ class MainActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
+        val menuItem1 = menu.findItem(R.id.action_settings)
+        val menuItem2 = menu.findItem(R.id.user_lookup)
+        menuItem1.isVisible = !hideOptions
+        menuItem2.isVisible = !hideOptions
+        return super.onPrepareOptionsMenu(menu)
     }
 
     override fun onSupportNavigateUp(): Boolean {

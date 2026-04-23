@@ -7,35 +7,47 @@
     tools:context=".MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true">
+        android:fitsSystemWindows="false">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize" />
+            android:layout_height="?attr/actionBarSize"
+            android:minHeight="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:titleTextAppearance="@style/ToolbarTitleSmall"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <include layout="@layout/content_main" />
 
+    <FrameLayout
+        android:id="@+id/contentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="@color/card_color"
-        app:itemBackground="@color/card_color"
         app:backgroundTint="@color/card_color"
-        app:labelVisibilityMode="labeled"
-        app:itemTextColor="@color/list_item_selector"
-        app:itemIconTint="@color/list_item_selector"
+        app:itemBackground="@color/card_color"
         app:itemIconSize="20dp"
-        app:itemPaddingTop="4dp"
+        app:itemIconTint="@color/list_item_selector"
         app:itemPaddingBottom="4dp"
+        app:itemPaddingTop="4dp"
+        app:itemTextColor="@color/list_item_selector"
         app:labelFontScalingEnabled="true"
-        app:layout_behavior="com.google.android.material.behavior.HideViewOnScrollBehavior"
+        app:labelVisibilityMode="labeled"
+        app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
         app:menu="@menu/bottom_menu" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

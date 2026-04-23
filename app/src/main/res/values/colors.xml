@@ -41,4 +41,8 @@
     <color name="nav_view">#FFFFFF</color>
     <color name="card_color">#F7F7F7</color>
     <color name="divider_color">#DEDEDE</color>
+
+    <color name="grad1">#E5CAEC</color>
+    <color name="grad2">#EBDCF6</color>
+    <color name="grad3">#EAEDF4</color>
 </resources>
