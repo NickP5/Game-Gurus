@@ -28,14 +28,6 @@ class MainActivity : AppCompatActivity() {
     private val viewModel: SharedViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val sharedPref = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
-        val isDarkMode = sharedPref.getBoolean(KEY_DARK_MODE, false)
-
-        if (isDarkMode) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        }
 
         super.onCreate(savedInstanceState)
 

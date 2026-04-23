@@ -89,6 +89,7 @@ class LoginFragment : Fragment() {
 
                             binding.loginButton.text = "LOG IN"
                         }
+                        binding.loginButton.text = "LOG IN"
                     }
             }
         }
