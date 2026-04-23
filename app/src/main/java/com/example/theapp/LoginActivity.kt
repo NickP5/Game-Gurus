@@ -9,6 +9,7 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.viewpager2.widget.ViewPager2
@@ -26,10 +27,22 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val sharedPref = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
+        val isDarkMode = sharedPref.getBoolean(KEY_DARK_MODE, false)
+
+        if (isDarkMode) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
+
         val tabLayout = findViewById<TabLayout>(R.id.tabLayout)
         val viewPager = findViewById<ViewPager2>(R.id.viewPager)
         val loginAdapter = LoginAdapter(this)
         viewPager.adapter = loginAdapter
+
+        // stop the user from accidentally swiping left or right when logging in/signing up
+        viewPager.isUserInputEnabled = false
 
         TabLayoutMediator(tabLayout, viewPager) { tab: TabLayout.Tab, position: Int ->
             when (position) {
@@ -42,10 +55,10 @@ class LoginActivity : AppCompatActivity() {
             }
         }.attach()
         // code to animate background
-        val drawable : AnimationDrawable = binding.root.background as AnimationDrawable
-
-        drawable.setEnterFadeDuration(1250)
-        drawable.setExitFadeDuration(2500)
-        drawable.start()
+//        val drawable : AnimationDrawable = binding.root.background as AnimationDrawable
+//
+//        drawable.setEnterFadeDuration(1250)
+//        drawable.setExitFadeDuration(2500)
+//        drawable.start()
     }
 }

@@ -44,6 +44,9 @@ class LoginFragment : Fragment() {
             val ue = ue_input.text.toString()
             val pass = pass_input.text.toString()
 
+            // change text to loading
+            binding.loginButton.text = "LOADING..."
+
                 //We're going to first go through all users looking for if a username or email matches
                 //what ue or pass has, only if that completes will we check for a correct password
                 val db = Firebase.firestore
@@ -77,11 +80,16 @@ class LoginFragment : Fragment() {
                             } else {
                                 // where anything to display incorrect password would happen
                                 Log.d(TAG2, "Incorrect Password")
+
+                                binding.loginButton.text = "LOG IN"
                             }
                         } else {
                             // This is where we would tell them that no user with that username/email exists
                             Log.d(TAG2, "No user with that Username/Email")
+
+                            binding.loginButton.text = "LOG IN"
                         }
+                        binding.loginButton.text = "LOG IN"
                     }
             }
         }

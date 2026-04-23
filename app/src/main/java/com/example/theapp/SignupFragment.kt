@@ -50,6 +50,9 @@ class SignupFragment : Fragment() {
             val pass = pass_input.text.toString()
             val confirm = pass_confirm.text.toString()
 
+            // change text to loading
+            binding.signupButton.text = "LOADING..."
+
             //We're going to first go through all users looking for if a username or email matches
             //If either a username or email matches, Sign Up fails, and we tell the user that one of
             //the two is already in use
