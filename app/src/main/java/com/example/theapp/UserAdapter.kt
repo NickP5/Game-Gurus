@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 
-class UserAdapter :
+class UserAdapter(private val onAddFriend: (User) -> Unit):
     ListAdapter<User, UserAdapter.UserViewHolder>(DIFF_CALLBACK) {
 
     companion object {
@@ -25,6 +25,7 @@ class UserAdapter :
     class UserViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val usernameText: TextView = view.findViewById(R.id.userNameText)
         val profileImage: ImageView = view.findViewById(R.id.userProfilePic)
+        val addFriendButton: View = view.findViewById(R.id.addUserAsFriend)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
@@ -46,5 +47,8 @@ class UserAdapter :
                 else -> R.drawable.cropped_circle_image
             }
         )
+        holder.addFriendButton.setOnClickListener {
+            onAddFriend(user)
+        }
     }
 }
