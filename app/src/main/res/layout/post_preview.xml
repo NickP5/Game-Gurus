@@ -23,7 +23,7 @@
                 android:id="@+id/postClue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:text="@string/default_op_clue"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="100dp"
@@ -66,7 +66,28 @@
                 android:text="@string/default_op_name"
                 android:layout_marginTop="12.5dp"
                 android:layout_marginStart="10dp"
-                android:layout_marginEnd="50dp" />
+                android:layout_marginEnd="100dp" />
+
+            <TextView
+                android:id="@+id/diffNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/diff_num"
+                android:layout_marginTop="6dp"
+                android:textSize="48sp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="32dp"/>
+
+            <TextView
+                android:id="@+id/diffHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/diff_header"
+                android:textSize="18sp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="31dp"
+                android:layout_below="@id/diffNum"/>
+
 
             <ImageView
                 android:id="@+id/divHorizontal"
