@@ -11,6 +11,8 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.theapp.Post
 import com.example.theapp.R
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.firestore
 
 class HomeAdapter(private val postList: List<Post>, private val onItemClick: (Post) -> Unit) :
     RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
@@ -39,10 +41,104 @@ class HomeAdapter(private val postList: List<Post>, private val onItemClick: (Po
         }
 
         holder.addFriendImage.setOnClickListener {
-            // TODO: add friend functionality
+            val db = Firebase.firestore
+            val usersRef = db.collection("users")
+
+            //get friendsArray
+            usersRef.document("$loggedInUser")
+                .get()
+                .addOnSuccessListener { currentUserDoc ->
+                    val friendsArray = currentUserDoc.get("friends") as? List<Long> ?: emptyList()
+
+                    usersRef.whereEqualTo("username", post.postOP)
+                        .get()
+                        .addOnSuccessListener { querySnapshot ->
+                            val targetUserDoc = querySnapshot.documents[0]
+                            val targetUserID = targetUserDoc.getLong("userID")
+
+                            if (targetUserID != null) {
+                                //check for if postOP is the logged in user
+                                if (targetUserID.toInt() == loggedInUser) {
+                                    Toast.makeText(
+                                        holder.itemView.context,
+                                        "You cannot add yourself as a friend.",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                } else if (friendsArray.contains(targetUserID)) {
+                                    //check for if postOP already a friend
+                                    Toast.makeText(
+                                        holder.itemView.context,
+                                        "Already friends with ${post.postOP}.",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                } else {
+                                    // add user to friends list
+                                    usersRef.document("$loggedInUser")
+                                        .update(
+                                            "friends",
+                                            com.google.firebase.firestore.FieldValue.arrayUnion(
+                                                targetUserID))
+                                        .addOnSuccessListener {
+                                            Toast.makeText(
+                                                holder.itemView.context,
+                                                "Added ${post.postOP} as a friend.",
+                                                Toast.LENGTH_LONG
+                                            ).show()
+                                        }
+                                }
+                            }
+                        }
+                }
         }
         holder.addFriendText.setOnClickListener {
-            // TODO: add friend functionality
+            val db = Firebase.firestore
+            val usersRef = db.collection("users")
+
+            //get friendsArray
+            usersRef.document("$loggedInUser")
+                .get()
+                .addOnSuccessListener { currentUserDoc ->
+                    val friendsArray = currentUserDoc.get("friends") as? List<Long> ?: emptyList()
+
+                    usersRef.whereEqualTo("username", post.postOP)
+                        .get()
+                        .addOnSuccessListener { querySnapshot ->
+                            val targetUserDoc = querySnapshot.documents[0]
+                            val targetUserID = targetUserDoc.getLong("userID")
+
+                            if (targetUserID != null) {
+                                //check for if postOP is the logged in user
+                                if (targetUserID.toInt() == loggedInUser) {
+                                    Toast.makeText(
+                                        holder.itemView.context,
+                                        "You cannot add yourself as a friend.",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                } else if (friendsArray.contains(targetUserID)) {
+                                    //check for if postOP already a friend
+                                    Toast.makeText(
+                                        holder.itemView.context,
+                                        "Already friends with ${post.postOP}.",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                } else {
+                                    // add user to friends list
+                                    usersRef.document("$loggedInUser")
+                                        .update(
+                                            "friends",
+                                            com.google.firebase.firestore.FieldValue.arrayUnion(
+                                                targetUserID))
+                                        .addOnSuccessListener {
+                                            Toast.makeText(
+                                                holder.itemView.context,
+                                                "Added ${post.postOP} as a friend.",
+                                                Toast.LENGTH_LONG
+                                            ).show()
+                                        }
+                                }
+                            }
+                        }
+                }
         }
 
         // real button too hard make text image clickingable instead
