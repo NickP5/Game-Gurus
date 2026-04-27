@@ -130,7 +130,7 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/log_out"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:text="@string/log_out"
         android:textSize="15sp"
         android:backgroundTint="@color/primary"
