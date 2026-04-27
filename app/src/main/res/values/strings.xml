@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">The App</string>
     <string name="action_settings">Settings</string>
-    <string name="log_out">Log out</string>
+    <string name="log_out">LOG OUT</string>
     <string name="account">Account</string>
     <string name="account_preferences">Account Preferences</string>
     <string name="dark_mode">Dark Mode</string>
@@ -58,7 +58,7 @@
     <string name="reply_answer">Reply Answer</string>
     <string name="reply_comment">Reply Comment</string>
     <string name="reply_username">Reply User</string>
-    <string name="write_a_reply">Add Reply</string>
+    <string name="write_a_reply">ADD REPLY</string>
     <string name="write_answer">Write an Answer…</string>
     <string name="write_comment">Write a Comment…</string>
     <string name="add_friend">Add friend</string>
