@@ -19,7 +19,7 @@ class HomeAdapter(private val postList: List<Post>, private val onItemClick: (Po
         val view = LayoutInflater.from(parent.context).inflate(R.layout.post_preview,
             parent, false)
         return HomeViewHolder(view) {
-            onItemClick(postList[it])
+//            onItemClick(postList[it])
         }
     }
 
@@ -45,6 +45,14 @@ class HomeAdapter(private val postList: List<Post>, private val onItemClick: (Po
             // TODO: add friend functionality
         }
 
+        // real button too hard make text image clickingable instead
+        holder.commentImage.setOnClickListener {
+            onItemClick(post)
+        }
+        holder.commentText.setOnClickListener {
+            onItemClick(post)
+        }
+
     }
 
     override fun getItemCount(): Int {
@@ -52,20 +60,23 @@ class HomeAdapter(private val postList: List<Post>, private val onItemClick: (Po
     }
 
     class HomeViewHolder(itemView: View, onItemClicked: (Int) -> Unit) : RecyclerView.ViewHolder(itemView) {
-        init {
-            itemView.setOnClickListener {
-                val position = bindingAdapterPosition
-                if (position != RecyclerView.NO_POSITION) {
-                    onItemClicked(position)
-                }
-            }
-        }
+
+        // have to comment this out otherwise an animation would play when clicking on cardview
+//        init {
+//            itemView.setOnClickListener {
+//                val position = bindingAdapterPosition
+//                if (position != RecyclerView.NO_POSITION) {
+//                    onItemClicked(position)
+//                }
+//            }
+//        }
         val postClue: TextView = itemView.findViewById(R.id.postClue)
         val postOP: TextView = itemView.findViewById(R.id.postOP)
         val postRatingStars: RatingBar = itemView.findViewById(R.id.postRatingStars)
         val addFriendImage: ImageView = itemView.findViewById(R.id.addFriendImage)
         val addFriendText: TextView = itemView.findViewById(R.id.addFriendText)
         val commentImage: ImageView = itemView.findViewById(R.id.commentImage)
+        val commentText: TextView = itemView.findViewById(R.id.commentText)
 
     }
     }

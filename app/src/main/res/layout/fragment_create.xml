@@ -3,34 +3,102 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".CreateFragment">
 
-    <EditText
-        android:id="@+id/gameField"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="256dp"
-        android:hint="@string/edit_game"/>
+        android:layout_height="360dp"
+        app:cardElevation="4dp"
+        app:cardCornerRadius="10dp"
+        android:layout_marginTop="74dp"
+        android:layout_marginHorizontal="5dp"
+        android:clickable="false"
+        android:focusable="false"
+        android:foreground="?attr/selectableItemBackground">
 
-    <EditText
-        android:id="@+id/clueField"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginHorizontal="20dp"
-        android:hint="@string/edit_clue" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <RatingBar
-        android:id="@+id/ratingBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:numStars="5"
-        android:stepSize="0.5"/>
-    
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/game_header"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:layout_marginTop="16dp"/>
+
+            <EditText
+                android:id="@+id/gameField"
+                android:background="@drawable/edittext_bg"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:padding="8dp"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="16dp"
+                android:hint="@string/edit_game"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="16dp"
+                android:src="@color/divider_color"
+                android:layout_marginHorizontal="16dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/clue_header"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:layout_marginTop="16dp"/>
+
+            <EditText
+                android:id="@+id/clueField"
+                android:background="@drawable/edittext_bg"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:padding="8dp"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="16dp"
+                android:hint="@string/edit_clue"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="16dp"
+                android:src="@color/divider_color"
+                android:layout_marginHorizontal="16dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/rating_header"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:layout_marginTop="16dp"/>
+
+            <RatingBar
+                android:layout_marginTop="10dp"
+                android:id="@+id/ratingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:numStars="5"
+                android:stepSize="0.5"/>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
     <Button
         android:id="@+id/postButton"
         android:background="@drawable/button_bg"
@@ -38,7 +106,7 @@
         android:layout_height="60dp"
         android:layout_gravity="center"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="250dp"
+        android:layout_marginTop="90dp"
         android:text="@string/post_button" />
 
 </LinearLayout>

@@ -42,8 +42,19 @@ class PostFragment : Fragment() {
         val postOP = arguments?.getString("postOP")
         val postAnswer = arguments?.getString("postAnswer")
 
+
+        // i am now realizing that this code is only needed for the original testpostlist posts
+        // because their ratings are still stored as "x/5" but new posts automatically store
+        // as the number in string format
+        val ratingStringSplit = postRating?.split("/")
+        val ratingNum = ratingStringSplit?.elementAt(0)
+
+        // this is still needed though i think
+        if (ratingNum != null) {
+            binding.originalPostRating.rating = ratingNum.toFloat()
+        }
+
         binding.originalPostClue.text = postClue
-        binding.originalPostRating.text = postRating
         binding.originalPostOP.text = postOP
 
         binding.replyRecyclerView.layoutManager = LinearLayoutManager(context)

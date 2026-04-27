@@ -36,10 +36,13 @@
     <string name="default_op_name">OP name here</string>
 
     <!-- strings for create tab -->
+    <string name="game_header">What game are you reviewing today?</string>
     <string name="edit_game">Write your game here</string>
+    <string name="clue_header">Describe this game in 6 words or less.</string>
     <string name="edit_clue">Write your clue here</string>
+    <string name="rating_header">How would you rate this game?</string>
     <string name="edit_rating">Write your rating here</string>
-    <string name="post_button">Post</string>
+    <string name="post_button">POST</string>
 
     <!-- strings for login and account creation tabs -->
     <string name="login_ue">Username or Email</string>
