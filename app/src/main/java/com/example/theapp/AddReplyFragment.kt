@@ -19,7 +19,7 @@ class AddReplyFragment() : BottomSheetDialogFragment() {
     private var _binding: FragmentAddReplyBinding? = null
     private val binding get() = _binding!!
 
-    private val GEMINI_API_KEY = "AIzaSyC6N4Naja3jrpH03SL9ZbJM-XjVMdFrjLQ"
+    private val GEMINI_API_KEY = "AIzaSyCvzJPr8qFwzWgdXyK67yM7-jQ2hR0YQd0"
 
     override fun onCreateView(
         inflater: LayoutInflater,
