@@ -89,6 +89,7 @@ class UserLookupFragment : Fragment() {
                 allUsers.clear()
                 for ((index, document) in querySnapshot.documents.withIndex()) {
                     val username = document.getString("username") ?: continue
+                    if (document.getLong("userID")?.toInt() == loggedInUser) continue
                     val points = document.getLong("points")?.toInt() ?: 0
                     val userId = document.getLong("userID")?.toInt() ?: index
                     allUsers.add(User(userId, username, points))
