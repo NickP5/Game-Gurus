@@ -20,6 +20,8 @@ class AddReplyFragment() : BottomSheetDialogFragment() {
     private val binding get() = _binding!!
 
     private val GEMINI_API_KEY = "AIzaSyCvzJPr8qFwzWgdXyK67yM7-jQ2hR0YQd0"
+    // if the grading is not working, use a new api key, github repo is public
+    // so any key used here will eventually be considered leaked
 
     override fun onCreateView(
         inflater: LayoutInflater,
