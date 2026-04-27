@@ -38,6 +38,13 @@ class HomeAdapter(private val postList: List<Post>, private val onItemClick: (Po
             holder.postRatingStars.rating = ratingNum.toFloat()
         }
 
+        holder.addFriendImage.setOnClickListener {
+            // TODO: add friend functionality
+        }
+        holder.addFriendText.setOnClickListener {
+            // TODO: add friend functionality
+        }
+
     }
 
     override fun getItemCount(): Int {
@@ -56,8 +63,9 @@ class HomeAdapter(private val postList: List<Post>, private val onItemClick: (Po
         val postClue: TextView = itemView.findViewById(R.id.postClue)
         val postOP: TextView = itemView.findViewById(R.id.postOP)
         val postRatingStars: RatingBar = itemView.findViewById(R.id.postRatingStars)
-        val guessButton: ImageView = itemView.findViewById(R.id.guessImage)
-        val commentButton: ImageView = itemView.findViewById(R.id.commentImage)
+        val addFriendImage: ImageView = itemView.findViewById(R.id.addFriendImage)
+        val addFriendText: TextView = itemView.findViewById(R.id.addFriendText)
+        val commentImage: ImageView = itemView.findViewById(R.id.commentImage)
 
     }
     }

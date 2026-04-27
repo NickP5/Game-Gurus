@@ -26,7 +26,7 @@
                 android:textSize="18sp"
                 android:text="@string/default_op_clue"
                 android:layout_marginStart="20dp"
-                android:layout_marginEnd="100dp"
+                android:layout_marginEnd="20dp"
                 android:layout_marginTop="10dp"
                 android:maxLines="2"/>
 
@@ -68,25 +68,25 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="100dp" />
 
-            <TextView
-                android:id="@+id/diffNum"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/diff_num"
-                android:layout_marginTop="6dp"
-                android:textSize="48sp"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="32dp"/>
+<!--            <TextView-->
+<!--                android:id="@+id/diffNum"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@string/diff_num"-->
+<!--                android:layout_marginTop="6dp"-->
+<!--                android:textSize="48sp"-->
+<!--                android:layout_alignParentEnd="true"-->
+<!--                android:layout_marginEnd="32dp"/>-->
 
-            <TextView
-                android:id="@+id/diffHeader"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/diff_header"
-                android:textSize="18sp"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="31dp"
-                android:layout_below="@id/diffNum"/>
+<!--            <TextView-->
+<!--                android:id="@+id/diffHeader"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@string/diff_header"-->
+<!--                android:textSize="18sp"-->
+<!--                android:layout_alignParentEnd="true"-->
+<!--                android:layout_marginEnd="31dp"-->
+<!--                android:layout_below="@id/diffNum"/>-->
 
 
             <ImageView
@@ -99,24 +99,25 @@
                 android:layout_marginHorizontal="16dp"/>
 
             <ImageView
-                android:id="@+id/guessImage"
+                android:id="@+id/addFriendImage"
                 android:clickable="true"
                 android:focusable="true"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginStart="84dp"
-                android:src="@drawable/baseline_question_mark_24"
+                android:src="@drawable/ic_add_friend"
                 android:layout_below="@id/divHorizontal"
                 android:layout_marginTop="10dp"/>
 
             <TextView
+                android:id="@+id/addFriendText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
                 android:layout_marginBottom="10dp"
-                android:layout_marginStart="70.5dp"
-                android:layout_below="@id/guessImage"
-                android:text="@string/guess_button"/>
+                android:layout_marginStart="53dp"
+                android:layout_below="@id/addFriendImage"
+                android:text="@string/add_friend"/>
 
             <ImageView
                 android:id="@+id/commentImage"
@@ -137,7 +138,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginBottom="10dp"
                 android:layout_marginEnd="55dp"
-                android:layout_below="@id/guessImage"
+                android:layout_below="@id/commentImage"
                 android:text="@string/comment_button"/>
 
         </RelativeLayout>

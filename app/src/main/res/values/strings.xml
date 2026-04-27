@@ -35,7 +35,7 @@
     <string name="default_op_rating">OP rating here</string>
     <string name="default_op_name">OP name here</string>
 
-    <!-- strings for edittext fields -->
+    <!-- strings for create tab -->
     <string name="edit_game">Write your game here</string>
     <string name="edit_clue">Write your clue here</string>
     <string name="edit_rating">Write your rating here</string>
